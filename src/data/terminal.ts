@@ -11,32 +11,29 @@ export interface FsNode {
   modified?: string
 }
 
+const mdFiles = (pName: string) => ({
+  'Overview.md': { type: 'file' as const, name: 'Overview.md', size: '1.2K', modified: 'today', content: `# ${pName} - Overview\n` },
+  'Problem.md': { type: 'file' as const, name: 'Problem.md', size: '950B', modified: 'today', content: `# ${pName} - Problem Statement\n` },
+  'Architecture.md': { type: 'file' as const, name: 'Architecture.md', size: '1.5K', modified: 'today', content: `# ${pName} - System Architecture\n` },
+  'TechStack.md': { type: 'file' as const, name: 'TechStack.md', size: '800B', modified: 'today', content: `# ${pName} - Technology Stack\n` },
+  'Results.md': { type: 'file' as const, name: 'Results.md', size: '1.1K', modified: 'today', content: `# ${pName} - Results & Learnings\n` },
+  'Links.md': { type: 'file' as const, name: 'Links.md', size: '400B', modified: 'today', content: `# ${pName} - Resource Links\n` },
+})
+
 export const filesystem: Record<string, FsNode> = {
   'projects': {
     type: 'dir', name: 'projects',
     children: {
-      'prs-os': { type: 'dir', name: 'prs-os', children: {
-        'package.json': { type: 'file', name: 'package.json', size: '2.3K', modified: 'today' },
-        'tsconfig.json': { type: 'file', name: 'tsconfig.json', size: '695B', modified: 'today' },
-        'src': { type: 'dir', name: 'src', children: {} },
-        'README.md': { type: 'file', name: 'README.md', size: '1.1K', modified: '2 days ago', content: '# PRS-OS Portfolio\nAI-powered developer OS built with Next.js and Zustand.\n' },
-      }},
-      'nimbusx': { type: 'dir', name: 'nimbusx', children: {
-        'README.md': { type: 'file', name: 'README.md', size: '820B', modified: '3 days ago' },
-      }},
-      'timeforge': { type: 'dir', name: 'timeforge', children: {
-        'README.md': { type: 'file', name: 'README.md', size: '540B', modified: '1 week ago' },
-      }},
+      'neuroscan': { type: 'dir', name: 'neuroscan', children: mdFiles('NeuroScan AI') },
+      'studyflow': { type: 'dir', name: 'studyflow', children: mdFiles('StudyFlow') },
+      'nimbusx': { type: 'dir', name: 'nimbusx', children: mdFiles('Nimbus X') },
+      'codeviz': { type: 'dir', name: 'codeviz', children: mdFiles('CodeViz') },
     },
   },
   'documents': { type: 'dir', name: 'documents', children: {
-    'resume.pdf': { type: 'file', name: 'resume.pdf', size: '245K', modified: '1 week ago' },
-    'notes.md': { type: 'file', name: 'notes.md', size: '1.2K', modified: '3 days ago', content: '# Dev Notes\n- Finish window manager\n- Polish command palette\n- Add terminal autocomplete\n' },
+    'resume_prem_rajesh.pdf': { type: 'file', name: 'resume_prem_rajesh.pdf', size: '210K', modified: 'yesterday' },
   }},
-  '.config': { type: 'dir', name: '.config', children: {
-    'theme.json': { type: 'file', name: 'theme.json', size: '128B', modified: 'today' },
-  }},
-  '.bashrc': { type: 'file', name: '.bashrc', size: '64B', modified: '2 weeks ago', content: '# PRS-OS Shell Config\nexport PS1="developer@prs-os:~$ "\nexport EDITOR=vim\n' },
+  '.bashrc': { type: 'file', name: '.bashrc', size: '64B', modified: '2 weeks ago', content: '# PRS-OS Shell Config\nexport PS1="prem@prs-os:~$ "\nexport EDITOR=nano\n' },
 }
 
 /* ─── Navigating the FS ──────────────────────────────── */
@@ -69,8 +66,6 @@ export function getNode(path: string): FsNode | null {
   return null
 }
 
-/* ─── App map ────────────────────────────────────────── */
-
 export const appMap: Record<string, WindowType> = {
   projects: 'projects',
   terminal: 'terminal',
@@ -81,7 +76,14 @@ export const appMap: Record<string, WindowType> = {
   ai: 'ai-assistant',
   assistant: 'ai-assistant',
   about: 'about',
+  github: 'github',
+  neuroscan: 'projects',
+  studyflow: 'projects',
   nimbusx: 'projects',
+  codeviz: 'projects',
+  education: 'education',
+  experience: 'experience',
+  certifications: 'certifications',
 }
 
 /* ─── All known commands (for autocomplete) ──────────── */
@@ -89,6 +91,6 @@ export const appMap: Record<string, WindowType> = {
 export const allCommands = [
   'help', 'about', 'projects', 'skills', 'resume', 'contact',
   'clear', 'open', 'launch', 'whoami', 'date', 'neofetch',
-  'echo', 'pwd', 'ls', 'cd', 'cat', 'mkdir', 'tree',
-  'history', 'theme',
+  'echo', 'pwd', 'ls', 'cd', 'cat', 'tree', 'history', 'theme',
+  'education', 'experience', 'github', 'certifications',
 ]

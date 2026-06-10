@@ -1,5 +1,3 @@
-import { type LucideIcon } from 'lucide-react'
-
 export interface Project {
   id: string
   name: string
@@ -44,36 +42,97 @@ export interface RecentBuild {
 
 export const projects: Project[] = [
   {
-    id: 'prs-os',
-    name: 'PRS-OS',
-    category: 'Developer Operating System',
-    tagline: 'Command-driven AI portfolio operating system inspired by modern developer tooling.',
-    description: 'A high-performance virtual operating system built as an immersive engineering portfolio. Combines command-driven navigation, contextual AI interactions, floating application windows, runtime browser environments, semantic project search, and cinematic motion architecture into a unified developer workspace experience.',
+    id: 'neuroscan',
+    name: 'NeuroScan AI',
+    category: 'AI & Machine Learning',
+    featured: true,
+    liveUrl: 'https://neuroscan-pink.vercel.app/',
+    tagline: 'ML-powered medical imaging analysis with 94.05% accuracy.',
+    description: 'A Flask web application designed for classifying brain MRI scans into Glioma, Meningioma, Pituitary, or No Tumor classes. Employs EfficientNetB0 transfer learning and ONNX Runtime CPU inference for high-speed, serverless computation.',
     keyFeatures: [
-      'Window manager',
-      'Runtime browser',
-      'Command palette',
-      'Contextual AI system',
-      'Semantic search',
-      'Terminal workspace',
-      'GitHub workspace',
-      'Resume viewer'
+      'ONNX Runtime Inference',
+      'Clinical Input Guardrails',
+      'EfficientNetB0 Architecture',
+      'Confidence Scoring',
+      'Serverless Flask API',
+      'MRI Visualization UI'
     ],
-    stack: ['Next.js', 'React', 'TypeScript', 'Zustand', 'Framer Motion', 'Tailwind CSS'],
-    architecture: 'Command-driven OS architecture powered by centralized Zustand orchestration and modular window lifecycle management.',
+    stack: ['Python', 'Flask', 'ONNX Runtime', 'EfficientNetB0', 'HTML5', 'CSS3', 'JavaScript'],
+    architecture: 'EfficientNetB0 backbone trained with transfer learning, converted to ONNX format, executed with ONNX Runtime CPU.',
     engineeringChallenges: [
-      'Multi-window state synchronization',
-      '60FPS motion performance orchestration',
-      'Context-aware command parsing',
-      'GPU-accelerated workspace rendering'
+      'Supporting CPU-optimized ONNX on Vercel Serverless',
+      'Grayscale contrast validation guardrails',
+      'Bundle size reduction below 250MB'
     ],
     status: 'active',
-    lastCommit: '2 min ago',
+    lastCommit: '2 hours ago',
+    commitHash: 'e12e674',
+    buildStatus: 'passing',
+    language: 'Python',
+    progress: 94,
+    tags: ["ai", "machine-learning", "onnx-runtime", "flask", "medical-ai"]
+  },
+  {
+    id: 'studyflow',
+    name: 'StudyFlow',
+    category: 'Full Stack & AI',
+    featured: true,
+    liveUrl: 'https://studyflow-aii.vercel.app/',
+    tagline: 'AI-driven study scheduling and focus platform with Google Gemini AI.',
+    description: 'A Next.js full-stack productivity companion that plans, tracks, and optimizes student study sessions. Implements Google Gemini API for adaptive, syllabus-aware scheduling, backed by Supabase DB, Auth, and Storage.',
+    keyFeatures: [
+      'AI Schedule Generator',
+      'Study AI Chatbot',
+      'Pomodoro Timer Tracker',
+      'Supabase Database sync',
+      'Syllabus PDF Parsing',
+      'Row Level Security (RLS)'
+    ],
+    stack: ['Next.js 16', 'TypeScript', 'Tailwind CSS 4', 'Google Gemini AI', 'Supabase', 'Vercel AI SDK'],
+    architecture: 'Next.js App Router coupled with Supabase Database, Auth, and Storage. Prompts structured via JSON schemas and validated using Zod.',
+    engineeringChallenges: [
+      'Enforcing strict JSON schema responses from LLM',
+      'Supabase real-time multi-device sync',
+      'PDF text extraction on serverless workers'
+    ],
+    status: 'active',
+    lastCommit: '3 weeks ago',
+    commitHash: '60457b7',
+    buildStatus: 'passing',
+    language: 'TypeScript',
+    progress: 90,
+    tags: ["nextjs", "gemini-ai", "supabase", "typescript", "productivity"]
+  },
+  {
+    id: 'nimbusx',
+    name: 'Nimbus X',
+    category: 'Cloud Storage & Organization',
+    featured: true,
+    liveUrl: 'https://nimbusx.vercel.app',
+    tagline: 'AI-powered cloud storage with intelligent organization.',
+    description: 'A next-generation cloud drive featuring AI-assisted file classification, automated metadata extraction, and semantic file search. Built on React and Firebase infrastructure.',
+    keyFeatures: [
+      'Intelligent Auto-Tagging',
+      'Semantic Concept Search',
+      'Direct Cloud Uploading',
+      'Firebase Auth Integration',
+      'Real-time metadata sync',
+      'Progressive Upload UI'
+    ],
+    stack: ['React', 'TypeScript', 'Tailwind CSS', 'Firebase Auth', 'Firestore', 'Firebase Storage'],
+    architecture: 'React frontend synced with Firestore DB and Firebase Storage. Back-end functions analyze uploads and trigger semantic categorizations.',
+    engineeringChallenges: [
+      'Chunked uploading with instant progress feedback',
+      'Dynamic search vector tag generation',
+      'Multi-format preview canvas components'
+    ],
+    status: 'completed',
+    lastCommit: '3 days ago',
     commitHash: 'a1b2c3d',
     buildStatus: 'passing',
     language: 'TypeScript',
-    progress: 92,
-    tags: ["developer-tools", "os-ui", "window-manager", "ai-interface", "nextjs", "motion-design"]
+    progress: 100,
+    tags: ["react", "firebase", "cloud-storage", "typescript", "ai"]
   },
   {
     id: 'codeviz',
@@ -82,23 +141,21 @@ export const projects: Project[] = [
     featured: true,
     liveUrl: 'https://code-visualizer.vercel.app/',
     tagline: 'Interactive multi-language code and algorithm visualization platform.',
-    description: 'A modern algorithm visualization environment that enables developers and students to understand code execution step-by-step through animated visual systems, execution tracing, and interactive controls.',
+    description: 'An educational software playground that parses user-written code into Abstract Syntax Trees, generating step-by-step execution control flows, variable stack histories, and graphical traversals.',
     keyFeatures: [
-      'Multi-language support',
-      'Sorting/Searching visualizations',
-      'Execution flow diagrams',
-      'Real-time variable tracking',
-      'Monaco editor integration',
-      'Playback controls',
-      'Performance-safe execution engine'
+      'Monaco Editor Integration',
+      'Data Structure Tracing',
+      'Call Stack Inspection',
+      'Step Forward/Backward Controls',
+      'Sandbox Execution Engine',
+      'D3.js SVG Rendering'
     ],
-    stack: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS', 'Monaco Editor', 'Framer Motion'],
-    architecture: 'Modular visualization architecture using isolated execution engines and specialized visualization pipelines for sorting, searching, and flow analysis.',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Monaco Editor', 'D3.js', 'Framer Motion'],
+    architecture: 'Next.js client embedding Monaco Editor. Code execution is parsed, and steps are visualised using D3.js trees and custom React diagrams.',
     engineeringChallenges: [
-      'Real-time execution synchronization',
-      'Preventing excessive rerenders during animations',
-      'Designing language-agnostic execution flows',
-      'Performance optimization for visualization rendering'
+      'Safe sandbox execution without eval() risk',
+      'High frame-rate SVG tree updates at 60 FPS',
+      'Language-agnostic telemetry tracking'
     ],
     status: 'completed',
     lastCommit: 'Yesterday',
@@ -106,117 +163,56 @@ export const projects: Project[] = [
     buildStatus: 'passing',
     language: 'TypeScript',
     progress: 100,
-    tags: ["developer-tools", "algorithms", "visualization", "monaco", "nextjs", "education"]
-  },
-  {
-    id: 'brain-tumor',
-    name: 'Brain Tumor Detection',
-    category: 'AI & Machine Learning',
-    tagline: 'Deep learning-based MRI brain tumor classification system with interactive medical visualization.',
-    description: 'An AI-powered medical imaging system for detecting and classifying brain tumors from MRI scans using convolutional neural networks and an interactive deployment environment.',
-    keyFeatures: [
-      'MRI classification',
-      'CNN-based prediction pipeline',
-      'Grad-CAM visualization',
-      'Confidence scoring',
-      'Flask deployment',
-      'Real-time predictions',
-      'Medical-themed responsive interface'
-    ],
-    stack: ['Python', 'TensorFlow', 'Flask', 'OpenCV', 'NumPy'],
-    architecture: 'CNN inference pipeline integrated with Flask serving architecture and image preprocessing workflow for real-time MRI classification.',
-    engineeringChallenges: [
-      'Dataset preprocessing consistency',
-      'Improving model generalization',
-      'Visualization of prediction confidence',
-      'Real-time inference integration'
-    ],
-    status: 'completed',
-    lastCommit: '2 weeks ago',
-    commitHash: 'm1.b4.c',
-    buildStatus: 'passing',
-    language: 'Python',
-    progress: 100,
-    tags: ["ai", "machine-learning", "tensorflow", "cnn", "medical-ai", "flask"]
-  },
-  {
-    id: 'nexus',
-    name: 'Nexus',
-    category: 'Full Stack System',
-    tagline: 'Academic archive and publication management ecosystem for scholarly communities.',
-    description: 'A research publication management platform designed for manuscript submission, editorial workflows, digital preservation, and institutional publication systems.',
-    keyFeatures: [
-      'Digital repository',
-      'Manuscript submission workflow',
-      'Editorial review system',
-      'Researcher dashboards',
-      'Role-based access control',
-      'Administrative analytics'
-    ],
-    stack: ['PHP 8', 'MySQL', 'Tailwind CSS', 'JavaScript'],
-    architecture: 'Session-based publication workflow architecture using RBAC authentication and modular administrative/researcher portal separation.',
-    engineeringChallenges: [
-      'Workflow state management',
-      'Role-based authorization',
-      'Secure manuscript handling',
-      'Metadata organization'
-    ],
-    status: 'completed',
-    lastCommit: '1 month ago',
-    commitHash: 'n.8.4.1',
-    buildStatus: 'passing',
-    language: 'PHP',
-    progress: 100,
-    tags: ["fullstack", "research-system", "php", "mysql", "rbac", "publication-platform"]
-  },
+    tags: ["developer-tools", "algorithms", "monaco", "nextjs", "d3js"]
+  }
 ]
 
 export const activityLogs: ActivityLog[] = [
-  { time: '16:42', message: 'Optimized render cycles in window manager', type: 'success' },
-  { time: '15:30', message: 'Resolved z-index collision in multi-pane layouts', type: 'info' },
-  { time: '14:15', message: 'Synchronized command palette intent mapping', type: 'process' },
-  { time: 'Yesterday', message: 'Tuned spring physics for cinematic transitions', type: 'success' },
-  { time: '2 days ago', message: 'Implemented modular runtime container system', type: 'info' },
+  { time: '16:15', message: 'Pushed updates to Nimbus X', type: 'success' },
+  { time: '13:00', message: 'Improved model accuracy in NeuroScan AI', type: 'info' },
+  { time: 'Yesterday', message: 'Optimized CodeViz visualization engine', type: 'success' },
+  { time: '2 days ago', message: 'Updated StudyFlow AI planner', type: 'process' },
+  { time: '3 days ago', message: 'Deployed new version of Nimbus X', type: 'info' },
 ]
 
 export const aiSuggestions: AISuggestion[] = [
   {
     id: 's1',
-    title: 'Show systems projects',
-    description: 'Explore infrastructure and distributed systems.',
+    title: 'Explore projects',
+    description: 'Investigate AI and Full-Stack systems.',
     type: 'feature',
   },
   {
     id: 's2',
-    title: 'Explain system design',
-    description: 'Deep dive into the architecture of PRS-OS.',
-    type: 'optimize',
+    title: 'Open resume',
+    description: 'Inspect academic details and certificates.',
+    type: 'refactor',
   },
   {
     id: 's3',
-    title: 'Open resume',
-    description: 'View technical experience and contributions.',
-    type: 'refactor',
+    title: 'Open Terminal',
+    description: 'Navigate workspace via developer shell.',
+    type: 'optimize',
   },
 ]
 
 export const recentBuilds: RecentBuild[] = [
-  { id: 'b1', name: 'PRS-OS Core', duration: '11.2s', status: 'success', timestamp: '2 min ago' },
-  { id: 'b2', name: 'Window Manager', duration: '8.9s', status: 'success', timestamp: '18 min ago' },
-  { id: 'b3', name: 'Contextual AI', duration: '12.1s', status: 'success', timestamp: '42 min ago' },
+  { id: 'b1', name: 'NeuroScan Model ONNX', duration: '5.2s', status: 'success', timestamp: '2 hours ago' },
+  { id: 'b2', name: 'StudyFlow Engine', duration: '9.4s', status: 'success', timestamp: '1 day ago' },
+  { id: 'b3', name: 'CodeViz Sandbox', duration: '11.8s', status: 'success', timestamp: 'Yesterday' },
 ]
 
 export const developerStatus = {
-  name: 'Prem R.',
-  role: 'Systems Engineer',
-  focus: 'Infrastructure & Developer Experience',
+  name: 'Prem Rajesh',
+  role: 'Software Engineering Student',
+  focus: 'AI Developer • Full Stack Developer • ML Enthusiast',
   mood: 'Engineering Focus',
   branch: 'main',
 }
 
 export const engineeringFocus = [
-  { icon: 'Brain', label: 'Systems Thinking', description: 'Architecting scalable, modular software architectures.' },
-  { icon: 'Search', label: 'Semantic Indexing', description: 'Context-aware retrieval and intelligent discovery.' },
-  { icon: 'Layout', label: 'UI Orchestration', description: 'Managing complex application states and layouts.' },
-  { icon: 'Zap', label: 'Developer Tooling', description: 'Building high-fidelity tools for improved workflows.' },
+  { icon: 'Brain', label: 'Artificial Intelligence', description: 'Training transfer-learning models and optimizing inference.' },
+  { icon: 'Layout', label: 'Full Stack Development', description: 'Building responsive, reactive client-server architectures.' },
+  { icon: 'Zap', label: 'Developer Tooling', description: 'Creating interactive visual sandboxes for complex systems.' },
+  { icon: 'Search', label: 'Problem Solving', description: 'Applying algorithmic analysis to deliver optimized tools.' },
 ]

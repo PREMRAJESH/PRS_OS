@@ -185,17 +185,11 @@ export function TerminalWindow() {
       case 'about':
         out([
           '',
-          '  ╭───────────────────────────────────────╮',
-          '  │          Full-Stack Developer          │',
-          '  │     AI/ML Engineer & Cloud Architect   │',
-          '  ╰───────────────────────────────────────╯',
+          '  Prem Rajesh is a Software Engineering student passionate about',
+          '  Artificial Intelligence, Machine Learning, and Full Stack Development.',
           '',
-          '  Passionate about building intelligent',
-          '  systems that solve real-world problems.',
-          '',
-          '  → 5+ years of experience',
-          '  → 50+ projects delivered',
-          '  → 10+ technologies mastered',
+          '  He enjoys building practical software solutions, experimenting with',
+          '  new technologies, and creating products that solve real-world problems.',
           '',
         ])
         return
@@ -205,9 +199,10 @@ export function TerminalWindow() {
         openWindow('projects')
         out([
           '',
-          '  ◆ PRS-OS Portfolio ─── Next.js · TypeScript · Zustand',
-          '  ◆ NimbusX Chat ─────── React · Firebase · WebRTC',
-          '  ◆ TimeForge Planner ── Next.js · Supabase · OpenAI',
+          '  ◆ NeuroScan AI ─────── Python · Flask · ONNX Runtime',
+          '  ◆ StudyFlow ────────── Next.js · Supabase · Gemini AI',
+          '  ◆ Nimbus X ─────────── React · Firebase · WebRTC',
+          '  ◆ CodeViz ──────────── Next.js · Monaco · D3.js',
           '',
           '  Opening project explorer...',
           '',
@@ -219,15 +214,14 @@ export function TerminalWindow() {
         openWindow('skills')
          out([
            '',
-           '  Installed System Modules',
-           '  ────────────────────────',
+           '  Technical Skills Matrix',
+           '  ─────────────────────────────────────',
            '',
-           '  [FRONTEND]  React · Next.js · TypeScript · Tailwind · Framer Motion',
-           '  [BACKEND]   Node.js · Express · Firebase · Supabase · Flask',
-           '  [AI/ML]     TensorFlow · PyTorch · OpenAI APIs · CNNs · RAG Systems',
-           '  [DATABASE]  PostgreSQL · MongoDB · Firebase Firestore · MySQL',
-           '  [TOOLS]     Git · GitHub · VS Code · Vercel · Linux',
-           '  [DESIGN]    Figma · Motion Design · UI Systems · UX Architecture',
+           '  [PROGRAMMING]  Python · Java · C++ · JavaScript',
+           '  [FRONTEND]     React · Next.js · Tailwind CSS',
+           '  [BACKEND]      Node.js · FastAPI · Firebase',
+           '  [AI / ML]      TensorFlow · PyTorch · Gemini API',
+           '  [DEV TOOLS]    Git · GitHub · Docker · Vercel',
            '',
          ])
         return
@@ -238,6 +232,55 @@ export function TerminalWindow() {
         out(['', '  Opening resume viewer...', ''])
         return
 
+      /* ── education ── */
+      case 'education':
+        openWindow('education')
+        out([
+          '',
+          '  Government Engineering College, Dahod',
+          '  Bachelor of Engineering (2024 - 2027)',
+          '',
+          '  Government Polytechnic, Dahod',
+          '  Diploma in Computer Software Engineering (2021 - 2024) [CPI: 8.33]',
+          '',
+          '  Opening Education screen...',
+          '',
+        ])
+        return
+
+      /* ── experience ── */
+      case 'experience':
+        openWindow('experience')
+        out([
+          '',
+          '  BrainyBeam Technologies Pvt. Ltd.',
+          '  Web Development Intern (September 2022)',
+          '',
+          '  Opening Experience screen...',
+          '',
+        ])
+        return
+
+      /* ── certifications ── */
+      case 'certifications':
+        openWindow('certifications')
+        out([
+          '',
+          '  1. Diploma Completion Certificate',
+          '  2. BrainyBeam Web Development Internship Certificate',
+          '  3. Additional online credentials (Web, AI, ML, Cloud)',
+          '',
+          '  Opening Certifications screen...',
+          '',
+        ])
+        return
+
+      /* ── github ── */
+      case 'github':
+        openWindow('github')
+        out(['', '  Opening GitHub Workspace profile dashboard...', ''])
+        return
+
       /* ── contact ── */
       case 'contact':
         out([
@@ -245,9 +288,10 @@ export function TerminalWindow() {
           '  Contact Information',
           '  ───────────────────',
           '',
-          '  Email     developer@prs.dev',
-          '  GitHub    github.com/prem',
-          '  LinkedIn  linkedin.com/in/prem',
+          '  Email     sargarapremrajesh@gmail.com',
+          '  GitHub    github.com/PREMRAJESH',
+          '  LinkedIn  linkedin.com/in/gecdhd-comp-prem-sargara',
+          '  LeetCode  leetcode.com/u/Sargara_Prem',
           '',
         ])
         return

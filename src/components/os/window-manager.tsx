@@ -13,6 +13,10 @@ import { GithubWorkspace } from '../github/github-workspace'
 import { AIAssistantWindow } from '../ai/ai-assistant-window'
 import { AboutWindow } from '../windows/about-window'
 import { RuntimeBrowser } from '../runtime/runtime-browser'
+import { QuickLinksWindow } from '../windows/quick-links-window'
+import { EducationWindow } from '../windows/education-window'
+import { ExperienceWindow } from '../windows/experience-window'
+import { CertificationsWindow } from '../windows/certifications-window'
 
 export function WindowManager() {
   const { windows } = useOSStore()
@@ -50,6 +54,14 @@ function WindowContent({ type }: { type: string }) {
       return <AboutWindow />
     case 'runtime':
       return <RuntimeBrowser />
+    case 'quick-links':
+      return <QuickLinksWindow />
+    case 'education':
+      return <EducationWindow />
+    case 'experience':
+      return <ExperienceWindow />
+    case 'certifications':
+      return <CertificationsWindow />
     default:
       return (
         <div className="flex items-center justify-center h-full text-muted-foreground">

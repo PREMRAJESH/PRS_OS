@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { 
   Github, 
   Linkedin, 
-  Twitter, 
   Mail, 
   MapPin,
   Calendar,
@@ -17,8 +16,8 @@ import {
 
 export function AboutWindow() {
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] overflow-y-auto custom-scrollbar selection:bg-primary/30">
-      <div className="p-8 max-w-3xl mx-auto w-full space-y-12 pb-20">
+    <div className="h-full flex flex-col bg-[#0a0a0b] overflow-y-auto custom-scrollbar selection:bg-primary/30 font-sans">
+      <div className="p-8 max-w-3xl mx-auto w-full space-y-12 pb-20 select-none">
         
         {/* Profile header */}
         <motion.div
@@ -28,8 +27,8 @@ export function AboutWindow() {
         >
           {/* Avatar */}
           <div className="relative shrink-0">
-            <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-4xl font-bold text-background shadow-2xl shadow-primary/20">
-              PR
+            <div className="w-32 h-32 rounded-3xl overflow-hidden border-4 border-[#0a0a0b] shadow-2xl bg-[#0c0d12]">
+              <img src="/avatar.png" alt="Prem Rajesh" className="w-full h-full object-cover" />
             </div>
             <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-emerald-500 border-4 border-[#0a0a0b] flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -37,130 +36,84 @@ export function AboutWindow() {
           </div>
 
           <div className="flex-1 text-center md:text-left space-y-3">
-            <h1 className="text-3xl font-black tracking-tight text-white">Prem Ranjan</h1>
-            <p className="text-lg text-primary font-medium">Software Systems Engineer</p>
+            <h1 className="text-3xl font-black tracking-tight text-white">Prem Rajesh</h1>
+            <p className="text-lg text-primary font-medium">Software Engineering Student</p>
             
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground/60 font-mono">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-muted-foreground/60 font-mono">
               <span className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                Bengaluru, India
+                <MapPin className="w-4 h-4 text-primary/70" />
+                Gujarat, India
               </span>
               <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                Engineering Undergrad
+                <Calendar className="w-4 h-4 text-primary/70" />
+                Government Engineering College, Dahod
               </span>
             </div>
           </div>
         </motion.div>
 
-        {/* Bio & Philosophy */}
+        {/* Bio & Intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="space-y-4"
         >
-          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Engineering Philosophy</h2>
-          <p className="text-base leading-relaxed text-muted-foreground/80 font-medium">
-            I specialize in architecting high-fidelity web systems and cloud-native applications. My approach favors 
-            <span className="text-white"> technical precision and system-level thinking</span> over decorative abstractions. I build tools that 
-            prioritize developer experience, keyboard accessibility, and performance.
+          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">About Me</h2>
+          <p className="text-base leading-relaxed text-muted-foreground/80 font-medium app-body-text">
+            Software Engineering student currently pursuing a Bachelor's degree at Government Engineering College, Dahod. Interested in Artificial Intelligence, Machine Learning, Cloud Computing, and Full Stack Development. I enjoy building practical software solutions that combine engineering principles with real-world problem solving.
           </p>
         </motion.div>
 
-        {/* Engineering Challenges (The Realism Part) */}
+        {/* Current Interests */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="space-y-6"
         >
-          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Engineering Challenges</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ChallengeCard 
-              title="State Orchestration"
-              description="Managing multi-window lifecycle and z-index depth without causing unnecessary re-renders in the main layout."
-              icon={Layers}
-            />
-            <ChallengeCard 
-              title="60FPS Motion Performance"
-              description="Optimizing GPU-accelerated transitions and mouse-reactive lighting to maintain high frame rates on low-end hardware."
-              icon={Activity}
-            />
-            <ChallengeCard 
-              title="Command Parsing"
-              description="Building a scalable natural language intent system that maps user queries to system-level workspace actions."
-              icon={Code2}
-            />
-            <ChallengeCard 
-              title="Context Preservation"
-              description="Ensuring workspace continuity and contextual handoffs between the Command Hub and individual app modules."
-              icon={Cpu}
-            />
+          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Current Technical Interests</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <InterestCard title="AI Agents" desc="Developing autonomous reasoning workflows and integration pipelines." icon={Cpu} />
+            <InterestCard title="Machine Learning" desc="Training classifier networks and optimizing inference operations." icon={Activity} />
+            <InterestCard title="Developer Experience" desc="Building high-fidelity Sandboxes and code visualizing tools." icon={Code2} />
+            <InterestCard title="Cloud Computing" desc="Orchestrating serverless runtimes and real-time database synchronizations." icon={Layers} />
+          </div>
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-muted-foreground leading-relaxed flex items-center gap-3">
+            <div className="w-2.5 h-2.5 rounded-full bg-primary shrink-0 animate-pulse" />
+            <span>Currently exploring <strong>Modern Web Applications</strong> built with React 19, Next.js 16, and Tailwind CSS 4.</span>
           </div>
         </motion.div>
 
-        {/* System Design Decisions */}
+        {/* Social connections */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="space-y-6"
         >
-          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">System Design Decisions</h2>
-          <div className="space-y-4">
-            <DecisionItem 
-              label="Why Zustand?"
-              value="Chosen for lightweight global orchestration. It provides low-overhead reactive state management for the OS 'kernel' without the boilerplate of Redux."
-            />
-            <DecisionItem 
-              label="Why Command-Driven UX?"
-              value="Reduces navigation cognitive load while increasing immersion. It prioritizes keyboard accessibility and mirrors professional developer tooling."
-            />
-            <DecisionItem 
-              label="Why Floating Windows?"
-              value="Enables contextual multitasking. Unlike static tabs, it allows the user to preserve workspace continuity across complex technical workflows."
-            />
-          </div>
-        </motion.div>
-
-        {/* Social links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="space-y-6"
-        >
           <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Connect</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <SocialLink icon={Github} label="GitHub" href="https://github.com/premranjan" username="@premranjan" />
-            <SocialLink icon={Linkedin} label="LinkedIn" href="https://linkedin.com/in/premranjan" username="in/premranjan" />
-            <SocialLink icon={Twitter} label="Twitter" href="https://twitter.com/premranjan" username="@premranjan" />
-            <SocialLink icon={Mail} label="Email" href="mailto:prem@example.com" username="prem@example.com" />
+            <SocialLink icon={Github} label="GitHub" href="https://github.com/PREMRAJESH" username="@PREMRAJESH" />
+            <SocialLink icon={Linkedin} label="LinkedIn" href="https://www.linkedin.com/in/gecdhd-comp-prem-sargara/" username="in/gecdhd-comp-prem-sargara" />
+            <SocialLink icon={Mail} label="Email" href="mailto:sargarapremrajesh@gmail.com" username="sargarapremrajesh@gmail.com" />
+            <SocialLink icon={Code2} label="LeetCode" href="https://leetcode.com/u/Sargara_Prem/" username="u/Sargara_Prem" />
           </div>
         </motion.div>
+
       </div>
     </div>
   )
 }
 
-function ChallengeCard({ title, description, icon: Icon }: { title: string, description: string, icon: any }) {
+function InterestCard({ title, desc, icon: Icon }: { title: string, desc: string, icon: any }) {
   return (
     <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all group">
-      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-        <Icon className="w-5 h-5 text-primary" />
+      <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform text-primary">
+        <Icon className="w-4.5 h-4.5" />
       </div>
-      <h3 className="text-sm font-bold text-white mb-2">{title}</h3>
-      <p className="text-xs text-muted-foreground/80 leading-relaxed font-medium">{description}</p>
-    </div>
-  )
-}
-
-function DecisionItem({ label, value }: { label: string, value: string }) {
-  return (
-    <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-      <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">{label}</div>
-      <div className="text-sm text-muted-foreground font-medium leading-relaxed">{value}</div>
+      <h3 className="text-sm font-bold text-white mb-1">{title}</h3>
+      <p className="text-xs text-muted-foreground/80 leading-relaxed font-medium">{desc}</p>
     </div>
   )
 }
@@ -181,7 +134,7 @@ function SocialLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/30 hover:bg-white/[0.05] transition-all group"
+      className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/30 hover:bg-white/[0.05] transition-all group"
     >
       <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
         <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />

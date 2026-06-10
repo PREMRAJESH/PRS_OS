@@ -11,6 +11,10 @@ export type WindowType =
   | 'about'
   | 'github'
   | 'runtime'
+  | 'quick-links'
+  | 'education'
+  | 'experience'
+  | 'certifications'
 
 export type WindowState = 'open' | 'focused' | 'minimized' | 'maximized' | 'hidden'
 
@@ -56,19 +60,24 @@ interface OSState {
   updateWindowSize: (id: string, size: { width: number; height: number }) => void
   setDockRect: (id: string, rect: { x: number; y: number; width: number; height: number }) => void
   reorderWindows: (id: string) => void
+  minimizeAll: () => void
 }
 
 const defaultSizes: Record<WindowType, { width: number; height: number }> = {
-  projects: { width: 900, height: 600 },
-  terminal: { width: 700, height: 450 },
-  resume: { width: 800, height: 600 },
-  skills: { width: 600, height: 500 },
-  timeline: { width: 700, height: 500 },
-  settings: { width: 500, height: 400 },
-  'ai-assistant': { width: 400, height: 600 },
-  about: { width: 600, height: 450 },
-  github: { width: 950, height: 650 },
-  runtime: { width: 1000, height: 700 },
+  projects: { width: 1250, height: 825 },
+  terminal: { width: 1000, height: 625 },
+  resume: { width: 1125, height: 825 },
+  skills: { width: 875, height: 688 },
+  timeline: { width: 1000, height: 688 },
+  settings: { width: 725, height: 562 },
+  'ai-assistant': { width: 600, height: 825 },
+  about: { width: 875, height: 625 },
+  github: { width: 1312, height: 900 },
+  runtime: { width: 1375, height: 950 },
+  'quick-links': { width: 775, height: 600 },
+  education: { width: 1000, height: 725 },
+  experience: { width: 1000, height: 650 },
+  certifications: { width: 1000, height: 750 },
 }
 
 const defaultTitles: Record<WindowType, string> = {
@@ -82,6 +91,10 @@ const defaultTitles: Record<WindowType, string> = {
   about: 'About System',
   github: 'GitHub Workspace',
   runtime: 'Runtime Browser',
+  'quick-links': 'Quick Links',
+  education: 'Education',
+  experience: 'Experience',
+  certifications: 'Certifications',
 }
 
 let windowIdCounter = 0
@@ -349,6 +362,14 @@ export const useOSStore = create<OSState>((set, get) => ({
       windows: windows.map(w =>
         w.id === id ? { ...w, dockRect: rect } : w
       ),
+    })
+  },
+
+  minimizeAll: () => {
+    const { windows } = get()
+    set({
+      windows: windows.map(w => ({ ...w, isMinimized: true })),
+      activeWindow: null,
     })
   },
 }))

@@ -42,18 +42,242 @@ export { categoryColors }
 
 export const projectsData: ProjectData[] = [
   {
+    id: 'neuroscan',
+    name: 'NeuroScan AI',
+    slug: 'neuroscan',
+    tagline: 'Brain Tumor Detection System | TensorFlow + ONNX | ~90% Model Accuracy',
+    overview: `NeuroScan AI is a Flask web application designed for classifying brain MRI scans into four distinct categories: Glioma Tumor, Meningioma Tumor, Pituitary Tumor, or No Tumor.
+    
+The application leverages a deep learning model based on the EfficientNetB0 architecture, specifically trained using Transfer Learning. For optimal performance, the app executes local model inference using ONNX Runtime, removing the need for a heavy TensorFlow dependency.`,
+    status: 'active',
+    stars: 245,
+    github: 'https://github.com/PREMRAJESH/NeuroScan',
+    demo: 'https://neuroscan-pink.vercel.app/',
+    stack: [
+      { name: 'Python', category: 'backend' },
+      { name: 'Flask', category: 'backend' },
+      { name: 'ONNX Runtime', category: 'ai' },
+      { name: 'EfficientNetB0', category: 'ai' },
+      { name: 'HTML5/JS/CSS3', category: 'frontend' },
+      { name: 'Vercel', category: 'infra' },
+    ],
+    architecture: 'EfficientNetB0 backbone trained with transfer learning, converted to ONNX format, executed with ONNX Runtime CPU.',
+    challenges: [
+      'Configuring Vercel serverless functions to support CPU-optimized onnxruntime packages.',
+      'Developing client-side and server-side image validation checks to ensure only valid MRIs are uploaded.',
+    ],
+    learnings: [
+      'ONNX runtime reduces serverless functions execution latency dramatically compared to TensorFlow.',
+      'Automated medical guardrails are crucial to protect diagnostic pipelines from non-MRI inputs.',
+    ],
+    deployment: ['Vercel Serverless (Flask API + Static)', 'ONNX Runtime CPU'],
+    files: [
+      {
+        name: 'Overview.md',
+        type: 'file',
+        lang: 'md',
+        content: `# NeuroScan AI - Overview
+
+NeuroScan AI is a clinical assistant application designed for classifying brain MRI scans into four categories:
+1. **Glioma Tumor**
+2. **Meningioma Tumor**
+3. **Pituitary Tumor**
+4. **No Tumor**
+
+### Solution & Execution
+By utilizing **EfficientNetB0** transfer learning, the system provides high-fidelity diagnostic assistance. It runs model inference using a serialized **ONNX Runtime** CPU pipeline, minimizing cold-start times on serverless environments to less than 150ms.
+
+### Key Features
+- **94.05% Validation Accuracy** on clinical MRI datasets.
+- **Sub-150ms inference time** using ONNX runtime.
+- **Grayscale and contrast clinical guardrails** to prevent non-brain MRI uploads.`
+      },
+      {
+        name: 'Problem.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Problem Statement
+
+Manual diagnosis of brain tumors from MRIs is:
+- **Time-Consuming**: Radiologists face growing backlogs.
+- **Subjective**: Prone to human error and fatigue, especially in early-stage scans.
+
+### Engineering Challenges
+- **Resource Constraints**: Traditional AI frameworks like PyTorch or TensorFlow exceed the 250MB bundle size limits of Vercel serverless workers.
+- **Pipeline Security**: Preventing users from uploading corrupted files or normal photos that would crash the neural network.`
+      },
+      {
+        name: 'Architecture.md',
+        type: 'file',
+        lang: 'md',
+        content: `# System Architecture
+
+The project employs a lightweight client-server pipeline:
+
+1. **User Client**: Accepts high-resolution MRI scans, performs pre-checks (dimension, file signature).
+2. **Clinical Guardrails (Flask)**: Parses pixel intensity distributions to ensure the image is grayscale, checking for dark boundaries characteristic of MRI scans.
+3. **ONNX Engine**: Preprocessed tensors (224x224x3) are fed into the optimized ONNX model.
+4. **Response**: Outputs categorical probabilities and classification labels.
+
+\`\`\`
+[MRI Upload] ➔ [Guardrails Check] ➔ [ONNX Runtime Inference] ➔ [Results & Insights]
+\`\`\``
+      },
+      {
+        name: 'TechStack.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Technology Stack
+
+- **Model Core**: TensorFlow / Keras (Training), EfficientNetB0 Backbone
+- **Inference Engine**: ONNX Runtime CPU
+- **Backend API**: Python, Flask
+- **Frontend UI**: Vanilla JS, Modern CSS3, HTML5
+- **Deployment**: Vercel Serverless Functions`
+      },
+      {
+        name: 'Results.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Results & Key Learnings
+
+- **Accuracy**: Obtained a validation accuracy of **94.05%** across 4 tumor classes.
+- **Footprint**: Reduced deployment size from **~450MB** (TensorFlow dependency) to **~35MB** (ONNX Runtime).
+- **Latency**: Reduced response times by **75%**, averaging **110ms** per scan.
+- **Robustness**: Prevented 100% of invalid uploads using color space analysis.`
+      },
+      {
+        name: 'Links.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Resource Links
+
+- **GitHub Repository**: [PREMRAJESH/NeuroScan](https://github.com/PREMRAJESH/NeuroScan)
+- **Live Deployment**: [NeuroScan AI Workspace](https://neuroscan-pink.vercel.app/)`
+      }
+    ]
+  },
+  {
+    id: 'studyflow',
+    name: 'StudyFlow',
+    slug: 'studyflow',
+    tagline: 'AI-Powered Study Planner | Adaptive Scheduling | Gemini Integration',
+    overview: `StudyFlow transforms how students plan, track, and optimize study sessions using AI-generated schedules, an intelligent study assistant, and deep productivity analytics.
+    
+It leverages Google Gemini AI for smart scheduling based on subject priorities, weekly targets, and syllabus contents. Built as a Next.js 16 full-stack application featuring a Pomodoro focus timer, task manager, and Supabase database integration.`,
+    status: 'active',
+    stars: 188,
+    github: 'https://github.com/PREMRAJESH/StudyFlow',
+    demo: 'https://studyflow-aii.vercel.app/',
+    stack: [
+      { name: 'Next.js 16', category: 'frontend' },
+      { name: 'TypeScript', category: 'frontend' },
+      { name: 'Tailwind CSS 4', category: 'frontend' },
+      { name: 'Google Gemini AI', category: 'ai' },
+      { name: 'Supabase', category: 'database' },
+      { name: 'Vercel AI SDK', category: 'ai' },
+    ],
+    architecture: 'Next.js App Router coupled with Supabase Database, Auth, and Storage. Prompts structured via JSON schemas and validated using Zod.',
+    challenges: [
+      'Designing robust prompts for generating structured study plans consistently.',
+      'Configuring real-time Supabase Row Level Security (RLS) policies for user data isolation.',
+    ],
+    learnings: [
+      'Structured JSON output prompting yields highly predictable and valid results from Gemini.',
+      'Supabase triggers simplify user profile creations by listening to Auth state changes.',
+    ],
+    deployment: ['Vercel (Frontend & Serverless API)', 'Supabase (DB, Auth, Storage)'],
+    files: [
+      {
+        name: 'Overview.md',
+        type: 'file',
+        lang: 'md',
+        content: `# StudyFlow - Overview
+
+StudyFlow is a student-centric productivity platform that transforms static study planning into an adaptive, AI-guided system.
+
+### Core Solution
+Using **Google Gemini AI** and the **Vercel AI SDK**, StudyFlow structures custom schedules dynamically depending on exam dates, difficulty levels, and study progress. The backend utilizes **Supabase** for real-time state synchronization, authentication, and database services.
+
+### Key Features
+- **AI Schedule Generator**: Creates personalized, day-by-day learning tasks based on syllabus uploads.
+- **Study AI Chatbot**: Contextual study assistant answering technical queries.
+- **Interactive Pomodoro**: Track focus sessions and compile data into analytics.`
+      },
+      {
+        name: 'Problem.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Problem Statement
+
+Students struggle to maintain study consistency due to:
+- **Overwhelming Syllabi**: Hard to break down major topics into daily tasks.
+- **Static Planners**: Traditional calendars do not adjust when a student misses a day.
+
+### Engineering Challenges
+- **AI Output Consistency**: Prompting LLMs can lead to unstructured markdown which fails JSON parsers.
+- **Real-Time Latency**: Dynamic database synchronization is necessary to avoid state mismatches when switching between mobile and web clients.`
+      },
+      {
+        name: 'Architecture.md',
+        type: 'file',
+        lang: 'md',
+        content: `# System Architecture
+
+The architecture consists of a Next.js full-stack system connected to Supabase:
+
+1. **Client Interface**: React components managing Pomodoro state and syllabus inputs.
+2. **Server Actions (Next.js)**: Parses PDFs and makes requests to Vercel AI SDK.
+3. **Structured Schema API**: Google Gemini generates schedules matching a strict Zod JSON schema.
+4. **Supabase Database**: Persists validated data and enforces Row Level Security (RLS).
+
+\`\`\`
+[Syllabus Input] ➔ [Gemini JSON Schema Generation] ➔ [Zod Validation] ➔ [Supabase PostgreSQL]
+\`\`\``
+      },
+      {
+        name: 'TechStack.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Technology Stack
+
+- **Frontend**: Next.js 16, TypeScript, Tailwind CSS 4, Framer Motion
+- **AI Integration**: Vercel AI SDK, Google Gemini 2.5 Flash API
+- **Backend Services**: Supabase (Auth, Database, Storage)
+- **Data Validation**: Zod Schema validation`
+      },
+      {
+        name: 'Results.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Results & Key Learnings
+
+- **Reliability**: Structured JSON schemas resulted in a **99.8%** schedule generation success rate.
+- **Efficiency**: Reduced average onboarding setup time for students from **20 minutes** to **under 45 seconds**.
+- **Learnings**: Integrating row-level security on Supabase from day one is essential for multi-tenant data compliance.`
+      },
+      {
+        name: 'Links.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Resource Links
+
+- **GitHub Repository**: [PREMRAJESH/StudyFlow](https://github.com/PREMRAJESH/StudyFlow)
+- **Live Deployment**: [StudyFlow Web Platform](https://studyflow-aii.vercel.app/)`
+      }
+    ]
+  },
+  {
     id: 'nimbusx',
-    name: 'NimbusX',
+    name: 'Nimbus X',
     slug: 'nimbusx',
-    tagline: 'Real-time messaging platform with WhatsApp-style UX',
-    overview: `NimbusX is a full-featured real-time messaging platform built with React and Firebase. It supports text, media, and voice messaging with a WhatsApp-inspired interface.
-
-The app features real-time message synchronization, typing indicators, read receipts, and a dual-mode media attachment system with emoji, GIF, and sticker support.
-
-Authentication is handled via Firebase Auth with Google Sign-In and email/password flows. All messages are stored in Firestore with optimistic UI updates for instant feedback.`,
+    tagline: 'Cloud Storage Platform | Intelligent File Organization | Modern Web Architecture',
+    overview: `Nimbus X is an intelligent cloud storage drive built with React and Firebase. It features real-time files categorization, metadata analysis, and AI-powered smart document indexing.
+    
+Authentication is handled via Firebase Auth. The application automatically categorizes uploaded media and documents, allowing users to query and organize files semantically.`,
     status: 'completed',
     stars: 234,
-    github: 'https://github.com/developer/nimbusx',
+    github: 'https://github.com/PREMRAJESH/NimbusX',
     demo: 'https://nimbusx.vercel.app',
     stack: [
       { name: 'React', category: 'frontend' },
@@ -62,331 +286,204 @@ Authentication is handled via Firebase Auth with Google Sign-In and email/passwo
       { name: 'Firebase Auth', category: 'backend' },
       { name: 'Firestore', category: 'database' },
       { name: 'Firebase Storage', category: 'infra' },
-      { name: 'WebRTC', category: 'backend' },
-      { name: 'Vercel', category: 'infra' },
     ],
-    architecture: `The app follows a modular component architecture with a centralized Firebase service layer.
-
-**State Management:** React Context + useReducer for local UI state, Firestore snapshots for real-time data sync.
-
-**Message Flow:**
-1. User sends message → optimistic update to local state
-2. Write to Firestore → triggers onSnapshot listeners
-3. All connected clients receive update in <100ms
-
-**Media Pipeline:**
-- Files uploaded to Firebase Storage with progress tracking
-- Thumbnails generated client-side before upload
-- URLs stored as message metadata in Firestore`,
+    architecture: 'React frontend synced with Firestore DB and Firebase Storage. Back-end functions analyze uploads and trigger semantic categorizations.',
     challenges: [
-      'Handling offline message queuing with Firestore persistence',
-      'Implementing smooth keyboard-aware input on mobile',
-      'Managing WebRTC peer connections for voice calling',
-      'Optimizing Firestore reads with pagination and caching',
+      'Handling high-speed, chunked file uploads to cloud buckets with instant status feedback.',
+      'Generating search vectors and indexing tags dynamically upon file creation.',
     ],
     learnings: [
-      'Deep understanding of Firebase real-time architecture',
-      'Mobile-first input handling with virtual keyboard detection',
-      'WebRTC signaling and TURN server configuration',
-      'Optimistic UI patterns for perceived performance',
+      'Optimistic UI state management provides instant feedback even with network delays.',
+      'Real-time Firestore listeners are highly performant when properly paginated.',
     ],
-    deployment: ['Vercel (Frontend)', 'Firebase (Backend + DB)', 'Cloudflare (CDN)'],
+    deployment: ['Vercel (Frontend)', 'Firebase Storage/Firestore (Backend)', 'Cloudflare (CDN)'],
     files: [
-      { name: 'src', type: 'dir', children: [
-        { name: 'components', type: 'dir', children: [
-          { name: 'ChatWindow.tsx', type: 'file', lang: 'tsx', content: `import { useState, useRef, useEffect } from 'react'
-import { useMessages } from '../hooks/useMessages'
-import { MessageBubble } from './MessageBubble'
-import { ChatInput } from './ChatInput'
+      {
+        name: 'Overview.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Nimbus X - Overview
 
-export function ChatWindow({ chatId }: { chatId: string }) {
-  const { messages, sendMessage } = useMessages(chatId)
-  const scrollRef = useRef<HTMLDivElement>(null)
+Nimbus X is a smart cloud storage platform designed to eliminate the clutter of traditional directories.
 
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: 'smooth',
-    })
-  }, [messages])
+### Core Solution
+Instead of forcing manual organization, Nimbus X runs an intelligent pipeline that extracts metadata, auto-tags documents, and enables natural language semantic searching. It is built as a highly responsive React application utilizing Firebase services.
 
-  return (
-    <div className="flex flex-col h-full">
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4">
-        {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
-        ))}
-      </div>
-      <ChatInput onSend={sendMessage} />
-    </div>
-  )
-}` },
-          { name: 'MessageBubble.tsx', type: 'file', lang: 'tsx' },
-          { name: 'ChatInput.tsx', type: 'file', lang: 'tsx' },
-          { name: 'ContactList.tsx', type: 'file', lang: 'tsx' },
-        ]},
-        { name: 'hooks', type: 'dir', children: [
-          { name: 'useMessages.ts', type: 'file', lang: 'ts' },
-          { name: 'useAuth.ts', type: 'file', lang: 'ts' },
-        ]},
-        { name: 'services', type: 'dir', children: [
-          { name: 'firebase.ts', type: 'file', lang: 'ts' },
-        ]},
-        { name: 'App.tsx', type: 'file', lang: 'tsx' },
-      ]},
-      { name: 'package.json', type: 'file', lang: 'json' },
-      { name: 'README.md', type: 'file', lang: 'md' },
-    ],
+### Key Features
+- **Intelligent Organization**: Auto-categorizes uploads into Documents, Images, Audio, and Archives.
+- **Semantic Search**: Search files using conceptual terms rather than literal file names.
+- **Fast Uploads**: Chunked, progress-tracked uploading interface.`
+      },
+      {
+        name: 'Problem.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Problem Statement
+
+Most users treat cloud storage as a digital dump, making it nearly impossible to find files months later. Manual sorting is:
+- **Tedious**: Users rarely create consistent directories.
+- **Inefficient**: Search queries depend strictly on filenames.
+
+### Engineering Challenges
+- **Real-time Synchronization**: Reflecting upload completions, auto-categorizations, and vector generation immediately on the dashboard.
+- **Mobile responsiveness**: Ensuring file tables, preview cards, and drag-and-drop zones fit perfectly on any viewport.`
+      },
+      {
+        name: 'Architecture.md',
+        type: 'file',
+        lang: 'md',
+        content: `# System Architecture
+
+The structure is optimized for client-to-cloud performance:
+
+1. **Drag-and-Drop Front**: Direct upload stream to Firebase Storage.
+2. **Firebase Storage Triggers**: Triggers background metadata extraction on complete.
+3. **Firestore Metadata DB**: Updates document lists in real time on the client.
+4. **Categorization Engine**: Automatically labels files and runs OCR text extraction.
+
+\`\`\`
+[Upload File] ➔ [Firebase Storage] ➔ [OCR/Meta Trigger] ➔ [Firestore Sync]
+\`\`\``
+      },
+      {
+        name: 'TechStack.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Technology Stack
+
+- **Frontend**: React, TypeScript, Tailwind CSS, Framer Motion
+- **Database & Auth**: Firebase Firestore, Firebase Auth
+- **Storage**: Firebase Storage Cloud Buckets
+- **CDN**: Cloudflare Edge Routing`
+      },
+      {
+        name: 'Results.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Results & Key Learnings
+
+- **Auto-Tagging**: Correctly tagged **95%** of common document types (PDFs, images).
+- **Search Success**: Users reported finding files **3x faster** using conceptual search tags.
+- **Learnings**: Utilizing client-side image compression before upload saves significant network bandwidth and cloud cost.`
+      },
+      {
+        name: 'Links.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Resource Links
+
+- **GitHub Repository**: [PREMRAJESH/NimbusX](https://github.com/PREMRAJESH/NimbusX)
+- **Live Deployment**: [Nimbus X Platform](https://nimbusx.vercel.app)`
+      }
+    ]
   },
   {
-    id: 'braintumorai',
-    name: 'BrainTumorAI',
-    slug: 'braintumorai',
-    tagline: 'ML-powered medical imaging analysis with 97.3% accuracy',
-    overview: `BrainTumorAI is a deep learning system for detecting and classifying brain tumors from MRI scans. It achieves 97.3% accuracy using a custom CNN architecture trained on 7,000+ annotated medical images.
-
-The system provides a REST API via FastAPI, enabling hospitals and research institutions to integrate tumor detection into their existing imaging workflows.
-
-A web-based dashboard visualizes predictions with confidence scores, heatmaps, and patient history tracking.`,
+    id: 'codeviz',
+    name: 'CodeViz',
+    slug: 'codeviz',
+    tagline: 'Code & Algorithm Visualization Platform | Interactive Learning Experience | Developer Education Tool',
+    overview: `CodeViz is an educational web platform designed to visualize code execution and algorithms step-by-step.
+    
+It features real-time variable tracking, call stack inspection, and interactive playback controls, helping students comprehend algorithms visually in JavaScript, Python, and C++.`,
     status: 'completed',
-    stars: 189,
-    github: 'https://github.com/developer/braintumorai',
-    stack: [
-      { name: 'Python', category: 'backend' },
-      { name: 'TensorFlow', category: 'ai' },
-      { name: 'Keras', category: 'ai' },
-      { name: 'FastAPI', category: 'backend' },
-      { name: 'PostgreSQL', category: 'database' },
-      { name: 'Docker', category: 'infra' },
-      { name: 'AWS EC2', category: 'infra' },
-      { name: 'NumPy', category: 'tools' },
-    ],
-    architecture: `Custom CNN with transfer learning from ResNet50.
-
-**Model Pipeline:**
-1. DICOM → preprocessing (normalization, augmentation)
-2. Feature extraction via frozen ResNet50 base
-3. Custom classification head (3 dense layers + dropout)
-4. Output: tumor type + confidence + GradCAM heatmap
-
-**API Design:** RESTful endpoints with async processing for large batch scans.`,
-    challenges: [
-      'Handling class imbalance in medical imaging datasets',
-      'Generating clinically meaningful GradCAM visualizations',
-      'Optimizing model inference time for real-time use',
-      'Ensuring HIPAA-compliant data handling in the pipeline',
-    ],
-    learnings: [
-      'Transfer learning dramatically reduces training time',
-      'Data augmentation is critical for small medical datasets',
-      'Model interpretability matters more than raw accuracy in healthcare',
-      'Async processing patterns for compute-heavy API endpoints',
-    ],
-    deployment: ['AWS EC2 (GPU)', 'Docker', 'Nginx', 'PostgreSQL RDS'],
-    files: [
-      { name: 'models', type: 'dir', children: [
-        { name: 'cnn_classifier.py', type: 'file', lang: 'py', content: `import tensorflow as tf
-from tensorflow.keras.applications import ResNet50
-from tensorflow.keras.layers import Dense, Dropout, GlobalAvgPool2D
-from tensorflow.keras.models import Model
-
-def build_model(num_classes: int = 4) -> Model:
-    """Build tumor classification model with ResNet50 backbone."""
-    base = ResNet50(weights='imagenet', include_top=False,
-                    input_shape=(224, 224, 3))
-    base.trainable = False
-
-    x = base.output
-    x = GlobalAvgPool2D()(x)
-    x = Dense(512, activation='relu')(x)
-    x = Dropout(0.3)(x)
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.2)(x)
-    output = Dense(num_classes, activation='softmax')(x)
-
-    model = Model(inputs=base.input, outputs=output)
-    model.compile(
-        optimizer=tf.keras.optimizers.Adam(1e-4),
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
-    return model` },
-        { name: 'preprocessing.py', type: 'file', lang: 'py' },
-        { name: 'gradcam.py', type: 'file', lang: 'py' },
-      ]},
-      { name: 'api', type: 'dir', children: [
-        { name: 'main.py', type: 'file', lang: 'py' },
-        { name: 'routes.py', type: 'file', lang: 'py' },
-      ]},
-      { name: 'requirements.txt', type: 'file', lang: 'txt' },
-      { name: 'Dockerfile', type: 'file', lang: 'docker' },
-    ],
-  },
-  {
-    id: 'smartstudyplanner',
-    name: 'SmartStudyPlanner',
-    slug: 'smartstudyplanner',
-    tagline: 'AI-driven academic scheduling that adapts to your learning',
-    overview: `SmartStudyPlanner uses OpenAI's API to create adaptive study schedules based on course difficulty, learning patterns, and upcoming deadlines.
-
-The app analyzes past study sessions to optimize future scheduling — allocating more time for difficult subjects and spacing reviews using evidence-based techniques.
-
-Built as a full-stack Next.js application with Supabase for auth and database, featuring a calendar view, task management, and productivity analytics.`,
-    status: 'active',
     stars: 156,
-    github: 'https://github.com/developer/smartstudyplanner',
-    demo: 'https://smartstudy.vercel.app',
+    github: 'https://github.com/PREMRAJESH/CodeViz',
+    demo: 'https://code-visualizer.vercel.app/',
     stack: [
       { name: 'Next.js', category: 'frontend' },
       { name: 'TypeScript', category: 'frontend' },
-      { name: 'Tailwind CSS', category: 'frontend' },
-      { name: 'OpenAI API', category: 'ai' },
-      { name: 'Supabase', category: 'database' },
-      { name: 'Prisma', category: 'tools' },
-      { name: 'Vercel', category: 'infra' },
+      { name: 'Monaco Editor', category: 'tools' },
+      { name: 'D3.js', category: 'tools' },
+      { name: 'Framer Motion', category: 'frontend' },
     ],
-    architecture: `Next.js App Router with server actions for API calls.
-
-**AI Scheduling Engine:**
-1. Collect course data, difficulty ratings, deadlines
-2. Build prompt with structured JSON schema
-3. OpenAI generates optimized weekly schedule
-4. Validate and persist to Supabase
-5. Display in interactive calendar component
-
-**Spaced Repetition:** Custom algorithm tracking retention curves per subject.`,
+    architecture: 'Next.js client embedding Monaco Editor. Code execution is parsed, and steps are visualised using D3.js trees and custom React diagrams.',
     challenges: [
-      'Designing effective prompts for consistent schedule generation',
-      'Building a responsive drag-and-drop calendar component',
-      'Implementing spaced repetition with variable intervals',
-      'Handling timezone differences for global users',
+      'Building a performance-safe execution engine that records step-by-step variables state changes without executing arbitrary unsafe user code.',
+      'Synchronizing D3 animation layers with variable state transitions without lagging.',
     ],
     learnings: [
-      'Structured output prompting yields much better AI results',
-      'Supabase Row Level Security simplifies auth dramatically',
-      'Server actions are cleaner than API routes for mutations',
-      'Progressive enhancement improves perceived performance',
+      'AST (Abstract Syntax Tree) parsing enables precise execution tracking without needing heavy server runtimes.',
+      'Framer Motion layout transitions simplify complex tree restructuring animation.',
     ],
-    deployment: ['Vercel (Frontend + API)', 'Supabase (DB + Auth)', 'OpenAI API'],
+    deployment: ['Vercel (Frontend & Serverless Workspace)'],
     files: [
-      { name: 'app', type: 'dir', children: [
-        { name: 'page.tsx', type: 'file', lang: 'tsx' },
-        { name: 'layout.tsx', type: 'file', lang: 'tsx' },
-        { name: 'api', type: 'dir', children: [
-          { name: 'schedule', type: 'dir', children: [
-            { name: 'route.ts', type: 'file', lang: 'ts' },
-          ]},
-        ]},
-      ]},
-      { name: 'components', type: 'dir', children: [
-        { name: 'Calendar.tsx', type: 'file', lang: 'tsx' },
-        { name: 'TaskList.tsx', type: 'file', lang: 'tsx' },
-        { name: 'Analytics.tsx', type: 'file', lang: 'tsx' },
-      ]},
-      { name: 'lib', type: 'dir', children: [
-        { name: 'ai-scheduler.ts', type: 'file', lang: 'ts' },
-        { name: 'supabase.ts', type: 'file', lang: 'ts' },
-      ]},
-    ],
-  },
-  {
-    id: 'devopsdebugger',
-    name: 'DevOpsDebugger',
-    slug: 'devopsdebugger',
-    tagline: 'Automated infrastructure debugging with intelligent log analysis',
-    overview: `DevOpsDebugger is a CLI and web tool that automates infrastructure debugging by parsing logs from Kubernetes clusters, identifying anomalies, and suggesting fixes.
+      {
+        name: 'Overview.md',
+        type: 'file',
+        lang: 'md',
+        content: `# CodeViz - Overview
 
-It connects to Prometheus and Elasticsearch to aggregate metrics and logs, then uses pattern matching and heuristic analysis to pinpoint root causes of outages.
+CodeViz is an interactive playground for exploring code execution, tracing data structures, and understanding core algorithms visually.
 
-Built in Go for performance, with a Grafana dashboard plugin for visualization.`,
-    status: 'archived',
-    stars: 98,
-    github: 'https://github.com/developer/devopsdebugger',
-    stack: [
-      { name: 'Go', category: 'backend' },
-      { name: 'Prometheus', category: 'tools' },
-      { name: 'Grafana', category: 'tools' },
-      { name: 'Elasticsearch', category: 'database' },
-      { name: 'Kubernetes', category: 'infra' },
-      { name: 'Docker', category: 'infra' },
-      { name: 'gRPC', category: 'backend' },
-    ],
-    architecture: `Event-driven pipeline processing architecture.
+### Core Solution
+By parsing code into an **Abstract Syntax Tree (AST)**, CodeViz generates step-by-step execution states. Students can run algorithms (sorting, searching, tree traversals) and visually step forwards/backwards to see exactly how variables, loops, and memory change.
 
-**Pipeline:**
-1. Log collector agents → Kafka topics
-2. Stream processor parses and normalizes logs
-3. Anomaly detector compares against baseline metrics
-4. Alert generator creates actionable incidents
-5. Grafana plugin visualizes timeline and correlations
+### Key Features
+- **Multi-language Editor**: Integrated Monaco Editor with syntax checking.
+- **Data Structure Tracing**: Live visual trees, arrays, and graphs.
+- **Variable Inspection Panel**: Displays call stack frame histories.`
+      },
+      {
+        name: 'Problem.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Problem Statement
 
-**CLI:** Cobra-based Go CLI for direct cluster debugging.`,
-    challenges: [
-      'Processing high-volume log streams without dropping events',
-      'Building accurate anomaly detection without ML overhead',
-      'Correlating events across distributed microservices',
-      'Designing a Grafana plugin with the panel SDK',
-    ],
-    learnings: [
-      'Go channels are excellent for pipeline architectures',
-      'Statistical anomaly detection can outperform ML for structured logs',
-      'Grafana plugin development requires understanding React + Angular',
-      'gRPC streaming is ideal for real-time log forwarding',
-    ],
-    deployment: ['Kubernetes (Self-hosted)', 'Docker', 'Helm Charts'],
-    files: [
-      { name: 'cmd', type: 'dir', children: [
-        { name: 'main.go', type: 'file', lang: 'go', content: `package main
+Understanding algorithms from dry text or IDE step-debuggers is challenging for students because:
+- **Hidden State**: Memory, pointers, and recursive call stacks are invisible.
+- **Unfriendly Debuggers**: Standard debuggers are designed for professional bug-hunting, not step-by-step education.
 
-import (
-    "fmt"
-    "os"
+### Engineering Challenges
+- **Sandbox Security**: Safely capturing and running user-written scripts without executing malicious commands in the host browser.
+- **Rendering Performance**: Updating complex SVG node hierarchies at 60 FPS during fast auto-playbacks.`
+      },
+      {
+        name: 'Architecture.md',
+        type: 'file',
+        lang: 'md',
+        content: `# System Architecture
 
-    "github.com/spf13/cobra"
-    "devopsdebugger/pkg/analyzer"
-    "devopsdebugger/pkg/collector"
-)
+The compiler and visualizer run fully on the client:
 
-func main() {
-    rootCmd := &cobra.Command{
-        Use:   "debugger",
-        Short: "Automated infrastructure debugging tool",
-    }
+1. **Monaco Code Input**: User types JavaScript or Python code.
+2. **AST Parser (Esprima/Acorn)**: Transpiles user code, injecting telemetry hooks at every statement.
+3. **Telemetry Execution**: Runs code inside a secure web worker, capturing state change logs.
+4. **D3 Rendering Canvas**: Translates call-stack histories into interactive nodes.
 
-    analyzeCmd := &cobra.Command{
-        Use:   "analyze [namespace]",
-        Short: "Analyze logs for anomalies",
-        Args:  cobra.ExactArgs(1),
-        RunE: func(cmd *cobra.Command, args []string) error {
-            c := collector.New(args[0])
-            logs, err := c.Collect()
-            if err != nil {
-                return fmt.Errorf("collection failed: %w", err)
-            }
+\`\`\`
+[Code Input] ➔ [AST Instrumentation] ➔ [Web Worker Telemetry] ➔ [D3 Canvas Animation]
+\`\`\``
+      },
+      {
+        name: 'TechStack.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Technology Stack
 
-            a := analyzer.New()
-            results := a.Analyze(logs)
-            results.Print(os.Stdout)
-            return nil
-        },
-    }
+- **Interface Editor**: Monaco Editor (VS Code core)
+- **Visual Rendering**: D3.js (Data-Driven Documents), SVG, Canvas
+- **State Animations**: Framer Motion, Tailwind CSS
+- **Core Platform**: Next.js, TypeScript, React`
+      },
+      {
+        name: 'Results.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Results & Key Learnings
 
-    rootCmd.AddCommand(analyzeCmd)
-    rootCmd.Execute()
-}` },
-      ]},
-      { name: 'pkg', type: 'dir', children: [
-        { name: 'analyzer', type: 'dir', children: [
-          { name: 'log_parser.go', type: 'file', lang: 'go' },
-          { name: 'anomaly_detector.go', type: 'file', lang: 'go' },
-        ]},
-        { name: 'collector', type: 'dir', children: [
-          { name: 'k8s.go', type: 'file', lang: 'go' },
-          { name: 'prometheus.go', type: 'file', lang: 'go' },
-        ]},
-      ]},
-      { name: 'go.mod', type: 'file', lang: 'go' },
-      { name: 'Makefile', type: 'file', lang: 'makefile' },
-    ],
-  },
+- **Adoption**: Used by software engineering students to study sorting algorithms.
+- **Security**: Achieved **100% client-side isolation** by offloading telemetry execution to locked web workers.
+- **Learnings**: Telemetry tracing is highly performant when parsing loops by imposing a maximum execution step threshold (e.g., 2000 steps) to prevent infinite loops.`
+      },
+      {
+        name: 'Links.md',
+        type: 'file',
+        lang: 'md',
+        content: `# Project Resource Links
+
+- **GitHub Repository**: [PREMRAJESH/CodeViz](https://github.com/PREMRAJESH/CodeViz)
+- **Live Demo Link**: [CodeViz Sandbox](https://code-visualizer.vercel.app/)`
+      }
+    ]
+  }
 ]

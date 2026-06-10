@@ -11,7 +11,6 @@ import {
   Plus, 
   X, 
   ExternalLink,
-  ShieldCheck,
   Zap,
   LayoutGrid,
   Search,
@@ -30,6 +29,8 @@ interface Tab {
 }
 
 const DEFAULT_TABS: Tab[] = [
+  { id: 'neuroscan-live', url: 'https://neuroscan-pink.vercel.app/', title: 'NeuroScan AI', icon: Zap, isLoading: false },
+  { id: 'studyflow-live', url: 'https://studyflow-aii.vercel.app/', title: 'StudyFlow', icon: Zap, isLoading: false },
   { id: 'codeviz-live', url: 'https://code-visualizer.vercel.app/', title: 'CodeViz Production', icon: Zap, isLoading: false },
   { id: 'prs-os-github', url: 'https://github.com/prs-os/core', title: 'PRS-OS Source', icon: Globe, isLoading: false },
 ]
@@ -43,8 +44,29 @@ export function RuntimeBrowser() {
   const [urlInput, setUrlInput] = useState(DEFAULT_TABS[0].url)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 })
   
   const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0]
+
+  // ResizeObserver to handle real-time iframe resizing and viewport scaling
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const observer = new ResizeObserver((entries) => {
+      if (!entries || entries.length === 0) return
+      const { width, height } = entries[0].contentRect
+      requestAnimationFrame(() => {
+        setDimensions({ width, height })
+      })
+    })
+
+    observer.observe(container)
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   // Sync with initialQuery from window manager
   useEffect(() => {
@@ -106,7 +128,7 @@ export function RuntimeBrowser() {
   }
 
   return (
-    <div className="flex h-full bg-[#0a0a0b] text-foreground overflow-hidden font-sans">
+    <div className="flex h-full text-foreground overflow-hidden font-sans" style={{ background: '#0a0a0b' }}>
       
       {/* ── Arc-style Sidebar ───────────────── */}
       <motion.aside
@@ -173,10 +195,10 @@ export function RuntimeBrowser() {
       </motion.aside>
 
       {/* ── Main Browser Area ───────────────── */}
-      <main className="flex-1 flex flex-col relative bg-background">
+      <main className="flex-1 flex flex-col relative min-w-0 min-h-0" style={{ background: '#0a0a0b' }}>
         
         {/* Navigation Bar */}
-        <header className="h-12 border-b border-white/5 flex items-center gap-4 px-4 bg-[#0a0a0b]/80 backdrop-blur-md z-10">
+        <header className="h-12 border-b border-white/5 flex items-center gap-4 px-4 shrink-0" style={{ background: 'rgba(10,10,11,0.85)', backdropFilter: 'blur(12px)' }}>
           <div className="flex items-center gap-1">
             <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground/40 transition-colors">
               <ChevronLeft className="w-4 h-4" />
@@ -210,55 +232,92 @@ export function RuntimeBrowser() {
           </button>
         </header>
 
-        {/* Browser Content */}
-        <div className="flex-1 relative bg-[#0a0a0b]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTabId}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0"
-            >
-              <iframe
-                ref={iframeRef}
-                src={activeTab.url}
-                className={`w-full h-full border-none transition-opacity duration-500 ${activeTab.isLoading ? 'opacity-0' : 'opacity-100'}`}
-                onLoad={onIframeLoad}
-                title={activeTab.title}
-                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-              />
+        {/* Browser Content — scaled viewport area */}
+        <div ref={containerRef} className="flex-1 relative overflow-hidden" style={{ background: '#0a0a0b' }}>
+          {(() => {
+            // Virtual viewport: render websites at desktop width, scale down to fit
+            const VIRTUAL_W = 1440;
+            const effectiveW = Math.max(dimensions.width, VIRTUAL_W);
+            const scale = dimensions.width / effectiveW;
+            const effectiveH = dimensions.height / scale;
 
-              {activeTab.isLoading && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#0a0a0b] z-10">
-                  <div className="relative">
-                    <div className="w-12 h-12 rounded-2xl border-2 border-primary/20 animate-pulse" />
-                    <Loader2 className="absolute inset-0 m-auto w-5 h-5 text-primary animate-spin" />
-                  </div>
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <span className="text-[10px] font-black tracking-[0.2em] uppercase text-muted-foreground/40">Initializing Container</span>
-                    <span className="text-[9px] font-mono text-muted-foreground/20 max-w-[200px] truncate">{activeTab.url}</span>
+            return (
+              <>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTabId}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: effectiveW,
+                      height: effectiveH,
+                      transform: `scale(${scale})`,
+                      transformOrigin: 'top left',
+                    }}
+                  >
+                    <iframe
+                      ref={iframeRef}
+                      src={activeTab.url}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        margin: 0,
+                        padding: 0,
+                        display: 'block',
+                        background: '#0a0a0b',
+                      }}
+                      className={`transition-opacity duration-500 ${activeTab.isLoading ? 'opacity-0' : 'opacity-100'}`}
+                      onLoad={onIframeLoad}
+                      title={activeTab.title}
+                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                    />
+
+                    {activeTab.isLoading && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-10" style={{ background: '#0a0a0b' }}>
+                        <div className="relative">
+                          <div className="w-12 h-12 rounded-2xl border-2 border-primary/20 animate-pulse" />
+                          <Loader2 className="absolute inset-0 m-auto w-5 h-5 text-primary animate-spin" />
+                        </div>
+                        <div className="flex flex-col items-center gap-1 text-center">
+                          <span className="text-[10px] font-black tracking-[0.2em] uppercase text-muted-foreground/40">Initializing Container</span>
+                          <span className="text-[9px] font-mono text-muted-foreground/20 max-w-[200px] truncate">{activeTab.url}</span>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Runtime Viewport Metrics */}
+                <div className="absolute bottom-4 right-4 flex items-center gap-3 z-30 pointer-events-none">
+                  <div className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-xl border border-white/5 flex items-center gap-2.5 shadow-2xl">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[8px] font-black text-emerald-500/80 uppercase tracking-widest">Live</span>
+                    </div>
+                    <div className="w-px h-3 bg-white/10" />
+                    <span className="text-[9px] font-mono font-bold text-white/50">
+                      {Math.round(effectiveW)}×{Math.round(effectiveH)}
+                    </span>
+                    {scale < 1 && (
+                      <>
+                        <div className="w-px h-3 bg-white/10" />
+                        <span className="text-[9px] font-mono font-bold text-primary">
+                          {Math.round(scale * 100)}%
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Runtime Metrics */}
-          <div className="absolute bottom-6 right-6 flex items-center gap-3">
-            <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/5 flex items-center gap-3 shadow-2xl">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] font-black text-emerald-500/80 uppercase tracking-widest">Isolated</span>
-              </div>
-              <div className="w-px h-3 bg-white/10" />
-              <div className="flex items-center gap-1.5">
-                <Zap className="w-3 h-3 text-primary" />
-                <span className="text-[9px] font-mono font-bold text-white/60">12.8ms</span>
-              </div>
-            </div>
-          </div>
+              </>
+            );
+          })()}
         </div>
       </main>
     </div>

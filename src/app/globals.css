@@ -137,11 +137,15 @@
 }
 
 @layer base {
+  html {
+    font-size: 125%;
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    line-height: 1.625;
   }
 }
 
@@ -290,4 +294,45 @@
   transform: translateZ(0);
   will-change: transform, opacity;
 }
+
+/* Central typography scale overrides (+10% to +20%) */
+.hero-title {
+  font-size: 3.25rem !important;
+  line-height: 1.1 !important;
+}
+.hero-subtitle {
+  font-size: 1.25rem !important;
+}
+.app-body-text {
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+}
+.sidebar-label {
+  font-size: 0.85rem !important;
+}
+.project-title {
+  font-size: 1.2rem !important;
+}
+.project-desc {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+.stats-value {
+  font-size: 1.35rem !important;
+}
+.stats-label {
+  font-size: 0.8rem !important;
+}
+.timeline-entry-title {
+  font-size: 1.05rem !important;
+}
+.timeline-entry-desc {
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+}
+.edu-exp-content {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
 

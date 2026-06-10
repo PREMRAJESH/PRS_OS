@@ -14,7 +14,8 @@ interface Message {
 
 const specializedResponses: Record<string, string> = {
   'explain architecture': "The PRS-OS architecture is built on a **Modular Micro-Kernel** philosophy:\n\n• **Core Runtime:** Next.js 15 + React 19 for reactive UI state.\n• **State Management:** Zustand-based OS store for windowing, themes, and global events.\n• **Component Matrix:** Isolated, lazy-loaded window modules (Project Explorer, Terminal, etc.).\n• **Intelligence Layer:** Context-aware command palette and semantic search integration.\n\nEverything is designed for **low latency** and **high intentionality**.",
-  'explain nimbusx architecture': "NimbusX follows a **Serverless Real-time** pattern:\n\n• **Real-time Sync:** Firebase/Firestore for sub-100ms message delivery.\n• **Authentication:** OAuth 2.0 integration for secure workspace access.\n• **Media Engine:** Integrated GIF/Emoji pickers with direct Cloud Storage pipelines.\n• **State:** Persistent local caching for offline message queuing.",
+  'explain neuroscan architecture': "NeuroScan AI is structured as a **Lightweight Medical Inference** pipeline:\n\n• **Clinical Guardrails:** Preprocessing checks (grayscale, contrast, borders) to filter non-MRI images.\n• **Inference Engine:** Optimized local runtime using ONNX Runtime (`onnxruntime-cpu`) for sub-50ms predictions.\n• **Frontend Workbench:** Dark clinical interface with glassmorphic visualizations for training results.",
+  'explain studyflow architecture': "StudyFlow follows a **Serverless Next.js + BaaS** architecture:\n\n• **AI Scheduler:** Vercel AI SDK integrations with Google Gemini AI (`gemini-2.5-flash`) for structured scheduling plans.\n• **Backend Layer:** Supabase for Auth, PostgreSQL (triggers + RLS), and Storage (PDF parsing context).\n• **Styling System:** Modern design built on Next.js 16.2 App Router and Tailwind CSS 4.",
   'show ai projects': "I've developed several AI-driven systems:\n\n• **BrainTumorAI:** ML-powered medical imaging analysis using TensorFlow.\n• **PRS-OS Assistant:** The current contextual intelligence system you're using.\n• **SmartStudyPlanner:** Adaptive scheduling based on learning velocity algorithms.\n\nWould you like to explore the source code for any of these?",
   'what technologies does prs use': "The core stack consists of:\n\n• **Frontend:** TypeScript, React 19, Tailwind CSS, Framer Motion.\n• **Backend:** Node.js, Go (for high-concurrency microservices).\n• **Infra:** Docker, Kubernetes, AWS Lambda.\n• **Database:** PostgreSQL (Relational), Redis (Caching), Pinecone (Vector Search).",
 }
@@ -29,7 +30,7 @@ function getAIResponse(query: string): string {
   }
 
   if (lowerQuery.includes('project') || lowerQuery.includes('work')) {
-    return "This developer focuses on high-performance web systems and AI integration. Key projects include **NimbusX**, **BrainTumorAI**, and this **PRS-OS** workspace. Which one should we dive into?"
+    return "This developer focuses on high-performance web systems and AI integration. Key projects include **NeuroScan AI**, **StudyFlow**, and this **PRS-OS** workspace. Which one should we dive into?"
   }
   
   return "I've analyzed your query. Based on the developer's workspace context, I can explain system architectures, tech stacks, or project details. What specific part of the system interests you?"

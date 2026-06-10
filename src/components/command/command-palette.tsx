@@ -216,12 +216,78 @@ export function CommandPalette() {
         action: execute('projects', 'PRS-OS Explorer'),
       },
       {
+        id: 'p-nimbusx',
+        label: 'Project: NimbusX',
+        description: 'Real-time messaging platform with WhatsApp-style UX',
+        icon: FileText,
+        category: 'projects',
+        keywords: ['nimbusx', 'chat', 'firebase', 'webrtc', 'react'],
+        action: execute('projects', 'NimbusX Explorer'),
+      },
+      {
+        id: 'p-nimbusx-demo',
+        label: 'Launch: NimbusX Live',
+        description: 'Execute NimbusX in PRS-OS Runtime',
+        icon: Zap,
+        category: 'projects',
+        keywords: ['demo', 'launch', 'nimbusx', 'live', 'open nimbusx'],
+        action: () => {
+          openWindow('runtime', 'NimbusX Runtime', 'https://nimbusx.vercel.app')
+          toggleCommandPalette()
+        },
+        accent: 'text-violet-400',
+      },
+      {
+        id: 'p-neuroscan',
+        label: 'Project: NeuroScan AI',
+        description: 'AI-powered MRI scan classification and validation',
+        icon: Cpu,
+        category: 'projects',
+        keywords: ['ai', 'ml', 'medical', 'brain tumor', 'neuroscan', 'onnx', 'flask'],
+        action: execute('projects', 'NeuroScan AI Explorer'),
+      },
+      {
+        id: 'p-neuroscan-demo',
+        label: 'Launch: NeuroScan Live',
+        description: 'Execute NeuroScan AI in PRS-OS Runtime',
+        icon: Zap,
+        category: 'projects',
+        keywords: ['demo', 'launch', 'neuroscan', 'live', 'open neuroscan'],
+        action: () => {
+          openWindow('runtime', 'NeuroScan AI Runtime', 'https://neuroscan-pink.vercel.app/')
+          toggleCommandPalette()
+        },
+        accent: 'text-violet-400',
+      },
+      {
+        id: 'p-studyflow',
+        label: 'Project: StudyFlow',
+        description: 'AI-driven study scheduling platform',
+        icon: FileText,
+        category: 'projects',
+        keywords: ['studyflow', 'gemini', 'schedule', 'supabase', 'nextjs'],
+        action: execute('projects', 'StudyFlow Explorer'),
+      },
+      {
+        id: 'p-studyflow-demo',
+        label: 'Launch: StudyFlow Live',
+        description: 'Execute StudyFlow in PRS-OS Runtime',
+        icon: Zap,
+        category: 'projects',
+        keywords: ['demo', 'launch', 'studyflow', 'live', 'open studyflow'],
+        action: () => {
+          openWindow('runtime', 'StudyFlow Runtime', 'https://studyflow-aii.vercel.app/')
+          toggleCommandPalette()
+        },
+        accent: 'text-violet-400',
+      },
+      {
         id: 'p-codeviz',
         label: 'Project: CodeViz',
-        description: 'Algorithm visualization platform',
-        icon: Globe,
+        description: 'Interactive code and algorithm visualization platform',
+        icon: FileText,
         category: 'projects',
-        keywords: ['codeviz', 'algorithms', 'visualization', 'code'],
+        keywords: ['codeviz', 'monaco', 'd3js', 'algorithms', 'visualization'],
         action: execute('projects', 'CodeViz Explorer'),
       },
       {
@@ -236,24 +302,6 @@ export function CommandPalette() {
           toggleCommandPalette()
         },
         accent: 'text-violet-400',
-      },
-      {
-        id: 'p-brain-tumor',
-        label: 'Project: Brain Tumor Detection',
-        description: 'AI-powered MRI classification',
-        icon: Cpu,
-        category: 'projects',
-        keywords: ['ai', 'ml', 'medical', 'brain tumor', 'tensorflow'],
-        action: execute('projects', 'Medical AI Explorer'),
-      },
-      {
-        id: 'p-nexus',
-        label: 'Project: Nexus',
-        description: 'Scholarly archive ecosystem',
-        icon: FileText,
-        category: 'projects',
-        keywords: ['nexus', 'fullstack', 'php', 'mysql', 'archive'],
-        action: execute('projects', 'Nexus Explorer'),
       },
     ]
 

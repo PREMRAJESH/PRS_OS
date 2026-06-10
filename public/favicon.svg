@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#0072ff" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="230" fill="#080a10" stroke="url(#cyanGrad)" stroke-width="16" />
+  <text x="256" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="150" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="-2" filter="url(#glow)">
+    PRS
+  </text>
+  <rect x="216" y="330" width="80" height="8" rx="4" fill="url(#cyanGrad)" />
+</svg>
