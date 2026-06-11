@@ -211,7 +211,7 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       width: w.get(),
       height: h.get(),
       borderRadius: 14,
-      filter: 'blur(0.5px) brightness(0.85)',
+      filter: 'brightness(0.85)',
       pointerEvents: 'auto',
       transition: { duration: 0.4 }
     }
@@ -246,14 +246,14 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       onPointerDown={() => focusWindow(win.id)}
       className={`
         flex flex-col overflow-hidden absolute
-        bg-[oklch(0.09_0.01_240/0.92)] backdrop-blur-xl backdrop-saturate-150
+        bg-[oklch(0.09_0.01_240/0.92)]
         transition-shadow duration-500 ease-out
         ${isActive
           ? 'shadow-[var(--shadow-window)] ring-1 ring-white/[0.12]'
           : 'shadow-[var(--shadow-window-inactive)] ring-1 ring-white/[0.04]'
         }
         ${isDragging || isResizing
-          ? 'shadow-[0_60px_130px_-20px_rgba(0,0,0,0.95)] !backdrop-blur-none transition-none'
+          ? 'shadow-[0_60px_130px_-20px_rgba(0,0,0,0.95)] transition-none'
           : ''
         }
       `}

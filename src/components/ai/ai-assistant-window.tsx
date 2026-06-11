@@ -103,7 +103,7 @@ export function AIAssistantWindow() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background/40 backdrop-blur-xl">
+    <div className="flex flex-col h-full bg-background/40">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
         <AnimatePresence initial={false}>

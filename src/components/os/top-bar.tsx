@@ -45,7 +45,7 @@ export function TopBar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="h-11 flex items-center justify-between px-4 bg-[oklch(0.07_0.01_240/0.8)] backdrop-blur-xl z-50 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.03)]"
+      className="h-11 flex items-center justify-between px-4 bg-[oklch(0.07_0.01_240/0.8)] z-50 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.03)]"
     >
       {/* ── Left: Brand + Branch ───────────────── */}
       <div className="flex items-center gap-4">

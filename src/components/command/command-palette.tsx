@@ -433,7 +433,7 @@ export function CommandPalette() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           onClick={toggleCommandPalette}
-          className="absolute inset-0 bg-background/50 backdrop-blur-2xl"
+          className="absolute inset-0 bg-background/50"
         />
 
         {/* Palette */}
@@ -442,7 +442,7 @@ export function CommandPalette() {
           animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(8px)' }}
           transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-          className="relative w-full max-w-[620px] rounded-2xl bg-[oklch(0.09_0.01_240/0.95)] backdrop-blur-xl shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col"
+          className="relative w-full max-w-[620px] rounded-2xl bg-[oklch(0.09_0.01_240/0.95)] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="px-5 py-4 flex items-center gap-4 shadow-[0_1px_0_rgba(255,255,255,0.03)]">

@@ -79,19 +79,18 @@ export function ExperienceWindow() {
           <div className="w-full md:w-56 shrink-0 flex flex-col justify-center items-center md:items-end">
             <div className="space-y-2 w-full max-w-[200px]">
               <span className="block text-[10px] font-black uppercase tracking-wider text-muted-foreground/60 text-center md:text-left">
-                Confirmation
+                Complete Internship
               </span>
               <button
                 onClick={() => setIsLightboxOpen(true)}
                 className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 hover:border-primary/40 bg-[#121318] shadow-lg flex items-center justify-center transition-all duration-300"
               >
-                {/* Background Certificate Image */}
+                {/* Background Offer Letter Image */}
                 <img
-                  src="/brainybeam-internship.jpg"
-                  alt="BrainyBeam Internship Certificate"
+                  src="/offerletter.jpg"
+                  alt="BrainyBeam Internship Offer Letter"
                   className="w-full h-full object-cover opacity-60 group-hover:opacity-85 transition-opacity duration-300"
                   onError={(e) => {
-                    // Fallback to static styled message if file copy didn't deploy correctly
                     e.currentTarget.style.display = 'none'
                   }}
                 />
@@ -100,7 +99,7 @@ export function ExperienceWindow() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-black/40 group-hover:bg-black/20 transition-all duration-300">
                   <ImageIcon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform mb-1" />
                   <span className="text-[10px] font-bold text-white tracking-wider flex items-center gap-1">
-                    View Certificate <ZoomIn className="w-3 h-3 text-primary" />
+                    View Offer Letter <ZoomIn className="w-3 h-3 text-primary" />
                   </span>
                 </div>
               </button>
@@ -127,7 +126,7 @@ export function ExperienceWindow() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-6 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-6"
             onClick={() => setIsLightboxOpen(false)}
           >
             <button
@@ -144,8 +143,8 @@ export function ExperienceWindow() {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src="/brainybeam-internship.jpg"
-                alt="BrainyBeam Internship Confirmation"
+                src="/offerletter.jpg"
+                alt="BrainyBeam Internship Offer Letter"
                 className="w-full h-full object-contain max-h-[80vh]"
               />
             </motion.div>

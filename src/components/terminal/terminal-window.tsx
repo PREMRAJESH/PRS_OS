@@ -201,7 +201,7 @@ export function TerminalWindow() {
           '',
           '  ◆ NeuroScan AI ─────── Python · Flask · ONNX Runtime',
           '  ◆ StudyFlow ────────── Next.js · Supabase · Gemini AI',
-          '  ◆ Nimbus X ─────────── React · Firebase · WebRTC',
+          '  ◆ Nimbus X ─────────── React Native · Supabase · Redux',
           '  ◆ CodeViz ──────────── Next.js · Monaco · D3.js',
           '',
           '  Opening project explorer...',
@@ -634,7 +634,7 @@ export function TerminalWindow() {
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.1 }}
-              className="absolute left-0 mt-1 z-50 py-1 rounded-lg bg-background/95 backdrop-blur-xl border border-border/60 shadow-lg min-w-48 overflow-hidden"
+              className="absolute left-0 mt-1 z-50 py-1 rounded-lg bg-background/95 border border-border/60 shadow-lg min-w-48 overflow-hidden"
               style={{ marginLeft: `${(input.lastIndexOf(' ') + 1) * 0.6 + 1}rem` }}
             >
               {suggestions.map((s, i) => (

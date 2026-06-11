@@ -17,8 +17,8 @@ const milestones: Milestone[] = [
   {
     year: '2026',
     title: 'Built Nimbus X',
-    institution: 'Cloud Storage Platform',
-    description: 'Developed Nimbus X featuring intelligent file organization and modern web architecture.',
+    institution: 'Mobile Messaging App',
+    description: 'Developed Nimbus X, a real-time Android chat app with React Native, Supabase, and cloud/local storage toggle.',
     icon: Code,
     iconColor: 'bg-primary/20 text-primary border-primary/30',
     tags: ['project', 'nimbusx']

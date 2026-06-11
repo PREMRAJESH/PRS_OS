@@ -5,7 +5,6 @@ export interface ProjectData {
   tagline: string
   overview: string
   status: 'active' | 'completed' | 'archived'
-  stars: number
   github: string
   demo?: string
   stack: TechItem[]
@@ -50,7 +49,6 @@ export const projectsData: ProjectData[] = [
     
 The application leverages a deep learning model based on the EfficientNetB0 architecture, specifically trained using Transfer Learning. For optimal performance, the app executes local model inference using ONNX Runtime, removing the need for a heavy TensorFlow dependency.`,
     status: 'active',
-    stars: 245,
     github: 'https://github.com/PREMRAJESH/NeuroScan',
     demo: 'https://neuroscan-pink.vercel.app/',
     stack: [
@@ -150,10 +148,7 @@ The project employs a lightweight client-server pipeline:
         name: 'Links.md',
         type: 'file',
         lang: 'md',
-        content: `# Project Resource Links
-
-- **GitHub Repository**: [PREMRAJESH/NeuroScan](https://github.com/PREMRAJESH/NeuroScan)
-- **Live Deployment**: [NeuroScan AI Workspace](https://neuroscan-pink.vercel.app/)`
+        content: `**Repository**\ngithub.com/PREMRAJESH/NeuroScan\n\n**Live Deployment**\nneuroscan-pink.vercel.app`
       }
     ]
   },
@@ -166,7 +161,6 @@ The project employs a lightweight client-server pipeline:
     
 It leverages Google Gemini AI for smart scheduling based on subject priorities, weekly targets, and syllabus contents. Built as a Next.js 16 full-stack application featuring a Pomodoro focus timer, task manager, and Supabase database integration.`,
     status: 'active',
-    stars: 188,
     github: 'https://github.com/PREMRAJESH/StudyFlow',
     demo: 'https://studyflow-aii.vercel.app/',
     stack: [
@@ -260,10 +254,7 @@ The architecture consists of a Next.js full-stack system connected to Supabase:
         name: 'Links.md',
         type: 'file',
         lang: 'md',
-        content: `# Project Resource Links
-
-- **GitHub Repository**: [PREMRAJESH/StudyFlow](https://github.com/PREMRAJESH/StudyFlow)
-- **Live Deployment**: [StudyFlow Web Platform](https://studyflow-aii.vercel.app/)`
+        content: `**Repository**\ngithub.com/PREMRAJESH/StudyFlow\n\n**Live Deployment**\nstudyflow-aii.vercel.app`
       }
     ]
   },
@@ -271,32 +262,27 @@ The architecture consists of a Next.js full-stack system connected to Supabase:
     id: 'nimbusx',
     name: 'Nimbus X',
     slug: 'nimbusx',
-    tagline: 'Cloud Storage Platform | Intelligent File Organization | Modern Web Architecture',
-    overview: `Nimbus X is an intelligent cloud storage drive built with React and Firebase. It features real-time files categorization, metadata analysis, and AI-powered smart document indexing.
-    
-Authentication is handled via Firebase Auth. The application automatically categorizes uploaded media and documents, allowing users to query and organize files semantically.`,
+    tagline: 'Real-time Mobile Messaging App | React Native | Cloud & Local Storage',
+    overview: `Nimbus X is a real-time mobile messaging app built with React Native, TypeScript, Supabase, and Redux Toolkit. It features authentication, private and group chats, status updates, media/file support, and persistent cloud and local storage with a toggle between cloud and local storing.`,
     status: 'completed',
-    stars: 234,
     github: 'https://github.com/PREMRAJESH/NimbusX',
-    demo: 'https://nimbusx.vercel.app',
     stack: [
-      { name: 'React', category: 'frontend' },
+      { name: 'React Native', category: 'frontend' },
       { name: 'TypeScript', category: 'frontend' },
-      { name: 'Tailwind CSS', category: 'frontend' },
-      { name: 'Firebase Auth', category: 'backend' },
-      { name: 'Firestore', category: 'database' },
-      { name: 'Firebase Storage', category: 'infra' },
+      { name: 'Redux Toolkit', category: 'frontend' },
+      { name: 'Supabase', category: 'backend' },
     ],
-    architecture: 'React frontend synced with Firestore DB and Firebase Storage. Back-end functions analyze uploads and trigger semantic categorizations.',
+    architecture: 'React Native mobile app with Redux Toolkit for state management, Supabase for backend services including auth, real-time messaging, and file storage with cloud/local toggle.',
     challenges: [
-      'Handling high-speed, chunked file uploads to cloud buckets with instant status feedback.',
-      'Generating search vectors and indexing tags dynamically upon file creation.',
+      'Implementing real-time messaging with private and group chat support.',
+      'Building a toggle system for cloud vs local file storage.',
+      'Ensuring persistent message and media storage across sessions.',
     ],
     learnings: [
-      'Optimistic UI state management provides instant feedback even with network delays.',
-      'Real-time Firestore listeners are highly performant when properly paginated.',
+      'Supabase provides excellent real-time subscriptions for chat features.',
+      'Redux Toolkit simplifies complex state management in React Native.',
     ],
-    deployment: ['Vercel (Frontend)', 'Firebase Storage/Firestore (Backend)', 'Cloudflare (CDN)'],
+    deployment: ['Google Play Store (Android)'],
     files: [
       {
         name: 'Overview.md',
@@ -304,46 +290,16 @@ Authentication is handled via Firebase Auth. The application automatically categ
         lang: 'md',
         content: `# Nimbus X - Overview
 
-Nimbus X is a smart cloud storage platform designed to eliminate the clutter of traditional directories.
+Nimbus X is a real-time mobile messaging app built with React Native.
 
-### Core Solution
-Instead of forcing manual organization, Nimbus X runs an intelligent pipeline that extracts metadata, auto-tags documents, and enables natural language semantic searching. It is built as a highly responsive React application utilizing Firebase services.
+### Core Features
+- **Private & Group Chats**: Real-time messaging with authentication.
+- **Status Updates**: Share status updates with contacts.
+- **Media/File Support**: Send and receive files with cloud/local storage toggle.
+- **Persistent Storage**: Messages and media stored both locally and in the cloud.
 
-### Key Features
-- **Intelligent Organization**: Auto-categorizes uploads into Documents, Images, Audio, and Archives.
-- **Semantic Search**: Search files using conceptual terms rather than literal file names.
-- **Fast Uploads**: Chunked, progress-tracked uploading interface.`
-      },
-      {
-        name: 'Problem.md',
-        type: 'file',
-        lang: 'md',
-        content: `# Problem Statement
-
-Most users treat cloud storage as a digital dump, making it nearly impossible to find files months later. Manual sorting is:
-- **Tedious**: Users rarely create consistent directories.
-- **Inefficient**: Search queries depend strictly on filenames.
-
-### Engineering Challenges
-- **Real-time Synchronization**: Reflecting upload completions, auto-categorizations, and vector generation immediately on the dashboard.
-- **Mobile responsiveness**: Ensuring file tables, preview cards, and drag-and-drop zones fit perfectly on any viewport.`
-      },
-      {
-        name: 'Architecture.md',
-        type: 'file',
-        lang: 'md',
-        content: `# System Architecture
-
-The structure is optimized for client-to-cloud performance:
-
-1. **Drag-and-Drop Front**: Direct upload stream to Firebase Storage.
-2. **Firebase Storage Triggers**: Triggers background metadata extraction on complete.
-3. **Firestore Metadata DB**: Updates document lists in real time on the client.
-4. **Categorization Engine**: Automatically labels files and runs OCR text extraction.
-
-\`\`\`
-[Upload File] ➔ [Firebase Storage] ➔ [OCR/Meta Trigger] ➔ [Firestore Sync]
-\`\`\``
+### Tech Stack
+- React Native, TypeScript, Redux Toolkit, Supabase`
       },
       {
         name: 'TechStack.md',
@@ -351,29 +307,15 @@ The structure is optimized for client-to-cloud performance:
         lang: 'md',
         content: `# Technology Stack
 
-- **Frontend**: React, TypeScript, Tailwind CSS, Framer Motion
-- **Database & Auth**: Firebase Firestore, Firebase Auth
-- **Storage**: Firebase Storage Cloud Buckets
-- **CDN**: Cloudflare Edge Routing`
-      },
-      {
-        name: 'Results.md',
-        type: 'file',
-        lang: 'md',
-        content: `# Project Results & Key Learnings
-
-- **Auto-Tagging**: Correctly tagged **95%** of common document types (PDFs, images).
-- **Search Success**: Users reported finding files **3x faster** using conceptual search tags.
-- **Learnings**: Utilizing client-side image compression before upload saves significant network bandwidth and cloud cost.`
+- **Frontend**: React Native, TypeScript, Redux Toolkit
+- **Backend**: Supabase (Auth, Database, Real-time, Storage)
+- **Platform**: Android (iOS support planned)`
       },
       {
         name: 'Links.md',
         type: 'file',
         lang: 'md',
-        content: `# Project Resource Links
-
-- **GitHub Repository**: [PREMRAJESH/NimbusX](https://github.com/PREMRAJESH/NimbusX)
-- **Live Deployment**: [Nimbus X Platform](https://nimbusx.vercel.app)`
+        content: `**Repository**\ngithub.com/PREMRAJESH/NimbusX`
       }
     ]
   },
@@ -386,7 +328,6 @@ The structure is optimized for client-to-cloud performance:
     
 It features real-time variable tracking, call stack inspection, and interactive playback controls, helping students comprehend algorithms visually in JavaScript, Python, and C++.`,
     status: 'completed',
-    stars: 156,
     github: 'https://github.com/PREMRAJESH/CodeViz',
     demo: 'https://code-visualizer.vercel.app/',
     stack: [
@@ -479,10 +420,7 @@ The compiler and visualizer run fully on the client:
         name: 'Links.md',
         type: 'file',
         lang: 'md',
-        content: `# Project Resource Links
-
-- **GitHub Repository**: [PREMRAJESH/CodeViz](https://github.com/PREMRAJESH/CodeViz)
-- **Live Demo Link**: [CodeViz Sandbox](https://code-visualizer.vercel.app/)`
+        content: `**Repository**\ngithub.com/PREMRAJESH/CodeViz\n\n**Live Demo**\ncode-visualizer.vercel.app`
       }
     ]
   }

@@ -11,7 +11,6 @@ import {
   ChevronDown,
   ExternalLink,
   GitBranch,
-  Star,
   Circle,
   X,
   Code2,
@@ -269,26 +268,10 @@ export function ProjectExplorer() {
                     <span className={`text-[9px] px-2 py-0.5 rounded-full border font-medium uppercase tracking-wider ${statusColors[currentProject.status]}`}>
                       {currentProject.status}
                     </span>
-                    <div className="flex items-center gap-1 text-[11px] text-muted-foreground ml-2 font-mono">
-                      <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
-                      {currentProject.stars} stars
-                    </div>
                   </div>
                   <p className="text-xs text-muted-foreground">{currentProject.tagline}</p>
                 </div>
-                
-                <div className="flex items-center gap-2 shrink-0">
-                  <a href={currentProject.github} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/50 text-[10px] font-mono text-foreground/80 hover:text-foreground hover:bg-white/5 transition-all">
-                    <GitBranch className="w-3.5 h-3.5 text-primary" /> Source <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-                  {currentProject.demo && (
-                    <a href={currentProject.demo} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-[10px] font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/10">
-                      Live Demo <ExternalLink className="w-2.5 h-2.5" />
-                    </a>
-                  )}
-                </div>
+                <div />
               </div>
 
               {/* Main Content Sections */}
@@ -390,7 +373,7 @@ export function ProjectExplorer() {
                     <div className="space-y-4">
                       <div className="flex items-center gap-2 mb-1">
                         <Cloud className="w-4 h-4 text-primary" />
-                        <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Direct Resource Launch</h2>
+                        <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Project Links</h2>
                       </div>
                       <div className="grid grid-cols-1 gap-2.5">
                         <a
@@ -583,7 +566,7 @@ function ProjectPreviewMock({ projectId }: { projectId: string }) {
           <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
           <div className="w-2 h-2 rounded-full bg-green-500/80" />
           <div className="ml-2 text-[9px] text-zinc-500 font-mono">nimbusx-drive</div>
-          <div className="ml-auto px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[9px] border border-emerald-500/20">UPLOAD ENGINE IDLE</div>
+          <div className="ml-auto px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 font-mono text-[9px] border border-sky-500/20">UPLOAD ENGINE IDLE</div>
         </div>
         {/* Cloud Storage Dashboard Mockup */}
         <div className="flex-1 grid grid-cols-4 gap-3 min-h-0">

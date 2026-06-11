@@ -66,7 +66,7 @@ export function AIPanel() {
       initial={false}
       animate={{ width: isExpanded ? 340 : 52 }}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="h-full border-l border-border/40 bg-background/40 backdrop-blur-xl flex flex-col relative z-20 shrink-0"
+      className="h-full border-l border-border/40 bg-background/40 flex flex-col relative z-20 shrink-0"
     >
       {/* Header */}
       <div className="h-14 flex items-center justify-between px-4 border-b border-border/30 shrink-0">
@@ -119,7 +119,7 @@ export function AIPanel() {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 border-t border-border/30 bg-background/20 backdrop-blur-md">
+          <div className="p-4 border-t border-border/30 bg-background/20">
             {/* Suggested Tags */}
             <div className="flex flex-wrap gap-1.5 mb-4">
               {aiSuggestions.map((s) => (

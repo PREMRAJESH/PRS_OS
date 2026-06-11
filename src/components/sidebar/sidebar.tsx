@@ -49,7 +49,7 @@ export function Sidebar() {
       initial={false}
       animate={{ width: sidebarCollapsed ? 56 : 210 }}
       transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-      className="h-full flex flex-col bg-[oklch(0.075_0.008_240/0.6)] backdrop-blur-sm border-r border-white/5 select-none"
+      className="h-full flex flex-col bg-[oklch(0.075_0.008_240/0.6)] border-r border-white/5 select-none"
     >
       {/* Header */}
       <div className="h-10 flex items-center justify-between px-3 border-b border-white/5">
@@ -126,7 +126,7 @@ export function Sidebar() {
 
                   {/* Tooltip for collapsed state */}
                   {sidebarCollapsed && (
-                    <div className="absolute left-full ml-3 px-2.5 py-1.5 rounded-lg bg-[oklch(0.12_0.01_240/0.98)] backdrop-blur-xl text-[10px] font-black uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-[0_8px_32px_rgba(0,0,0,0.6)] text-white/90 border border-white/10">
+                    <div className="absolute left-full ml-3 px-2.5 py-1.5 rounded-lg bg-[oklch(0.12_0.01_240/0.98)] text-[10px] font-black uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-[0_8px_32px_rgba(0,0,0,0.6)] text-white/90 border border-white/10">
                       {item.label}
                     </div>
                   )}

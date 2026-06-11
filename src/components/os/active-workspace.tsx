@@ -19,6 +19,7 @@ import {
   Mail,
   ChevronRight,
   Briefcase,
+  MessageSquare,
 } from 'lucide-react'
 
 const stagger = {
@@ -64,7 +65,7 @@ export function ActiveWorkspace() {
             {/* ── Hero Panel ── */}
             <motion.div 
               variants={stagger.item} 
-              className="p-6 rounded-2xl bg-[#0c0d12]/50 backdrop-blur-md border border-white/[0.03] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden group shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+              className="p-6 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden group shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
             >
               {/* Background accent glow */}
               <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10 group-hover:bg-primary/10 transition-colors duration-500" />
@@ -104,17 +105,18 @@ export function ActiveWorkspace() {
                   >
                     Explore Projects <ChevronRight className="w-3.5 h-3.5" />
                   </motion.button>
-                  <motion.button
-                    onClick={() => openWindow('resume')}
+                  <motion.a
+                    href="/Resume.pdf"
+                    download="P.R.S_Resume.pdf"
                     whileHover={{ scale: 1.02, y: -0.5 }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-foreground/80 hover:text-white text-[11px] font-semibold transition-all flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-foreground/80 hover:text-white text-[11px] font-semibold transition-all flex items-center gap-1.5 cursor-pointer no-underline"
                   >
                     Download Resume
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                  </motion.button>
+                  </motion.a>
                 </div>
               </div>
 
@@ -185,12 +187,12 @@ export function ActiveWorkspace() {
                 <ProjectCard 
                   id="nimbusx"
                   title="Nimbus X"
-                  badge="Cloud"
+                  badge="Chat"
                   badgeColor="text-sky-400 bg-sky-400/10 border-sky-400/20"
-                  desc="Cloud Storage Platform"
-                  icon={Cloud}
-                  iconColor="text-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(56,189,248,0.15)] border-sky-400/20"
-                  tags={['Intelligent File Organization', 'Modern Web Architecture']}
+                  desc="Real-time Android Messaging"
+                  icon={MessageSquare}
+                  iconColor="text-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(14,165,233,0.15)] border-sky-400/20"
+                  tags={['React Native', 'Cloud & Local Storage']}
                 />
 
                 {/* Project 3: StudyFlow */}
@@ -226,7 +228,7 @@ export function ActiveWorkspace() {
                 <User className="w-4 h-4 text-primary/80" />
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">ABOUT ME</span>
               </div>
-              <div className="p-5 rounded-2xl bg-[#0c0d12]/50 backdrop-blur-md border border-white/[0.03] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+              <div className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
                 <p className="text-xs text-muted-foreground/80 leading-relaxed app-body-text">
                   Software Engineering student currently pursuing a Bachelor's degree at Government Engineering College, Dahod. Interested in Artificial Intelligence, Machine Learning, Cloud Computing, and Full Stack Development. I enjoy building practical software solutions that combine engineering principles with real-world problem solving.
                 </p>
@@ -236,7 +238,7 @@ export function ActiveWorkspace() {
                   <StatItem value="4+" label="Projects Built" icon={Code2} iconBg="bg-blue-500/10 text-blue-400 border-blue-500/20" />
                   <StatItem value="Since 2021" label="Coding Journey" icon={Calendar} iconBg="bg-emerald-500/10 text-emerald-400 border-emerald-500/20" />
                   <StatItem value="1" label="Internship" icon={Briefcase} iconBg="bg-purple-500/10 text-purple-400 border-purple-500/20" />
-                  <StatItem value="AI • Full Stack • ML" label="Current Focus" icon={Layers} iconBg="bg-red-500/10 text-red-400 border-red-500/20" />
+                  <StatItem value="AI • ML" label="Current Focus" icon={Layers} iconBg="bg-red-500/10 text-red-400 border-red-500/20" />
                 </div>
               </div>
             </motion.div>
@@ -247,10 +249,10 @@ export function ActiveWorkspace() {
           <div className="lg:col-span-4 space-y-6">
             
             {/* ── Key Milestones ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 backdrop-blur-md border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-primary/80" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">KEY MILESTONES</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">KEY MILESTONES</span>
               </div>
 
               {/* Activity Dot list representing real milestones */}
@@ -264,17 +266,17 @@ export function ActiveWorkspace() {
 
               <button 
                 onClick={() => openWindow('timeline')}
-                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-[10px] font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
+                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-xs font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
               >
                 View Full Timeline <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </motion.div>
 
             {/* ── Tech Stack ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 backdrop-blur-md border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4 text-primary/80" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">TECH STACK</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">TECH STACK</span>
               </div>
 
               <div className="space-y-3.5 select-text">
@@ -287,23 +289,23 @@ export function ActiveWorkspace() {
 
               <button 
                 onClick={() => openWindow('skills')}
-                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-[10px] font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
+                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-xs font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
               >
                 View Full Stack <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </motion.div>
 
             {/* ── Quick Links ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 backdrop-blur-md border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
               <div className="flex items-center gap-2">
                 <ExternalLink className="w-4 h-4 text-primary/80" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">QUICK LINKS</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">QUICK LINKS</span>
               </div>
 
               <div className="space-y-2 select-text">
                 <QuickLinkItem label="GitHub" url="github.com/PREMRAJESH" href="https://github.com/PREMRAJESH" icon={Github} />
-                <QuickLinkItem label="LinkedIn" url="linkedin.com/in/gecdhd-comp-prem-sargara" href="https://www.linkedin.com/in/gecdhd-comp-prem-sargara/" icon={Linkedin} />
-                <QuickLinkItem label="Email" url="sargarapremrajesh@gmail.com" href="mailto:sargarapremrajesh@gmail.com" icon={Mail} />
+                <QuickLinkItem label="LinkedIn" url="linkedin.com/in/prem-sargara" href="https://www.linkedin.com/in/gecdhd-comp-prem-sargara/" icon={Linkedin} />
+                <QuickLinkItem label="Email" url="sargarapremrajesh@gmail.com" href="mailto:sargarapremrajesh@gmail.com" icon={Mail} isEmail />
                 <QuickLinkItem label="LeetCode" url="leetcode.com/u/Sargara_Prem" href="https://leetcode.com/u/Sargara_Prem/" icon={Code2} />
               </div>
             </motion.div>
@@ -347,7 +349,7 @@ function ProjectCard({
           <div className={`w-12 h-12 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${iconColor}`}>
             <Icon className="w-5 h-5" />
           </div>
-          <span className={`text-[8.5px] px-2 py-0.5 rounded-full border font-bold uppercase tracking-wide font-mono ${badgeColor}`}>
+          <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold uppercase tracking-wide font-mono ${badgeColor}`}>
             {badge}
           </span>
         </div>
@@ -356,7 +358,7 @@ function ProjectCard({
           <h3 className="text-sm font-bold text-white group-hover:text-primary transition-colors project-title">
             {title}
           </h3>
-          <p className="text-[11px] text-muted-foreground/85 leading-relaxed project-desc">
+          <p className="text-xs text-muted-foreground/85 leading-relaxed project-desc">
             {desc}
           </p>
         </div>
@@ -364,7 +366,7 @@ function ProjectCard({
         {/* Tech tags */}
         <div className="flex flex-wrap gap-1.5 pt-1">
           {tags.map((tag) => (
-            <span key={tag} className="text-[9px] font-mono text-muted-foreground/60 bg-white/5 border border-white/[0.03] px-2 py-0.5 rounded-md">
+            <span key={tag} className="text-[10px] font-mono text-muted-foreground/60 bg-white/5 border border-white/[0.03] px-2 py-0.5 rounded-md">
               {tag}
             </span>
           ))}
@@ -372,7 +374,7 @@ function ProjectCard({
       </div>
 
       {/* Footer links */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/[0.03] text-[10px] font-bold text-muted-foreground/50">
+      <div className="flex items-center justify-between pt-3 border-t border-white/[0.03] text-xs font-bold text-muted-foreground/50">
         <button 
           onClick={() => openWindow('projects', undefined, id)}
           className="hover:text-primary transition-colors flex items-center gap-1"
@@ -407,7 +409,7 @@ function StatItem({
     <div className="p-3.5 rounded-xl bg-[#06070a]/40 border border-white/[0.02] flex items-center justify-between gap-2">
       <div className="space-y-0.5">
         <div className="text-base font-black text-white leading-none stats-value">{value}</div>
-        <div className="text-[9px] font-medium text-muted-foreground/60 leading-tight stats-label">{label}</div>
+        <div className="text-[10px] font-medium text-muted-foreground/60 leading-tight stats-label">{label}</div>
       </div>
       <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${iconBg}`}>
         <Icon className="w-3.5 h-3.5" />
@@ -426,11 +428,11 @@ function ActivityItem({
   dotColor: string
 }) {
   return (
-    <div className="flex items-start gap-2.5 text-[10px] group">
+    <div className="flex items-start gap-2.5 text-xs group">
       <div className={`w-1.5 h-1.5 rounded-full shrink-0 mt-1.5 ${dotColor}`} />
       <div className="flex-1 min-w-0 space-y-0.5">
         <div className="text-muted-foreground/80 leading-normal group-hover:text-white transition-colors">{title}</div>
-        <div className="text-muted-foreground/35 font-mono">{time}</div>
+        <div className="text-muted-foreground/35 font-mono text-[10px]">{time}</div>
       </div>
     </div>
   )
@@ -444,11 +446,11 @@ function StackCategory({
   items: string[]
 }) {
   return (
-    <div className="space-y-1.5 text-[10px]">
-      <span className="block text-muted-foreground/45 font-bold uppercase tracking-wider text-[8px]">{title}</span>
+    <div className="space-y-1.5 text-xs">
+      <span className="block text-muted-foreground/45 font-bold uppercase tracking-wider text-[10px]">{title}</span>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
-          <span key={item} className="px-2 py-0.5 rounded-md bg-[#06070a]/50 text-muted-foreground/80 border border-white/[0.03] font-mono">
+          <span key={item} className="px-2 py-0.5 rounded-md bg-[#06070a]/50 text-muted-foreground/80 border border-white/[0.03] font-mono hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all cursor-default">
             {item}
           </span>
         ))}
@@ -461,27 +463,39 @@ function QuickLinkItem({
   label,
   url,
   href,
-  icon: Icon
+  icon: Icon,
+  isEmail
 }: {
   label: string
   url: string
   href: string
   icon: any
+  isEmail?: boolean
 }) {
+  const { openWindow } = useOSStore()
+  
+  const handleClick = (e: React.MouseEvent) => {
+    if (isEmail) {
+      e.preventDefault()
+      openWindow('quick-links')
+    }
+  }
+
   return (
     <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-between p-2.5 rounded-xl bg-[#06070a]/40 border border-white/[0.02] hover:border-primary/20 hover:bg-white/[0.02] transition-all group"
+      href={isEmail ? '#' : href}
+      target={isEmail ? undefined : "_blank"}
+      rel={isEmail ? undefined : "noopener noreferrer"}
+      onClick={handleClick}
+      className="flex-1 flex items-center justify-between p-2.5 rounded-xl bg-[#06070a]/40 border border-white/[0.02] hover:border-primary/20 hover:bg-white/[0.02] transition-all group"
     >
       <div className="flex items-center gap-2.5 min-w-0">
         <div className="p-1.5 rounded-lg bg-white/5 text-muted-foreground group-hover:text-primary transition-colors">
           <Icon className="w-3.5 h-3.5" />
         </div>
         <div className="min-w-0">
-          <div className="text-[10px] font-bold text-white leading-none">{label}</div>
-          <div className="text-[8.5px] text-muted-foreground/50 font-mono truncate mt-0.5">{url}</div>
+          <div className="text-xs font-bold text-white leading-none">{label}</div>
+          <div className="text-[10px] text-muted-foreground/50 font-mono truncate mt-0.5">{url}</div>
         </div>
       </div>
       <svg className="w-3 h-3 text-muted-foreground/30 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

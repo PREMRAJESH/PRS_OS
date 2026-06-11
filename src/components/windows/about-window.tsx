@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useOSStore } from '@/store/os-store'
 import { 
   Github, 
   Linkedin, 
@@ -96,7 +97,7 @@ export function AboutWindow() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <SocialLink icon={Github} label="GitHub" href="https://github.com/PREMRAJESH" username="@PREMRAJESH" />
             <SocialLink icon={Linkedin} label="LinkedIn" href="https://www.linkedin.com/in/gecdhd-comp-prem-sargara/" username="in/gecdhd-comp-prem-sargara" />
-            <SocialLink icon={Mail} label="Email" href="mailto:sargarapremrajesh@gmail.com" username="sargarapremrajesh@gmail.com" />
+            <SocialLink icon={Mail} label="Email" href="#" username="sargarapremrajesh@gmail.com" onClick={() => useOSStore.getState().openWindow('quick-links')} />
             <SocialLink icon={Code2} label="LeetCode" href="https://leetcode.com/u/Sargara_Prem/" username="u/Sargara_Prem" />
           </div>
         </motion.div>
@@ -122,19 +123,22 @@ function SocialLink({
   icon: Icon, 
   label, 
   href, 
-  username 
+  username,
+  onClick
 }: { 
   icon: any
   label: string
   href: string
   username: string
+  onClick?: () => void
 }) {
   return (
     <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/30 hover:bg-white/[0.05] transition-all group"
+      href={onClick ? undefined : href}
+      target={onClick ? undefined : "_blank"}
+      rel={onClick ? undefined : "noopener noreferrer"}
+      onClick={onClick ? (e) => { e.preventDefault(); onClick() } : undefined}
+      className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primary/30 hover:bg-white/[0.05] transition-all group cursor-pointer"
     >
       <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
         <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -143,7 +147,9 @@ function SocialLink({
         <div className="text-xs font-bold text-white uppercase tracking-tight">{label}</div>
         <div className="text-xs text-muted-foreground/60 truncate font-mono mt-0.5">{username}</div>
       </div>
-      <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+      {!onClick && (
+        <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+      )}
     </a>
   )
 }

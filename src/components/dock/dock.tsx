@@ -6,10 +6,13 @@ import { useOSStore, type WindowType, type Window } from '@/store/os-store'
 import {
   FolderOpen,
   Terminal,
-  FileText,
-  Cpu,
+  Code,
   Github,
   Globe,
+  Mail,
+  BookOpen,
+  User,
+  Brain,
 } from 'lucide-react'
 
 interface DockApp {
@@ -25,8 +28,7 @@ const dockItems: DockApp[] = [
   { type: 'terminal',  icon: Terminal,   label: 'Terminal',   color: 'text-emerald-400', activeGlow: 'rgba(52,211,153,0.3)' },
   { type: 'runtime',   icon: Globe,      label: 'Runtime',    color: 'text-violet-400',  activeGlow: 'rgba(167,139,250,0.3)' },
   { type: 'github',    icon: Github,     label: 'GitHub',     color: 'text-white/80',    activeGlow: 'rgba(255,255,255,0.15)' },
-  { type: 'resume',    icon: FileText,   label: 'Resume',     color: 'text-amber-400',   activeGlow: 'rgba(251,191,36,0.2)' },
-  { type: 'skills',    icon: Cpu,        label: 'Skills',     color: 'text-rose-400',    activeGlow: 'rgba(251,113,133,0.2)' },
+  { type: 'skills',    icon: Code,       label: 'Skills',     color: 'text-rose-400',    activeGlow: 'rgba(251,113,133,0.2)' },
 ]
 
 export function Dock() {
@@ -42,7 +44,7 @@ export function Dock() {
       onMouseLeave={() => mouseX.set(Infinity)}
       className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[1000]"
     >
-      <div className="flex items-end gap-2.5 px-4 py-3 rounded-[24px] bg-[oklch(0.08_0.01_240/0.75)] backdrop-blur-3xl shadow-[0_24px_80px_-12px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)] ring-1 ring-inset ring-white/5">
+      <div className="flex items-end gap-2.5 px-4 py-3 rounded-[24px] bg-[oklch(0.08_0.01_240/0.75)] shadow-[0_24px_80px_-12px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)] ring-1 ring-inset ring-white/5">
         {dockItems.map((item) => {
           const openInstances = windows.filter(w => w.type === item.type)
           const isActive = openInstances.some(w => w.id === activeWindow)
@@ -105,16 +107,17 @@ function getIconForType(type: WindowType) {
   const icons: Record<WindowType, any> = {
     projects: FolderOpen,
     terminal: Terminal,
-    resume: FileText,
-    skills: Cpu,
-    timeline: FileText,
-    settings: Cpu,
-    about: FileText,
+    resume: BookOpen,
+    skills: Code,
+    timeline: BookOpen,
+    settings: Code,
+    about: User,
     github: Github,
     runtime: Globe,
-    'ai-assistant': Globe,
+    'ai-assistant': Brain,
+    'quick-links': Mail,
   }
-  return icons[type] || FileText
+  return icons[type] || BookOpen
 }
 
 interface DockIconProps {
@@ -184,7 +187,7 @@ function DockIcon({ mouseX, app, isActive, hasOpenWindow, isMinimized, windows, 
             animate={{ opacity: 1, y: -12, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 28 }}
-            className="absolute -top-12 px-3 py-1.5 rounded-xl bg-[oklch(0.12_0.01_240/0.98)] backdrop-blur-2xl text-[10px] font-black uppercase tracking-wider text-white/90 whitespace-nowrap pointer-events-none shadow-[0_12px_40px_rgba(0,0,0,0.7)] border border-white/10"
+            className="absolute -top-12 px-3 py-1.5 rounded-xl bg-[oklch(0.12_0.01_240/0.98)] text-[10px] font-black uppercase tracking-wider text-white/90 whitespace-nowrap pointer-events-none shadow-[0_12px_40px_rgba(0,0,0,0.7)] border border-white/10"
           >
             {app.label}
           </motion.div>
@@ -204,18 +207,20 @@ function DockIcon({ mouseX, app, isActive, hasOpenWindow, isMinimized, windows, 
             ? `bg-white/[0.12] ${app.color} shadow-[0_0_20px_${app.activeGlow}]` 
             : 'bg-white/[0.04] text-white/40 hover:bg-white/[0.08] hover:text-white/80'
           }
-          ${isMinimized ? 'opacity-50' : ''}
+          ${isMinimized ? 'opacity-60 ring-1 ring-white/10' : ''}
         `}
       >
         <app.icon className="w-[45%] h-[45%] transition-transform duration-300 group-hover:scale-110" />
         
-        {/* Active indicator dot */}
+        {/* Active indicator dot — always visible for minimized windows */}
         {hasOpenWindow && (
           <div 
             className={`absolute -bottom-2 w-1.5 h-1.5 rounded-full transition-all duration-500 ${
               isActive 
                 ? `bg-current shadow-[0_0_8px_currentColor] scale-100` 
-                : 'bg-white/30 scale-75'
+                : isMinimized
+                  ? 'bg-white/50 scale-100'
+                  : 'bg-white/30 scale-75'
             }`}
           />
         )}

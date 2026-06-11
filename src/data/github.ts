@@ -5,7 +5,6 @@ export interface GithubRepo {
   description: string
   language: string
   languageColor: string
-  stars: number
   forks: number
   watchers: number
   issues: number
@@ -64,7 +63,6 @@ export const githubRepos: GithubRepo[] = [
     description: 'AI-powered brain tumor detection and classification web app for MRI scans, using EfficientNetB0 and ONNX Runtime.',
     language: 'Python',
     languageColor: '#3572A5',
-    stars: 245,
     forks: 34,
     watchers: 12,
     issues: 2,
@@ -97,7 +95,6 @@ export const githubRepos: GithubRepo[] = [
     description: 'AI-powered study planner & productivity platform featuring smart scheduling with Google Gemini AI and Supabase.',
     language: 'TypeScript',
     languageColor: '#3178c6',
-    stars: 188,
     forks: 22,
     watchers: 15,
     issues: 0,
@@ -127,31 +124,27 @@ export const githubRepos: GithubRepo[] = [
     id: 'nimbusx',
     name: 'NimbusX',
     fullName: 'PREMRAJESH/NimbusX',
-    description: 'Cloud Storage Platform featuring intelligent file organization and modern web architecture.',
+    description: 'A real-time mobile messaging app built with React Native, TypeScript, Supabase, and Redux Toolkit.',
     language: 'TypeScript',
     languageColor: '#3178c6',
-    stars: 234,
-    forks: 42,
-    watchers: 18,
-    issues: 3,
+    forks: 0,
+    watchers: 0,
+    issues: 0,
     license: 'MIT',
     defaultBranch: 'main',
-    branches: ['main', 'dev', 'feature/file-categorization'],
-    lastPush: '3 days ago',
+    branches: ['main'],
+    lastPush: '5 days ago',
     createdAt: 'Jan 2025',
-    topics: ['react', 'firebase', 'cloud-storage', 'intelligent-file-organization', 'typescript'],
-    homepage: 'https://nimbusx.vercel.app',
-    readme: `# Nimbus X ☁️\n\nCloud Storage Platform with intelligent file organization and modern web architecture.`,
+    topics: ['react-native', 'typescript', 'supabase', 'redux-toolkit', 'android', 'chat-app'],
+    readme: `# Nimbus X 💬\n\nA real-time mobile messaging app built with React Native, TypeScript, Supabase, and Redux Toolkit.`,
     contributors: [
-      { name: 'Prem Rajesh', avatar: 'PR', commits: 187, role: 'Creator' },
+      { name: 'Prem Rajesh', avatar: 'PR', commits: 49, role: 'Creator' },
     ],
     commits: [
-      { hash: 'a1b2c3d', message: 'feat: implement semantic search using metadata vectors', author: 'Prem Rajesh', date: '3 days ago', additions: 342, deletions: 18 },
-      { hash: 'e4f5g6h', message: 'fix: optimize chunked uploads to Firebase Storage', author: 'Prem Rajesh', date: '4 days ago', additions: 28, deletions: 12 },
+      { hash: '34c043f', message: 'chore(assets): add app logo and general static media assets', author: 'Prem Rajesh', date: '5 days ago', additions: 0, deletions: 0 },
+      { hash: 'a1b2c3d', message: 'feat: migrate from Firebase/Cloudinary to Supabase', author: 'Prem Rajesh', date: '3 weeks ago', additions: 0, deletions: 0 },
     ],
-    deployments: [
-      { env: 'Production', status: 'active', url: 'https://nimbusx.vercel.app', provider: 'Vercel', lastDeploy: '3 days ago' },
-    ],
+    deployments: [],
     files: [
       { name: 'README.md', type: 'file', lang: 'md', size: '2.1K', content: '# Nimbus X Cloud Storage' }
     ],
@@ -163,7 +156,6 @@ export const githubRepos: GithubRepo[] = [
     description: 'Interactive multi-language code and algorithm visualization platform, parsing scripts into dynamic trees.',
     language: 'TypeScript',
     languageColor: '#3178c6',
-    stars: 156,
     forks: 18,
     watchers: 10,
     issues: 1,
@@ -196,7 +188,6 @@ export const githubRepos: GithubRepo[] = [
     description: 'AI-powered developer OS portfolio with window management, command palette, and integrated terminal.',
     language: 'TypeScript',
     languageColor: '#3178c6',
-    stars: 312,
     forks: 28,
     watchers: 45,
     issues: 0,

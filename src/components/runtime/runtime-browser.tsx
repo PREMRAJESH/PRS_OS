@@ -296,7 +296,7 @@ export function RuntimeBrowser() {
 
                 {/* Runtime Viewport Metrics */}
                 <div className="absolute bottom-4 right-4 flex items-center gap-3 z-30 pointer-events-none">
-                  <div className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-xl border border-white/5 flex items-center gap-2.5 shadow-2xl">
+                  <div className="px-3 py-1.5 rounded-full bg-black/70 border border-white/5 flex items-center gap-2.5 shadow-2xl">
                     <div className="flex items-center gap-1.5">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       <span className="text-[8px] font-black text-emerald-500/80 uppercase tracking-widest">Live</span>
