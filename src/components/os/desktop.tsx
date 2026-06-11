@@ -28,17 +28,7 @@ export function Desktop() {
     mouseY.set(e.clientY)
   }, [mouseX, mouseY])
 
-  // Auto-open terminal on first desktop mount for "alive" feel
-  useEffect(() => {
-    const alreadyOpened = sessionStorage.getItem('prs-os-auto-opened')
-    if (!alreadyOpened) {
-      sessionStorage.setItem('prs-os-auto-opened', 'true')
-      const timer = setTimeout(() => {
-        openWindow('terminal')
-      }, 800)
-      return () => clearTimeout(timer)
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
 
   // Keyboard shortcuts
   useEffect(() => {
