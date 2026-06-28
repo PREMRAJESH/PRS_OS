@@ -8,14 +8,14 @@ import { TopBar } from './top-bar'
 import { WindowManager } from './window-manager'
 import { CommandPalette } from '../command/command-palette'
 import { ActiveWorkspace } from './active-workspace'
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 
 export function Desktop() {
-  const { commandPaletteOpen, toggleCommandPalette, openWindow } = useOSStore()
+  const { commandPaletteOpen, toggleCommandPalette, openWindow, setWorkArea, sidebarCollapsed } = useOSStore()
   // Mouse reactive lighting
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  
+
   const springX = useSpring(mouseX, { stiffness: 40, damping: 30 })
   const springY = useSpring(mouseY, { stiffness: 40, damping: 30 })
 
@@ -28,7 +28,39 @@ export function Desktop() {
     mouseY.set(e.clientY)
   }, [mouseX, mouseY])
 
+  // ── Measure the real usable work area (<main>) so windows can fit inside it ──
+  const workspaceRef = useRef<HTMLElement>(null)
 
+  useEffect(() => {
+    const el = workspaceRef.current
+    if (!el) return
+
+    const sync = () => {
+      const rect = el.getBoundingClientRect()
+      // Guard against zero-size during initial mount
+      if (rect.width === 0 || rect.height === 0) return
+      setWorkArea({
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+        height: rect.height,
+      })
+    }
+
+    // Initial measurement (deferred so layout has settled)
+    const frame = requestAnimationFrame(sync)
+
+    // Track any size changes to <main> (viewport resize, sidebar collapse/expand, etc.)
+    const ro = new ResizeObserver(sync)
+    ro.observe(el)
+
+    window.addEventListener('resize', sync)
+    return () => {
+      cancelAnimationFrame(frame)
+      ro.disconnect()
+      window.removeEventListener('resize', sync)
+    }
+  }, [setWorkArea, sidebarCollapsed])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -104,8 +136,8 @@ export function Desktop() {
         {/* Sidebar */}
         <Sidebar />
 
-        {/* Main content area */}
-        <main className="flex-1 relative overflow-hidden bg-background/30 workspace-glow">
+        {/* Main content area — windows live here, so this is the work area */}
+        <main ref={workspaceRef} className="flex-1 relative overflow-hidden bg-background/30 workspace-glow">
           <ActiveWorkspace />
           <WindowManager />
         </main>

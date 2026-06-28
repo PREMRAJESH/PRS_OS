@@ -25,6 +25,12 @@ const coreCertificates: CoreCertificate[] = [
     description: 'Completed Computer Software Engineering Diploma program (CPI: 8.33).'
   },
   {
+    title: 'AI Automation & Intelligent Solutions Internship',
+    issuer: 'CSRBOX × IBM SkillsBuild × AICTE',
+    date: 'June 2026 – Present',
+    description: 'AICTE certified program covering AI Automation, Agentic AI & Workflow Automation, IBM SkillsBuild Learning Path, and hands-on AI projects with industry mentorship.'
+  },
+  {
     title: 'Web Development Internship Certificate',
     issuer: 'BrainyBeam Technologies Pvt. Ltd.',
     date: 'September 2022',

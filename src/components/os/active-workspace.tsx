@@ -237,7 +237,7 @@ export function ActiveWorkspace() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <StatItem value="4+" label="Projects Built" icon={Code2} iconBg="bg-blue-500/10 text-blue-400 border-blue-500/20" />
                   <StatItem value="Since 2021" label="Coding Journey" icon={Calendar} iconBg="bg-emerald-500/10 text-emerald-400 border-emerald-500/20" />
-                  <StatItem value="1" label="Internship" icon={Briefcase} iconBg="bg-purple-500/10 text-purple-400 border-purple-500/20" />
+                  <StatItem value="2" label="Internships" icon={Briefcase} iconBg="bg-purple-500/10 text-purple-400 border-purple-500/20" />
                   <StatItem value="AI • ML" label="Current Focus" icon={Layers} iconBg="bg-red-500/10 text-red-400 border-red-500/20" />
                 </div>
               </div>
@@ -261,6 +261,7 @@ export function ActiveWorkspace() {
                 <ActivityItem title="Built NeuroScan AI & StudyFlow" time="2025" dotColor="bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.5)]" />
                 <ActivityItem title="Started B.E. at GEC Dahod" time="2024" dotColor="bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
                 <ActivityItem title="Completed Diploma at Govt. Polytechnic" time="2024" dotColor="bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+                <ActivityItem title="Started AI Automation Internship at CSRBOX × IBM SkillsBuild × AICTE" time="2026" dotColor="bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                 <ActivityItem title="Completed Web Dev Internship at BrainyBeam" time="2022" dotColor="bg-purple-400 shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
               </div>
 

@@ -253,6 +253,9 @@ export function TerminalWindow() {
         openWindow('experience')
         out([
           '',
+          '  CSRBOX × IBM SkillsBuild × AICTE',
+          '  AI Automation & Intelligent Solutions Intern (June 2026 - Present)',
+          '',
           '  BrainyBeam Technologies Pvt. Ltd.',
           '  Web Development Intern (September 2022)',
           '',

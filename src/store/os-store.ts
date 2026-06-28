@@ -38,6 +38,17 @@ export interface Window {
 
 export type ThemeName = 'ai-lab' | 'matrix' | 'minimal' | 'cyber' | 'synthwave' | 'ubuntu'
 
+export interface WorkArea {
+  /** absolute screen-space offset of the work area (left edge) */
+  left: number
+  /** absolute screen-space offset of the work area (top edge, below top bar) */
+  top: number
+  /** usable width (viewport minus sidebar) */
+  width: number
+  /** usable height (viewport minus top bar) */
+  height: number
+}
+
 interface OSState {
   windows: Window[]
   activeWindow: string | null
@@ -45,7 +56,9 @@ interface OSState {
   sidebarCollapsed: boolean
   currentTheme: ThemeName
   maxZIndex: number
-  
+  /** Real usable area where windows may live (measured from the desktop <main>) */
+  workArea: WorkArea
+
   openWindow: (type: WindowType, title?: string, query?: string, triggerPosition?: { x: number; y: number }) => void
   closeWindow: (id: string) => void
   focusWindow: (id: string) => void
@@ -61,6 +74,7 @@ interface OSState {
   setDockRect: (id: string, rect: { x: number; y: number; width: number; height: number }) => void
   reorderWindows: (id: string) => void
   minimizeAll: () => void
+  setWorkArea: (area: WorkArea) => void
 }
 
 const defaultSizes: Record<WindowType, { width: number; height: number }> = {
@@ -99,22 +113,51 @@ const defaultTitles: Record<WindowType, string> = {
 
 let windowIdCounter = 0
 
+// Fallback when no work area has been measured yet (SSR / first paint)
+const DEFAULT_WORKAREA: WorkArea = {
+  left: 56,
+  top: 44,
+  width: typeof window !== 'undefined' ? window.innerWidth - 56 : 1920 - 56,
+  height: typeof window !== 'undefined' ? window.innerHeight - 44 : 1080 - 44,
+}
+
+const TITLE_BAR_H = 40
+// Minimum amount of a window that must stay visible when dragged around
+const MIN_VISIBLE_W = 100
+
+function getWorkArea(): WorkArea {
+  // Default fallback covers the common collapsed-sidebar case (56px) + top bar (~44px)
+  return useOSStore.getState().workArea ?? DEFAULT_WORKAREA
+}
+
+/**
+ * Clamp a window position. Window x/y are LOCAL to the desktop <main>
+ * (the window's offset parent), so the usable space is [0..area.width] × [0..area.height].
+ */
 function clampPosition(
   pos: { x: number; y: number },
   size: { width: number; height: number },
+  area = getWorkArea(),
 ): { x: number; y: number } {
-  if (typeof window === 'undefined') return pos
-  const vw = window.innerWidth
-  const vh = window.innerHeight
-  const TITLE_BAR_H = 40
-  const MIN_VISIBLE = 100 // Amount of window that must remain on screen
-
   return {
-    // Keep at least MIN_VISIBLE px horizontally on screen
-    x: Math.min(Math.max(-(size.width - MIN_VISIBLE), pos.x), vw - MIN_VISIBLE),
-    // Top edge: Title bar must ALWAYS be visible. 
-    // Bottom edge: Keep at least TITLE_BAR_H visible.
-    y: Math.min(Math.max(0, pos.y), vh - TITLE_BAR_H),
+    // Keep at least MIN_VISIBLE_W px horizontally within the work area
+    x: Math.min(Math.max(0, pos.x), Math.max(0, area.width - MIN_VISIBLE_W)),
+    // Title bar must ALWAYS be visible at the top; clamp bottom within the work area.
+    y: Math.min(Math.max(0, pos.y), Math.max(0, area.height - TITLE_BAR_H)),
+  }
+}
+
+/**
+ * Shrink a window's size so it never exceeds the usable work area
+ * (prevents content from being clipped at the edges).
+ */
+function fitSize(
+  size: { width: number; height: number },
+  area = getWorkArea(),
+): { width: number; height: number } {
+  return {
+    width: Math.min(size.width, area.width),
+    height: Math.min(size.height, area.height),
   }
 }
 
@@ -132,6 +175,34 @@ export const useOSStore = create<OSState>((set, get) => ({
   sidebarCollapsed: false,
   currentTheme: 'ai-lab',
   maxZIndex: 100,
+  workArea: DEFAULT_WORKAREA,
+
+  setWorkArea: (area) => {
+    const prev = get().workArea
+    // Avoid spurious updates (ResizeObserver fires continuously)
+    if (
+      prev.left === area.left &&
+      prev.top === area.top &&
+      prev.width === area.width &&
+      prev.height === area.height
+    ) {
+      return
+    }
+
+    const { windows } = get()
+    // Re-clamp every open, non-maximized window so it stays inside the new area
+    const updated = windows.map((w) => {
+      if (w.isMaximized) return w
+      const size = fitSize(w.size, area)
+      return {
+        ...w,
+        size,
+        position: clampPosition(w.position, size, area),
+      }
+    })
+
+    set({ workArea: area, windows: updated })
+  },
 
   reorderWindows: (id) => {
     const { windows } = get()
@@ -167,17 +238,18 @@ export const useOSStore = create<OSState>((set, get) => ({
     }
 
     const id = `window-${++windowIdCounter}`
-    const size = defaultSizes[type]
-    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1400
-    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 900
-    
+    const area = get().workArea
+    // Never let a fresh window be larger than the usable work area
+    const size = fitSize(defaultSizes[type], area)
+
     const offset = (windows.length % 6) * 32
     const position = clampPosition(
       {
-        x: (screenWidth - size.width) / 2 + offset,
-        y: (screenHeight - size.height) / 2 + offset - 40,
+        x: (area.width - size.width) / 2 + offset,
+        y: (area.height - size.height) / 2 + offset - 20,
       },
       size,
+      area,
     )
 
     const newWindow: Window = {
@@ -286,6 +358,11 @@ export const useOSStore = create<OSState>((set, get) => ({
 
     if (target.isMaximized) {
       const prev = target.preMaximize
+      const area = get().workArea
+      // The restored size must still fit the current work area (the user may
+      // have resized the window or the viewport/sidebar changed while maximized)
+      const restoredSize = fitSize(prev?.size || target.size, area)
+      const restoredPosition = clampPosition(prev?.position || target.position, restoredSize, area)
       set({
         windows: windows.map(w => 
           w.id === id
@@ -293,8 +370,8 @@ export const useOSStore = create<OSState>((set, get) => ({
                 ...w,
                 isMaximized: false,
                 zIndex: newZ,
-                position: prev?.position || w.position,
-                size: prev?.size || w.size,
+                position: restoredPosition,
+                size: restoredSize,
                 preMaximize: undefined,
                 lastFocusedAt: Date.now(),
               }
@@ -348,10 +425,12 @@ export const useOSStore = create<OSState>((set, get) => ({
   },
 
   updateWindowSize: (id, size) => {
+    const area = get().workArea
+    const fitted = fitSize(size, area)
     const { windows } = get()
     set({
       windows: windows.map(w => 
-        w.id === id ? { ...w, size } : w
+        w.id === id ? { ...w, size: fitted } : w
       ),
     })
   },

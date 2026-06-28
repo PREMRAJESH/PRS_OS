@@ -24,6 +24,7 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
     activeWindow,
     updateWindowPosition,
     updateWindowSize,
+    workArea,
   } = useOSStore()
 
   const windowRef = useRef<HTMLDivElement>(null)
@@ -53,27 +54,28 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
   }, [win.position.x, win.position.y, win.size.width, win.size.height, isDragging, isResizing, x, y, w, h])
 
   // ── Viewport clamping & Snapping ──
+  // Window x/y are LOCAL to the desktop <main> (its offset parent), so the
+  // usable space spans [0..workArea.width] × [0..workArea.height].
   const getClampedPos = useCallback((rawX: number, rawY: number): [number, number] => {
-    const vw = window.innerWidth
-    const vh = window.innerHeight
+    const { width: areaW, height: areaH } = workArea
     const curW = w.get()
     const curH = h.get()
 
     let cx = rawX
     let cy = rawY
 
-    // Snapping logic
+    // Snapping logic (relative to the work area edges)
     if (Math.abs(cx) < EDGE_SNAP) cx = 0
-    if (Math.abs(cx + curW - vw) < EDGE_SNAP) cx = vw - curW
+    if (Math.abs(cx + curW - areaW) < EDGE_SNAP) cx = areaW - curW
     if (Math.abs(cy) < EDGE_SNAP) cy = 0
-    if (Math.abs(cy + curH - vh) < EDGE_SNAP) cy = vh - curH
+    if (Math.abs(cy + curH - areaH) < EDGE_SNAP) cy = areaH - curH
 
-    // Hard constraints: Never lose the window
-    cx = Math.min(Math.max(-(curW - MIN_VISIBLE_HEADER), cx), vw - MIN_VISIBLE_HEADER)
-    cy = Math.min(Math.max(0, cy), vh - TITLE_BAR_H)
+    // Hard constraints: never lose the window within the work area
+    cx = Math.min(Math.max(0, cx), Math.max(0, areaW - MIN_VISIBLE_HEADER))
+    cy = Math.min(Math.max(0, cy), Math.max(0, areaH - TITLE_BAR_H))
 
     return [cx, cy]
-  }, [w, h])
+  }, [w, h, workArea])
 
   // ── Drag handler ──
   const handleDragStart = useCallback((e: React.PointerEvent) => {
@@ -152,8 +154,10 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
 
   // ── Animation Setup ──
   const dockRect = win.dockRect
-  const dockX = dockRect ? dockRect.x + dockRect.width / 2 : window.innerWidth / 2
-  const dockY = dockRect ? dockRect.y + dockRect.height / 2 : window.innerHeight
+  // Dock rect is measured in screen coords; convert to <main>-local space so the
+  // minimized window flies toward the actual dock icon.
+  const dockX = dockRect ? dockRect.x + dockRect.width / 2 - workArea.left : workArea.width / 2
+  const dockY = dockRect ? dockRect.y + dockRect.height / 2 - workArea.top : workArea.height
 
   const variants: any = {
     standard: {
@@ -176,10 +180,13 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
     maximized: {
       opacity: 1,
       scale: 1,
+      // Windows are absolute-positioned inside the desktop <main>, so local
+      // origin (0,0) maps to the top-left of that <main>. Filling its measured
+      // width/height guarantees the window never overflows the work area.
       x: 0,
       y: 0,
-      width: '100vw',
-      height: '100vh',
+      width: workArea.width,
+      height: workArea.height,
       borderRadius: 0,
       filter: 'blur(0px) brightness(1)',
       pointerEvents: 'auto',
@@ -226,11 +233,12 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
   return (
     <motion.div
       ref={windowRef}
-      initial={triggerPos ? { 
-        opacity: 0, 
-        scale: 0.2, 
-        x: triggerPos.x - win.size.width/2, 
-        y: triggerPos.y - win.size.height/2 
+      initial={triggerPos ? {
+        opacity: 0,
+        scale: 0.2,
+        // triggerPos is screen coords from the dock icon; convert to <main>-local space
+        x: triggerPos.x - workArea.left - win.size.width/2,
+        y: triggerPos.y - workArea.top - win.size.height/2
       } : 'minimized'}
       animate={currentState}
       variants={variants}

@@ -69,6 +69,15 @@ const milestones: Milestone[] = [
     tags: ['education', '8.33 CPI']
   },
   {
+    year: '2026',
+    title: 'Started AI Automation & Intelligent Solutions Internship',
+    institution: 'CSRBOX × IBM SkillsBuild × AICTE',
+    description: 'Engaged in AI automation, agentic AI workflows, and hands-on AI projects through the IBM SkillsBuild learning path — an AICTE certified program.',
+    icon: Briefcase,
+    iconColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    tags: ['internship', 'csrbox', 'ibm', 'aicte']
+  },
+  {
     year: '2022',
     title: 'Completed Web Development Internship',
     institution: 'BrainyBeam Technologies',
