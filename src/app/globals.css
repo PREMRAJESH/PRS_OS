@@ -209,6 +209,137 @@
   pointer-events: none;
 }
 
+/* ─── Theme Classes ─── */
+
+.theme-ai-lab {
+}
+
+.theme-matrix {
+  --background: oklch(0.05 0.01 140);
+  --foreground: oklch(0.85 0.18 150);
+  --primary: oklch(0.7 0.25 145);
+  --primary-foreground: oklch(0.05 0.01 140);
+  --secondary: oklch(0.1 0.02 140);
+  --accent: oklch(0.6 0.2 155);
+  --muted: oklch(0.12 0.01 140);
+  --muted-foreground: oklch(0.45 0.08 150);
+  --border: oklch(0.15 0.04 145);
+  --ring: oklch(0.7 0.25 145);
+  --glow: oklch(0.7 0.25 145 / 0.35);
+  --glow-accent: oklch(0.6 0.2 155 / 0.3);
+  --terminal-green: oklch(0.78 0.18 150);
+  --sidebar: oklch(0.06 0.01 140);
+  --sidebar-foreground: oklch(0.75 0.15 150);
+  --sidebar-primary: oklch(0.7 0.25 145);
+  --sidebar-accent: oklch(0.1 0.02 140);
+  --sidebar-border: oklch(0.12 0.03 145);
+  --sidebar-ring: oklch(0.7 0.25 145);
+  --chart-1: oklch(0.7 0.25 145);
+  --chart-2: oklch(0.6 0.2 155);
+  --chart-3: oklch(0.5 0.15 130);
+  --chart-4: oklch(0.8 0.2 150);
+  --chart-5: oklch(0.65 0.18 140);
+}
+
+.theme-minimal {
+  --background: oklch(0.1 0.005 260);
+  --foreground: oklch(0.96 0 0);
+  --primary: oklch(0.92 0 0);
+  --primary-foreground: oklch(0.1 0.005 260);
+  --secondary: oklch(0.16 0.005 260);
+  --accent: oklch(0.55 0 0);
+  --muted: oklch(0.18 0.005 260);
+  --muted-foreground: oklch(0.55 0 0);
+  --border: oklch(0.22 0.005 260);
+  --ring: oklch(0.92 0 0);
+  --glow: oklch(0.92 0 0 / 0.15);
+  --glow-accent: oklch(0.55 0 0 / 0.12);
+  --sidebar: oklch(0.12 0.005 260);
+  --sidebar-foreground: oklch(0.92 0 0);
+  --sidebar-primary: oklch(0.92 0 0);
+  --sidebar-accent: oklch(0.16 0.005 260);
+  --sidebar-border: oklch(0.2 0.005 260);
+  --sidebar-ring: oklch(0.92 0 0);
+}
+
+.theme-cyber {
+  --background: oklch(0.06 0.02 280);
+  --foreground: oklch(0.95 0.01 0);
+  --primary: oklch(0.75 0.22 20);
+  --primary-foreground: oklch(0.06 0.02 280);
+  --secondary: oklch(0.12 0.03 280);
+  --accent: oklch(0.85 0.18 80);
+  --muted: oklch(0.14 0.02 280);
+  --muted-foreground: oklch(0.5 0.04 0);
+  --border: oklch(0.2 0.04 280);
+  --ring: oklch(0.75 0.22 20);
+  --glow: oklch(0.75 0.22 20 / 0.35);
+  --glow-accent: oklch(0.85 0.18 80 / 0.3);
+  --sidebar: oklch(0.08 0.02 280);
+  --sidebar-foreground: oklch(0.9 0.01 0);
+  --sidebar-primary: oklch(0.75 0.22 20);
+  --sidebar-accent: oklch(0.12 0.03 280);
+  --sidebar-border: oklch(0.18 0.04 280);
+  --sidebar-ring: oklch(0.75 0.22 20);
+  --chart-1: oklch(0.75 0.22 20);
+  --chart-2: oklch(0.85 0.18 80);
+  --chart-3: oklch(0.6 0.15 300);
+  --chart-4: oklch(0.7 0.2 150);
+  --chart-5: oklch(0.65 0.16 340);
+}
+
+.theme-synthwave {
+  --background: oklch(0.08 0.03 310);
+  --foreground: oklch(0.95 0.02 0);
+  --primary: oklch(0.8 0.22 330);
+  --primary-foreground: oklch(0.08 0.03 310);
+  --secondary: oklch(0.14 0.04 310);
+  --accent: oklch(0.85 0.18 220);
+  --muted: oklch(0.16 0.03 310);
+  --muted-foreground: oklch(0.55 0.04 0);
+  --border: oklch(0.22 0.05 310);
+  --ring: oklch(0.8 0.22 330);
+  --glow: oklch(0.8 0.22 330 / 0.35);
+  --glow-accent: oklch(0.85 0.18 220 / 0.3);
+  --sidebar: oklch(0.1 0.03 310);
+  --sidebar-foreground: oklch(0.9 0.02 0);
+  --sidebar-primary: oklch(0.8 0.22 330);
+  --sidebar-accent: oklch(0.14 0.04 310);
+  --sidebar-border: oklch(0.2 0.05 310);
+  --sidebar-ring: oklch(0.8 0.22 330);
+  --chart-1: oklch(0.8 0.22 330);
+  --chart-2: oklch(0.85 0.18 220);
+  --chart-3: oklch(0.7 0.15 280);
+  --chart-4: oklch(0.75 0.2 150);
+  --chart-5: oklch(0.7 0.16 30);
+}
+
+.theme-ubuntu {
+  --background: oklch(0.08 0.02 20);
+  --foreground: oklch(0.93 0.01 0);
+  --primary: oklch(0.7 0.2 40);
+  --primary-foreground: oklch(0.08 0.02 20);
+  --secondary: oklch(0.14 0.03 20);
+  --accent: oklch(0.5 0.15 330);
+  --muted: oklch(0.16 0.02 20);
+  --muted-foreground: oklch(0.52 0.02 0);
+  --border: oklch(0.22 0.04 20);
+  --ring: oklch(0.7 0.2 40);
+  --glow: oklch(0.7 0.2 40 / 0.35);
+  --glow-accent: oklch(0.5 0.15 330 / 0.3);
+  --sidebar: oklch(0.1 0.02 20);
+  --sidebar-foreground: oklch(0.88 0.01 0);
+  --sidebar-primary: oklch(0.7 0.2 40);
+  --sidebar-accent: oklch(0.14 0.03 20);
+  --sidebar-border: oklch(0.2 0.04 20);
+  --sidebar-ring: oklch(0.7 0.2 40);
+  --chart-1: oklch(0.7 0.2 40);
+  --chart-2: oklch(0.5 0.15 330);
+  --chart-3: oklch(0.6 0.15 260);
+  --chart-4: oklch(0.75 0.18 170);
+  --chart-5: oklch(0.65 0.14 350);
+}
+
 /* Thin custom scrollbar utility */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

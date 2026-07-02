@@ -78,7 +78,7 @@ export function ActiveWorkspace() {
                 
                 <div className="space-y-1">
                   <h1 className="text-4xl font-black text-white tracking-tight leading-none hero-title">
-                    Prem <span className="text-[#38bdf8]">Rajesh</span>
+                    Sargara <span className="text-[#38bdf8]">Prem</span>
                   </h1>
                   <h2 className="text-sm font-bold text-[#38bdf8] tracking-wide mt-1.5 hero-subtitle">
                     Software Engineering Student
@@ -130,7 +130,7 @@ export function ActiveWorkspace() {
                 </div>
                 <pre className="space-y-0.5 text-[9px]">
                   <div><span className="text-[#f472b6]">const</span> developer = &#123;</div>
-                  <div>  name: <span className="text-[#34d399]">"Prem Rajesh"</span>,</div>
+                  <div>  name: <span className="text-[#34d399]">"Sargara Prem"</span>,</div>
                   <div>  role: <span className="text-[#34d399]">"Software Engineering Student"</span>,</div>
                   <div>  interests: [</div>
                   <div>    <span className="text-[#34d399]">"Artificial Intelligence"</span>,</div>

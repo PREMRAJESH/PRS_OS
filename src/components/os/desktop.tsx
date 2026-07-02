@@ -11,7 +11,7 @@ import { ActiveWorkspace } from './active-workspace'
 import { useEffect, useCallback, useRef } from 'react'
 
 export function Desktop() {
-  const { commandPaletteOpen, toggleCommandPalette, openWindow, setWorkArea, sidebarCollapsed } = useOSStore()
+  const { commandPaletteOpen, toggleCommandPalette, openWindow, setWorkArea, sidebarCollapsed, currentTheme } = useOSStore()
   // Mouse reactive lighting
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -61,6 +61,14 @@ export function Desktop() {
       window.removeEventListener('resize', sync)
     }
   }, [setWorkArea, sidebarCollapsed])
+
+  // Apply theme class to HTML element
+  useEffect(() => {
+    const root = document.documentElement
+    const previous = Array.from(root.classList).find(c => c.startsWith('theme-'))
+    if (previous) root.classList.remove(previous)
+    root.classList.add(`theme-${currentTheme}`)
+  }, [currentTheme])
 
   // Keyboard shortcuts
   useEffect(() => {
