@@ -197,7 +197,7 @@ export const githubRepos: GithubRepo[] = [
     lastPush: 'just now',
     createdAt: 'May 2025',
     topics: ['nextjs', 'portfolio', 'os-ui', 'zustand', 'framer-motion', 'typescript'],
-    homepage: 'https://prs-os.dev',
+    homepage: 'https://premsargara.me',
     readme: `# PRS-OS ⚡\n\nAn AI-powered developer portfolio operating system.`,
     contributors: [
       { name: 'Prem Rajesh', avatar: 'PR', commits: 312, role: 'Creator' },
@@ -206,7 +206,7 @@ export const githubRepos: GithubRepo[] = [
       { hash: 'x9y0z1a', message: 'feat: build GitHub workspace profile dashboard', author: 'Prem Rajesh', date: 'just now', additions: 890, deletions: 12 },
     ],
     deployments: [
-      { env: 'Production', status: 'active', url: 'https://prs-os.dev', provider: 'Vercel', lastDeploy: 'just now' },
+      { env: 'Production', status: 'active', url: 'https://premsargara.me', provider: 'Vercel', lastDeploy: 'just now' },
     ],
     files: [
       { name: 'README.md', type: 'file', lang: 'md', size: '1.8K', content: '# PRS-OS Workspace' }

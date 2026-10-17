@@ -14,9 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'PRS-OS | AI-Powered Developer Portfolio',
-  description: 'A futuristic AI-powered developer operating system portfolio',
-  generator: 'v0.app',
+  metadataBase: new URL('https://premsargara.me'),
+  title: 'PRS-OS | Prem Rajesh — AI-Powered Developer Portfolio',
+  description: 'A futuristic AI-powered developer operating system portfolio by Prem Rajesh.',
+  authors: [{ name: 'Prem Rajesh', url: 'https://premsargara.me' }],
+  creator: 'Prem Rajesh',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://premsargara.me',
+    title: 'PRS-OS | Prem Rajesh — Developer Portfolio',
+    description: 'A futuristic AI-powered developer operating system portfolio showcasing high-performance web systems and AI applications.',
+    siteName: 'PRS-OS',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PRS-OS | Prem Rajesh — Developer Portfolio',
+    description: 'A futuristic AI-powered developer operating system portfolio.',
+  },
   icons: {
     icon: '/favicon.svg',
     apple: '/favicon.svg',
