@@ -1,7 +1,43 @@
 import { useRef, useState, useEffect, type ReactNode, useCallback } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useVelocity } from 'framer-motion'
-import { useOSStore, type Window } from '@/store/os-store'
-import { X, Minus, Maximize2, Minimize2 } from 'lucide-react'
+import { useOSStore, type Window, type WindowType } from '@/store/os-store'
+import {
+  X,
+  Minus,
+  Square,
+  Copy,
+  FolderOpen,
+  Terminal,
+  FileText,
+  Code2,
+  History,
+  Settings,
+  Sparkles,
+  User,
+  Github,
+  Globe,
+  Mail,
+  GraduationCap,
+  Briefcase,
+  Award,
+} from 'lucide-react'
+
+const WINDOW_ICONS: Record<WindowType, typeof FolderOpen> = {
+  projects: FolderOpen,
+  terminal: Terminal,
+  resume: FileText,
+  skills: Code2,
+  timeline: History,
+  settings: Settings,
+  'ai-assistant': Sparkles,
+  about: User,
+  github: Github,
+  runtime: Globe,
+  'quick-links': Mail,
+  education: GraduationCap,
+  experience: Briefcase,
+  certifications: Award,
+}
 
 /* ─── Constants ─── */
 const TITLE_BAR_H = 40
@@ -167,7 +203,7 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       y: y.get(),
       width: w.get(),
       height: h.get(),
-      borderRadius: 14,
+      borderRadius: 11,
       filter: 'blur(0px) brightness(1)',
       pointerEvents: 'auto',
       transition: {
@@ -217,8 +253,8 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       y: y.get(),
       width: w.get(),
       height: h.get(),
-      borderRadius: 14,
-      filter: 'brightness(0.85)',
+      borderRadius: 11,
+      filter: 'brightness(0.92) saturate(0.94)',
       pointerEvents: 'auto',
       transition: { duration: 0.4 }
     }
@@ -229,6 +265,7 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
     : (win.isMaximized ? 'maximized' : (isActive ? 'standard' : 'inactive'))
 
   const triggerPos = win.triggerPosition
+  const Icon = WINDOW_ICONS[win.type] ?? FileText
 
   return (
     <motion.div
@@ -253,15 +290,14 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       } as any}
       onPointerDown={() => focusWindow(win.id)}
       className={`
-        flex flex-col overflow-hidden absolute
-        bg-[oklch(0.09_0.01_240/0.92)]
+        flex flex-col overflow-hidden absolute window-surface
         transition-shadow duration-500 ease-out
         ${isActive
-          ? 'shadow-[var(--shadow-window)] ring-1 ring-white/[0.12]'
-          : 'shadow-[var(--shadow-window-inactive)] ring-1 ring-white/[0.04]'
+          ? 'shadow-[var(--shadow-window)] ring-1 ring-foreground/[0.13]'
+          : 'shadow-[var(--shadow-window-inactive)] ring-1 ring-foreground/[0.07]'
         }
         ${isDragging || isResizing
-          ? 'shadow-[0_60px_130px_-20px_rgba(0,0,0,0.95)] transition-none'
+          ? 'shadow-[0_60px_130px_-24px_rgba(10,7,4,0.9)] transition-none'
           : ''
         }
       `}
@@ -269,48 +305,63 @@ export function OSWindow({ window: win, children }: OSWindowProps) {
       {/* ── Title bar ── */}
       <div
         className={`
-          h-10 flex items-center justify-between px-3.5
-          ${isActive ? 'bg-white/[0.06]' : 'bg-transparent'}
+          relative h-10 flex items-center justify-between px-3 shrink-0
+          border-b border-hairline
+          ${isActive ? 'bg-window-chrome/80' : 'bg-transparent'}
           select-none touch-none
           ${win.isMaximized ? 'cursor-default' : isDragging ? 'cursor-grabbing' : 'cursor-grab'}
         `}
         onPointerDown={handleDragStart}
         onDoubleClick={() => maximizeWindow(win.id)}
       >
-        <div className="flex items-center gap-2.5 z-10">
-          <button
-            onClick={(e) => { e.stopPropagation(); closeWindow(win.id) }}
-            className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-all group flex items-center justify-center shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] active:scale-90"
+        <div className="flex items-center gap-2 min-w-0 pointer-events-none">
+          <Icon
+            className={`w-3.5 h-3.5 shrink-0 transition-colors ${
+              isActive ? 'text-primary/80' : 'text-muted-foreground/45'
+            }`}
+          />
+          <span
+            className={`text-[11.5px] font-medium tracking-tight truncate transition-colors ${
+              isActive ? 'text-foreground/80' : 'text-muted-foreground/50'
+            }`}
           >
-            <X className="w-2 h-2 text-black/70 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); minimizeWindow(win.id) }}
-            className="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] hover:bg-[#f5a623] transition-all group flex items-center justify-center shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] active:scale-90"
-          >
-            <Minus className="w-2 h-2 text-black/70 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); maximizeWindow(win.id) }}
-            className="w-3.5 h-3.5 rounded-full bg-[#27c93f] hover:bg-[#1fb734] transition-all group flex items-center justify-center shadow-[inset_0_-1px_1px_rgba(0,0,0,0.2)] active:scale-90"
-          >
-            {win.isMaximized
-              ? <Minimize2 className="w-1.5 h-1.5 text-black/70 opacity-0 group-hover:opacity-100 transition-opacity" />
-              : <Maximize2 className="w-1.5 h-1.5 text-black/70 opacity-0 group-hover:opacity-100 transition-opacity" />
-            }
-          </button>
-        </div>
-
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className={`text-[11px] font-bold tracking-[0.05em] uppercase transition-colors ${isActive ? 'text-foreground/60' : 'text-muted-foreground/30'}`}>
             {win.title}
           </span>
         </div>
-        <div className="w-20" />
+
+        <div className="flex items-center gap-0.5">
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); minimizeWindow(win.id) }}
+            className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground/55 hover:text-foreground hover:bg-foreground/[0.06] active:scale-95 transition-all"
+            aria-label="Minimize window"
+          >
+            <Minus className="w-3 h-3" />
+          </button>
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); maximizeWindow(win.id) }}
+            className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground/55 hover:text-foreground hover:bg-foreground/[0.06] active:scale-95 transition-all"
+            aria-label={win.isMaximized ? 'Restore window' : 'Maximize window'}
+          >
+            {win.isMaximized
+              ? <Copy className="w-2.5 h-2.5" />
+              : <Square className="w-2.5 h-2.5" />
+            }
+          </button>
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); closeWindow(win.id) }}
+            className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground/55 hover:text-destructive hover:bg-destructive/15 active:scale-95 transition-all"
+            aria-label="Close window"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        </div>
       </div>
 
       {/* ── Content ── */}
-      <div className="flex-1 overflow-hidden bg-background/60 relative">
+      <div className="flex-1 overflow-hidden bg-transparent relative">
         <div className={`w-full h-full ${win.isMinimized ? 'pointer-events-none' : ''}`}>
           {children}
         </div>

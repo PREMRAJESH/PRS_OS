@@ -25,14 +25,14 @@ export function WindowManager() {
     <AnimatePresence mode="popLayout">
       {windows.map((window) => (
         <OSWindow key={window.id} window={window}>
-          <WindowContent type={window.type} />
+          <WindowContent type={window.type} initialQuery={window.initialQuery} />
         </OSWindow>
       ))}
     </AnimatePresence>
   )
 }
 
-function WindowContent({ type }: { type: string }) {
+function WindowContent({ type, initialQuery }: { type: string; initialQuery?: string | null }) {
   switch (type) {
     case 'projects':
       return <ProjectExplorer />
@@ -49,7 +49,7 @@ function WindowContent({ type }: { type: string }) {
     case 'settings':
       return <SettingsWindow />
     case 'ai-assistant':
-      return <AIAssistantWindow />
+      return <AIAssistantWindow initialQuery={initialQuery} />
     case 'about':
       return <AboutWindow />
     case 'runtime':

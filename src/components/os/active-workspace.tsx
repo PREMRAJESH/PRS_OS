@@ -1,40 +1,101 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { useOSStore } from '@/store/os-store'
 import {
-  Activity,
-  Folder,
-  User,
-  ExternalLink,
-  Brain,
-  Cloud,
-  BookOpen,
-  Code2,
-  Heart,
-  Calendar,
-  Layers,
+  ArrowUpRight,
+  ArrowRight,
   Github,
   Linkedin,
   Mail,
-  ChevronRight,
-  Briefcase,
-  MessageSquare,
+  Download,
+  MapPin,
+  GraduationCap,
+  Sparkles,
+  Code2,
 } from 'lucide-react'
 
-const stagger = {
+const stagger: Variants = {
   container: {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.06, delayChildren: 0.08 },
     },
   },
   item: {
-    hidden: { opacity: 0, y: 12 },
-    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } },
+    hidden: { opacity: 0, y: 14 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
   },
 }
+
+const selectedWork = [
+  {
+    id: 'neuroscan',
+    index: '01',
+    title: 'NeuroScan AI',
+    discipline: 'AI / ML',
+    desc: 'Brain tumor detection from MRI scans, running a 35 MB ONNX model on serverless infrastructure.',
+    metric: '94.05% validation accuracy',
+    tags: ['Python', 'ONNX', 'Flask'],
+  },
+  {
+    id: 'studyflow',
+    index: '02',
+    title: 'StudyFlow',
+    discipline: 'Full stack / AI',
+    desc: 'An adaptive study planner that turns a syllabus PDF into a working schedule in under a minute.',
+    metric: 'Onboarding cut from 20 min to 45 s',
+    tags: ['Next.js', 'Gemini', 'Supabase'],
+  },
+  {
+    id: 'nimbusx',
+    index: '03',
+    title: 'Nimbus X',
+    discipline: 'Mobile',
+    desc: 'A real-time Android messaging app with private and group chats, media sharing and offline storage.',
+    metric: 'Cloud + local storage toggle',
+    tags: ['React Native', 'TypeScript', 'Redux'],
+  },
+  {
+    id: 'codeviz',
+    index: '04',
+    title: 'CodeViz',
+    discipline: 'Developer tooling',
+    desc: 'A step-through visualiser for algorithms and data structures, built on a locked-down client sandbox.',
+    metric: '100% client-side isolation',
+    tags: ['Monaco', 'D3.js', 'TypeScript'],
+  },
+]
+
+const milestones = [
+  { year: '2026', text: 'AI Automation intern, CSRBOX × IBM SkillsBuild × AICTE' },
+  { year: '2026', text: 'Shipped Nimbus X and CodeViz' },
+  { year: '2025', text: 'Built NeuroScan AI and StudyFlow' },
+  { year: '2024', text: 'Started B.E. Computer Engineering, GEC Dahod' },
+  { year: '2024', text: 'Diploma completed with CPI 8.33' },
+]
+
+const toolkit = [
+  { group: 'Languages', items: ['Python', 'TypeScript', 'Java', 'C++'] },
+  { group: 'Interface', items: ['React', 'Next.js', 'Tailwind'] },
+  { group: 'Systems', items: ['Node.js', 'FastAPI', 'Firebase', 'Supabase'] },
+  { group: 'Intelligence', items: ['TensorFlow', 'PyTorch', 'Gemini'] },
+]
+
+const stats = [
+  { value: '05', label: 'Projects shipped' },
+  { value: '02', label: 'Internships' },
+  { value: '8.33', label: 'Diploma CPI' },
+  { value: '2027', label: 'Graduating' },
+]
+
+const elsewhere = [
+  { label: 'GitHub', handle: '@PREMRAJESH', href: 'https://github.com/PREMRAJESH', icon: Github },
+  { label: 'LinkedIn', handle: 'in/prem-sargara', href: 'https://www.linkedin.com/in/gecdhd-comp-prem-sargara/', icon: Linkedin },
+  { label: 'Email', handle: 'sargarapremrajesh@gmail.com', href: 'mailto:sargarapremrajesh@gmail.com', icon: Mail },
+  { label: 'LeetCode', handle: 'u/Sargara_Prem', href: 'https://leetcode.com/u/Sargara_Prem/', icon: Code2 },
+]
 
 export function ActiveWorkspace() {
   const { windows, openWindow } = useOSStore()
@@ -44,464 +105,319 @@ export function ActiveWorkspace() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{
-        opacity: hasActiveWindows ? 0.08 : 1,
-        scale: hasActiveWindows ? 0.97 : 1,
-        filter: hasActiveWindows ? 'blur(6px)' : 'blur(0px)',
+        opacity: hasActiveWindows ? 0.14 : 1,
+        scale: hasActiveWindows ? 0.985 : 1,
+        filter: hasActiveWindows ? 'blur(4px)' : 'blur(0px)',
       }}
-      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="absolute inset-0 overflow-y-auto pb-32 custom-scrollbar selection:bg-primary/20 font-sans"
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className="absolute inset-0 overflow-y-auto overflow-x-hidden pb-32 custom-scrollbar font-sans"
+      aria-hidden={hasActiveWindows}
     >
       <motion.div
         variants={stagger.container}
         initial="hidden"
         animate="show"
-        className="p-6 md:p-8 max-w-7xl mx-auto"
+        className="px-5 sm:px-8 md:px-12 pt-8 md:pt-12 pb-16 max-w-[1180px] mx-auto"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* ─── Left / Center Column (Hero, Projects, About) ─── */}
-          <div className="lg:col-span-8 space-y-6">
-            
-            {/* ── Hero Panel ── */}
-            <motion.div 
-              variants={stagger.item} 
-              className="p-6 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden group shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
-            >
-              {/* Background accent glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10 group-hover:bg-primary/10 transition-colors duration-500" />
-              
-              <div className="flex-1 space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                  <span className="text-[9px] font-black uppercase tracking-widest text-[#2dd4bf]/70 font-mono">SYSTEM ACTIVE</span>
+        {/* ── Hero ── */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-14 items-end">
+          <motion.div variants={stagger.item} className="lg:col-span-7 xl:col-span-8">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] font-mono tracking-[0.1em] uppercase text-muted-foreground/65">
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                Available for internships
+              </span>
+              <span className="hidden sm:block h-3 w-px bg-hairline" />
+              <span className="flex items-center gap-1.5">
+                <MapPin className="w-3 h-3" />
+                Gujarat, India
+              </span>
+            </div>
+
+            <h1 className="font-display text-[clamp(3.6rem,8.5vw,6.75rem)] leading-[0.88] tracking-[-0.025em] text-foreground mt-6">
+              Prem<br />
+              <span className="text-foreground/90">Rajesh</span>
+            </h1>
+
+            <p className="mt-6 max-w-xl text-[13.5px] leading-[1.75] text-muted-foreground/85">
+              Software engineering student building AI systems, full-stack products and
+              developer tools. I care about the small details that make software feel
+              considered — fast, legible, and quietly useful.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2.5 mt-7">
+              <motion.button
+                onClick={() => openWindow('projects')}
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.985 }}
+                className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-[12px] font-medium hover:bg-primary/90 transition-colors"
+              >
+                Browse projects
+                <ArrowRight className="w-3.5 h-3.5" />
+              </motion.button>
+
+              <motion.a
+                href="/Resume.pdf"
+                download="P.R.S_Resume.pdf"
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.985 }}
+                className="inline-flex items-center gap-2 h-9 px-4 rounded-md border border-hairline-strong text-foreground/75 hover:text-foreground hover:bg-foreground/[0.035] text-[12px] font-medium transition-colors"
+              >
+                Résumé
+                <Download className="w-3.5 h-3.5" />
+              </motion.a>
+
+              <button
+                onClick={() => openWindow('quick-links')}
+                className="inline-flex items-center gap-1.5 h-9 px-2 text-[12px] text-muted-foreground/70 hover:text-foreground transition-colors"
+              >
+                Get in touch
+                <ArrowUpRight className="w-3 h-3" />
+              </button>
+            </div>
+
+            <div className="mt-9 pt-5 border-t border-hairline flex flex-wrap gap-x-8 gap-y-2 text-[11px] text-muted-foreground/60">
+              <span className="flex items-center gap-2">
+                <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/45" />
+                B.E. Computer Engineering, GEC Dahod
+              </span>
+              <span className="flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-muted-foreground/45" />
+                AI, machine learning & product engineering
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Portrait */}
+          <motion.div variants={stagger.item} className="lg:col-span-5 xl:col-span-4">
+            <div className="relative max-w-[340px] mx-auto lg:mx-0 lg:ml-auto">
+              <div className="absolute -inset-2.5 rounded-[18px] border border-hairline/80 pointer-events-none" />
+              <div className="relative aspect-[4/5] rounded-[14px] overflow-hidden bg-surface ring-1 ring-hairline-strong">
+                <img
+                  src="/avatar.jpg"
+                  alt="Portrait of Prem Rajesh"
+                  width={1254}
+                  height={1254}
+                  className="w-full h-full object-cover object-top grayscale-[0.12] contrast-[1.02]"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#17130f]/80 via-[#17130f]/10 to-transparent" />
+                <div className="absolute bottom-3.5 left-4 right-4 flex items-end justify-between gap-3">
+                  <div>
+                    <p className="font-display text-[19px] leading-none text-[#f4ede2]">Prem Rajesh</p>
+                    <p className="mt-1 text-[9px] font-mono tracking-[0.13em] uppercase text-[#e9dfd0]/60">
+                      Portfolio, 2026
+                    </p>
+                  </div>
+                  <span className="shrink-0 flex items-center gap-1.5 text-[9px] font-mono tracking-[0.1em] uppercase text-[#e9dfd0]/75">
+                    <span className="w-1 h-1 rounded-full bg-accent" />
+                    Open
+                  </span>
                 </div>
-                
-                <div className="space-y-1">
-                  <h1 className="text-4xl font-black text-white tracking-tight leading-none hero-title">
-                    Sargara <span className="text-[#38bdf8]">Prem</span>
-                  </h1>
-                  <h2 className="text-sm font-bold text-[#38bdf8] tracking-wide mt-1.5 hero-subtitle">
-                    Software Engineering Student
-                  </h2>
-                  <p className="text-[10px] text-muted-foreground/60 font-mono flex items-center gap-1.5 pt-0.5">
-                    <span>AI Developer</span>
-                    <span className="text-primary/40">•</span>
-                    <span>Full Stack Developer</span>
-                    <span className="text-primary/40">•</span>
-                    <span>ML Enthusiast</span>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ── Selected work ── */}
+        <motion.section variants={stagger.item} className="mt-16 md:mt-24">
+          <div className="flex items-end justify-between gap-4 pb-3.5 border-b border-hairline-strong">
+            <div className="flex items-baseline gap-3">
+              <h2 className="text-eyebrow">Selected work</h2>
+              <span className="text-[10px] font-mono text-muted-foreground/40">2025 — 2026</span>
+            </div>
+            <button
+              onClick={() => openWindow('projects')}
+              className="group inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/65 hover:text-foreground transition-colors"
+            >
+              All projects
+              <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </button>
+          </div>
+
+          <div>
+            {selectedWork.map((project) => (
+              <button
+                key={project.id}
+                onClick={() => openWindow('projects', undefined, project.id)}
+                className="group w-full text-left grid grid-cols-[28px_1fr_auto] sm:grid-cols-[34px_minmax(0,1.05fr)_minmax(0,1.2fr)_auto] gap-x-4 gap-y-1 items-baseline py-5 border-b border-hairline hover:bg-foreground/[0.022] transition-colors px-2 -mx-2 rounded-sm"
+              >
+                <span className="font-mono text-[10px] text-muted-foreground/35 group-hover:text-primary/70 transition-colors">
+                  {project.index}
+                </span>
+
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-2.5 flex-wrap">
+                    <h3 className="text-[17px] leading-tight tracking-[-0.01em] text-foreground/90 group-hover:text-foreground transition-colors">
+                      {project.title}
+                    </h3>
+                    <span className="text-[9px] font-mono tracking-[0.1em] uppercase text-muted-foreground/40">
+                      {project.discipline}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70 max-w-md sm:hidden">
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mt-2.5 sm:hidden">
+                    {project.tags.map(tag => (
+                      <span key={tag} className="text-[9.5px] font-mono text-muted-foreground/55 border border-hairline px-1.5 py-0.5 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="hidden sm:block min-w-0">
+                  <p className="text-[12px] leading-relaxed text-muted-foreground/70 max-w-md">
+                    {project.desc}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2">
+                    {project.tags.map((tag, i) => (
+                      <span key={tag} className="text-[9.5px] font-mono text-muted-foreground/50">
+                        {tag}{i < project.tags.length - 1 && <span className="ml-2 text-muted-foreground/20">·</span>}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 justify-end">
+                  <span className="hidden xl:block text-[10px] font-mono text-muted-foreground/45 text-right max-w-[170px] leading-snug">
+                    {project.metric}
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+              </button>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* ── About + context ── */}
+        <section className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+          <motion.div variants={stagger.item} className="lg:col-span-7">
+            <h2 className="text-eyebrow pb-3.5 border-b border-hairline-strong">About</h2>
+            <p className="mt-5 text-[13.5px] leading-[1.8] text-muted-foreground/85 max-w-xl">
+              I&apos;m in my third year of Computer Engineering at Government Engineering
+              College, Dahod, after a diploma in Computer Software Engineering. My work sits
+              between machine learning and product engineering: training models, then making
+              them feel simple enough to actually use.
+            </p>
+            <p className="mt-4 text-[13.5px] leading-[1.8] text-muted-foreground/70 max-w-xl">
+              Right now I&apos;m interning in AI automation, and spending the rest of my time
+              on developer tooling and interfaces built with React, Next.js and TypeScript.
+            </p>
+
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-4">
+              {stats.map(stat => (
+                <div key={stat.label} className="border-l border-hairline pl-3.5">
+                  <div className="font-display text-[26px] leading-none text-foreground/90 tabular">{stat.value}</div>
+                  <div className="mt-1.5 text-[9.5px] font-mono tracking-[0.08em] uppercase text-muted-foreground/50">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.aside variants={stagger.item} className="lg:col-span-5 space-y-8 lg:border-l lg:border-hairline lg:pl-10">
+            {/* Now */}
+            <div>
+              <h2 className="text-eyebrow">Now</h2>
+              <div className="mt-3.5 space-y-3">
+                <div className="flex items-start gap-2.5">
+                  <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                  <p className="text-[12px] leading-relaxed text-muted-foreground/80">
+                    AI Automation & Intelligent Solutions intern at{' '}
+                    <span className="text-foreground/85">CSRBOX × IBM SkillsBuild × AICTE</span>
                   </p>
                 </div>
-
-                <p className="text-xs text-muted-foreground/80 leading-relaxed max-w-md app-body-text">
-                  Passionate about building intelligent systems and exceptional digital experiences. I love turning ideas into real-world products that make an impact.
-                </p>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <motion.button
-                    onClick={() => openWindow('projects')}
-                    whileHover={{ scale: 1.02, y: -0.5 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-4 py-2 rounded-lg bg-[#14b8a6] hover:bg-[#0d9488] text-white text-[11px] font-bold tracking-wide transition-all flex items-center gap-1.5 shadow-lg shadow-[#14b8a6]/10"
-                  >
-                    Explore Projects <ChevronRight className="w-3.5 h-3.5" />
-                  </motion.button>
-                  <motion.a
-                    href="/Resume.pdf"
-                    download="P.R.S_Resume.pdf"
-                    whileHover={{ scale: 1.02, y: -0.5 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-foreground/80 hover:text-white text-[11px] font-semibold transition-all flex items-center gap-1.5 cursor-pointer no-underline"
-                  >
-                    Download Resume
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </motion.a>
+                <div className="flex items-start gap-2.5">
+                  <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-foreground/25 shrink-0" />
+                  <p className="text-[12px] leading-relaxed text-muted-foreground/80">
+                    Exploring agentic workflows, retrieval pipelines and small, sharp developer tools.
+                  </p>
                 </div>
               </div>
+            </div>
 
-              {/* Right: Mock Code Sandbox Window */}
-              <div className="w-full md:w-72 shrink-0 bg-[#06070a]/90 rounded-xl border border-white/[0.04] p-4 font-mono text-[9.5px] leading-relaxed text-zinc-400 shadow-2xl relative overflow-hidden select-text">
-                <div className="flex items-center gap-1.5 pb-2.5 border-b border-white/[0.03] mb-3">
-                  <div className="w-2 h-2 rounded-full bg-red-500/80" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
-                  <div className="w-2 h-2 rounded-full bg-green-500/80" />
-                  <span className="text-[8px] text-zinc-600 ml-1.5">developer.js</span>
-                </div>
-                <pre className="space-y-0.5 text-[9px]">
-                  <div><span className="text-[#f472b6]">const</span> developer = &#123;</div>
-                  <div>  name: <span className="text-[#34d399]">"Sargara Prem"</span>,</div>
-                  <div>  role: <span className="text-[#34d399]">"Software Engineering Student"</span>,</div>
-                  <div>  interests: [</div>
-                  <div>    <span className="text-[#34d399]">"Artificial Intelligence"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"Machine Learning"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"Full Stack Development"</span></div>
-                  <div>  ],</div>
-                  <div>  currentlyLearning: [</div>
-                  <div>    <span className="text-[#34d399]">"Cloud Computing"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"Machine Learning"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"Modern Web Development"</span></div>
-                  <div>  ],</div>
-                  <div>  building: [</div>
-                  <div>    <span className="text-[#34d399]">"NeuroScan AI"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"StudyFlow"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"Nimbus X"</span>,</div>
-                  <div>    <span className="text-[#34d399]">"CodeViz"</span></div>
-                  <div>  ]</div>
-                  <div>&#125;;</div>
-                </pre>
-              </div>
-            </motion.div>
-
-            {/* ── Featured Projects ── */}
-            <motion.div variants={stagger.item} className="space-y-4">
-              <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <Folder className="w-4 h-4 text-primary/80" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">FEATURED PROJECTS</span>
-                </div>
-                <button 
-                  onClick={() => openWindow('projects')}
-                  className="text-[10px] font-bold tracking-wider text-muted-foreground/50 hover:text-primary transition-colors flex items-center gap-1"
+            {/* Milestones */}
+            <div>
+              <div className="flex items-center justify-between">
+                <h2 className="text-eyebrow">Milestones</h2>
+                <button
+                  onClick={() => openWindow('timeline')}
+                  className="text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
                 >
-                  View All Projects <ChevronRight className="w-3 h-3" />
+                  Full timeline
                 </button>
               </div>
+              <ol className="mt-3.5 space-y-2.5">
+                {milestones.map((m) => (
+                  <li key={`${m.year}-${m.text}`} className="grid grid-cols-[38px_1fr] gap-3 items-baseline">
+                    <span className="font-mono text-[10px] text-muted-foreground/35 tabular">{m.year}</span>
+                    <span className="text-[11.5px] leading-snug text-muted-foreground/75">{m.text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-              {/* 2x2 Projects Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* Project 1: NeuroScan AI */}
-                <ProjectCard 
-                  id="neuroscan"
-                  title="NeuroScan AI"
-                  badge="AI / ML"
-                  badgeColor="text-emerald-400 bg-emerald-400/10 border-emerald-400/20"
-                  desc="Brain Tumor Detection System"
-                  icon={Brain}
-                  iconColor="text-emerald-400 bg-emerald-400/10 shadow-[0_0_20px_rgba(52,211,153,0.15)] border-emerald-400/20"
-                  tags={['TensorFlow + ONNX', '~90% Model Accuracy']}
-                />
-
-                {/* Project 2: Nimbus X */}
-                <ProjectCard 
-                  id="nimbusx"
-                  title="Nimbus X"
-                  badge="Chat"
-                  badgeColor="text-sky-400 bg-sky-400/10 border-sky-400/20"
-                  desc="Real-time Android Messaging"
-                  icon={MessageSquare}
-                  iconColor="text-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(14,165,233,0.15)] border-sky-400/20"
-                  tags={['React Native', 'Cloud & Local Storage']}
-                />
-
-                {/* Project 3: StudyFlow */}
-                <ProjectCard 
-                  id="studyflow"
-                  title="StudyFlow"
-                  badge="Productivity"
-                  badgeColor="text-violet-400 bg-violet-400/10 border-violet-400/20"
-                  desc="AI-Powered Study Planner"
-                  icon={BookOpen}
-                  iconColor="text-violet-400 bg-violet-400/10 shadow-[0_0_20px_rgba(167,139,250,0.15)] border-violet-400/20"
-                  tags={['Adaptive Scheduling', 'Gemini Integration']}
-                />
-
-                {/* Project 4: CodeViz */}
-                <ProjectCard 
-                  id="codeviz"
-                  title="CodeViz"
-                  badge="Developer Tool"
-                  badgeColor="text-emerald-400 bg-emerald-400/10 border-emerald-400/20"
-                  desc="Code & Algorithm Visualization Platform"
-                  icon={Code2}
-                  iconColor="text-emerald-400 bg-emerald-400/10 shadow-[0_0_20px_rgba(52,211,153,0.15)] border-emerald-400/20"
-                  tags={['Interactive Learning Experience', 'Developer Education Tool']}
-                />
-
+            {/* Toolkit */}
+            <div>
+              <div className="flex items-center justify-between">
+                <h2 className="text-eyebrow">Toolkit</h2>
+                <button
+                  onClick={() => openWindow('skills')}
+                  className="text-[10px] text-muted-foreground/50 hover:text-foreground transition-colors"
+                >
+                  Details
+                </button>
               </div>
-            </motion.div>
-
-            {/* ── About Me ── */}
-            <motion.div variants={stagger.item} className="space-y-4">
-              <div className="flex items-center gap-2 px-1">
-                <User className="w-4 h-4 text-primary/80" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/50">ABOUT ME</span>
+              <div className="mt-3.5 space-y-2">
+                {toolkit.map(group => (
+                  <div key={group.group} className="grid grid-cols-[72px_1fr] gap-2 items-baseline">
+                    <span className="text-[10px] text-muted-foreground/40">{group.group}</span>
+                    <span className="text-[11px] text-muted-foreground/75 leading-relaxed">
+                      {group.items.join(', ')}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-                <p className="text-xs text-muted-foreground/80 leading-relaxed app-body-text">
-                  Software Engineering student currently pursuing a Bachelor's degree at Government Engineering College, Dahod. Interested in Artificial Intelligence, Machine Learning, Cloud Computing, and Full Stack Development. I enjoy building practical software solutions that combine engineering principles with real-world problem solving.
-                </p>
-                
-                {/* 4 Stat Cards Row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <StatItem value="4+" label="Projects Built" icon={Code2} iconBg="bg-blue-500/10 text-blue-400 border-blue-500/20" />
-                  <StatItem value="Since 2021" label="Coding Journey" icon={Calendar} iconBg="bg-emerald-500/10 text-emerald-400 border-emerald-500/20" />
-                  <StatItem value="2" label="Internships" icon={Briefcase} iconBg="bg-purple-500/10 text-purple-400 border-purple-500/20" />
-                  <StatItem value="AI • ML" label="Current Focus" icon={Layers} iconBg="bg-red-500/10 text-red-400 border-red-500/20" />
-                </div>
+            </div>
+
+            {/* Elsewhere */}
+            <div>
+              <h2 className="text-eyebrow">Elsewhere</h2>
+              <div className="mt-2.5">
+                {elsewhere.map(link => {
+                  const Icon = link.icon
+                  const isEmail = link.href.startsWith('mailto:')
+                  return (
+                    <a
+                      key={link.label}
+                      href={isEmail ? undefined : link.href}
+                      target={isEmail ? undefined : '_blank'}
+                      rel={isEmail ? undefined : 'noopener noreferrer'}
+                      onClick={isEmail ? (e) => { e.preventDefault(); openWindow('quick-links') } : undefined}
+                      className="group flex items-center gap-3 py-2 border-b border-hairline last:border-b-0 text-[11.5px] hover:text-foreground transition-colors"
+                    >
+                      <Icon className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors" strokeWidth={1.7} />
+                      <span className="text-muted-foreground/80 group-hover:text-foreground transition-colors w-16 shrink-0">{link.label}</span>
+                      <span className="text-[10px] font-mono text-muted-foreground/45 truncate flex-1">{link.handle}</span>
+                      <ArrowUpRight className="w-3 h-3 text-muted-foreground/25 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </a>
+                  )
+                })}
               </div>
-            </motion.div>
+            </div>
+          </motion.aside>
+        </section>
 
-          </div>
-
-          {/* ─── Right Sidebar Column (Activity, Tech Stack, Quick Links) ─── */}
-          <div className="lg:col-span-4 space-y-6">
-            
-            {/* ── Key Milestones ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-              <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-primary/80" />
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">KEY MILESTONES</span>
-              </div>
-
-              {/* Activity Dot list representing real milestones */}
-              <div className="space-y-4">
-                <ActivityItem title="Built Nimbus X & CodeViz" time="2026" dotColor="bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                <ActivityItem title="Built NeuroScan AI & StudyFlow" time="2025" dotColor="bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.5)]" />
-                <ActivityItem title="Started B.E. at GEC Dahod" time="2024" dotColor="bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
-                <ActivityItem title="Completed Diploma at Govt. Polytechnic" time="2024" dotColor="bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                <ActivityItem title="Started AI Automation Internship at CSRBOX × IBM SkillsBuild × AICTE" time="2026" dotColor="bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-                <ActivityItem title="Completed Web Dev Internship at BrainyBeam" time="2022" dotColor="bg-purple-400 shadow-[0_0_8px_rgba(167,139,250,0.5)]" />
-              </div>
-
-              <button 
-                onClick={() => openWindow('timeline')}
-                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-xs font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
-              >
-                View Full Timeline <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </motion.div>
-
-            {/* ── Tech Stack ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-primary/80" />
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">TECH STACK</span>
-              </div>
-
-              <div className="space-y-3.5 select-text">
-                <StackCategory title="Languages" items={['Python', 'JavaScript', 'C++', 'SQL']} />
-                <StackCategory title="Frontend" items={['React', 'Next.js', 'Tailwind CSS']} />
-                <StackCategory title="Backend" items={['Node.js', 'FastAPI', 'Firebase']} />
-                <StackCategory title="AI / ML" items={['TensorFlow', 'PyTorch', 'Gemini API']} />
-                <StackCategory title="Tools" items={['Git', 'Docker', 'VS Code', 'Vercel']} />
-              </div>
-
-              <button 
-                onClick={() => openWindow('skills')}
-                className="w-full py-2 border border-white/5 hover:border-white/10 hover:bg-white/[0.02] rounded-xl text-xs font-bold text-muted-foreground/60 hover:text-white transition-all text-center flex items-center justify-center gap-1.5"
-              >
-                View Full Stack <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </motion.div>
-
-            {/* ── Quick Links ── */}
-            <motion.div variants={stagger.item} className="p-5 rounded-2xl bg-[#0c0d12]/50 border border-white/[0.03] space-y-4 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-              <div className="flex items-center gap-2">
-                <ExternalLink className="w-4 h-4 text-primary/80" />
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/50">QUICK LINKS</span>
-              </div>
-
-              <div className="space-y-2 select-text">
-                <QuickLinkItem label="GitHub" url="github.com/PREMRAJESH" href="https://github.com/PREMRAJESH" icon={Github} />
-                <QuickLinkItem label="LinkedIn" url="linkedin.com/in/prem-sargara" href="https://www.linkedin.com/in/gecdhd-comp-prem-sargara/" icon={Linkedin} />
-                <QuickLinkItem label="Email" url="sargarapremrajesh@gmail.com" href="mailto:sargarapremrajesh@gmail.com" icon={Mail} isEmail />
-                <QuickLinkItem label="LeetCode" url="leetcode.com/u/Sargara_Prem" href="https://leetcode.com/u/Sargara_Prem/" icon={Code2} />
-              </div>
-            </motion.div>
-
-          </div>
-
-        </div>
+        <footer className="mt-16 md:mt-20 pt-4 border-t border-hairline flex flex-wrap items-center justify-between gap-3 text-[9.5px] font-mono tracking-[0.08em] uppercase text-muted-foreground/35">
+          <span>PRS—OS · Built with Next.js, Tailwind and Framer Motion</span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1 h-1 rounded-full bg-accent/80" />
+            Open to opportunities
+          </span>
+        </footer>
       </motion.div>
     </motion.div>
-  )
-}
-
-/* ─── Helper Sub-components ───────────────────────────── */
-
-function ProjectCard({
-  id,
-  title,
-  badge,
-  badgeColor,
-  desc,
-  icon: Icon,
-  iconColor,
-  tags
-}: {
-  id: string
-  title: string
-  badge: string
-  badgeColor: string
-  desc: string
-  icon: any
-  iconColor: string
-  tags: string[]
-}) {
-  const { openWindow } = useOSStore()
-
-  return (
-    <div className="p-4 rounded-xl bg-[#06070a]/50 border border-white/[0.03] flex flex-col justify-between gap-4 group hover:border-[#14b8a6]/30 hover:bg-[#06070a]/80 transition-all duration-300">
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          {/* Project icon with glow border */}
-          <div className={`w-12 h-12 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${iconColor}`}>
-            <Icon className="w-5 h-5" />
-          </div>
-          <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold uppercase tracking-wide font-mono ${badgeColor}`}>
-            {badge}
-          </span>
-        </div>
-
-        <div className="space-y-1">
-          <h3 className="text-sm font-bold text-white group-hover:text-primary transition-colors project-title">
-            {title}
-          </h3>
-          <p className="text-xs text-muted-foreground/85 leading-relaxed project-desc">
-            {desc}
-          </p>
-        </div>
-
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {tags.map((tag) => (
-            <span key={tag} className="text-[10px] font-mono text-muted-foreground/60 bg-white/5 border border-white/[0.03] px-2 py-0.5 rounded-md">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Footer links */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/[0.03] text-xs font-bold text-muted-foreground/50">
-        <button 
-          onClick={() => openWindow('projects', undefined, id)}
-          className="hover:text-primary transition-colors flex items-center gap-1"
-        >
-          View Project <ChevronRight className="w-3 h-3" />
-        </button>
-        <a 
-          href={`https://github.com/PREMRAJESH/${id === 'nimbusx' ? 'NimbusX' : id === 'neuroscan' ? 'NeuroScan' : id === 'studyflow' ? 'StudyFlow' : 'CodeViz'}`}
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="hover:text-primary transition-colors"
-        >
-          <Github className="w-3.5 h-3.5" />
-        </a>
-      </div>
-    </div>
-  )
-}
-
-function StatItem({
-  value,
-  label,
-  icon: Icon,
-  iconBg
-}: {
-  value: string
-  label: string
-  icon: any
-  iconBg: string
-}) {
-  return (
-    <div className="p-3.5 rounded-xl bg-[#06070a]/40 border border-white/[0.02] flex items-center justify-between gap-2">
-      <div className="space-y-0.5">
-        <div className="text-base font-black text-white leading-none stats-value">{value}</div>
-        <div className="text-[10px] font-medium text-muted-foreground/60 leading-tight stats-label">{label}</div>
-      </div>
-      <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${iconBg}`}>
-        <Icon className="w-3.5 h-3.5" />
-      </div>
-    </div>
-  )
-}
-
-function ActivityItem({
-  title,
-  time,
-  dotColor
-}: {
-  title: string
-  time: string
-  dotColor: string
-}) {
-  return (
-    <div className="flex items-start gap-2.5 text-xs group">
-      <div className={`w-1.5 h-1.5 rounded-full shrink-0 mt-1.5 ${dotColor}`} />
-      <div className="flex-1 min-w-0 space-y-0.5">
-        <div className="text-muted-foreground/80 leading-normal group-hover:text-white transition-colors">{title}</div>
-        <div className="text-muted-foreground/35 font-mono text-[10px]">{time}</div>
-      </div>
-    </div>
-  )
-}
-
-function StackCategory({
-  title,
-  items
-}: {
-  title: string
-  items: string[]
-}) {
-  return (
-    <div className="space-y-1.5 text-xs">
-      <span className="block text-muted-foreground/45 font-bold uppercase tracking-wider text-[10px]">{title}</span>
-      <div className="flex flex-wrap gap-1.5">
-        {items.map((item) => (
-          <span key={item} className="px-2 py-0.5 rounded-md bg-[#06070a]/50 text-muted-foreground/80 border border-white/[0.03] font-mono hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all cursor-default">
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function QuickLinkItem({
-  label,
-  url,
-  href,
-  icon: Icon,
-  isEmail
-}: {
-  label: string
-  url: string
-  href: string
-  icon: any
-  isEmail?: boolean
-}) {
-  const { openWindow } = useOSStore()
-  
-  const handleClick = (e: React.MouseEvent) => {
-    if (isEmail) {
-      e.preventDefault()
-      openWindow('quick-links')
-    }
-  }
-
-  return (
-    <a
-      href={isEmail ? '#' : href}
-      target={isEmail ? undefined : "_blank"}
-      rel={isEmail ? undefined : "noopener noreferrer"}
-      onClick={handleClick}
-      className="flex-1 flex items-center justify-between p-2.5 rounded-xl bg-[#06070a]/40 border border-white/[0.02] hover:border-primary/20 hover:bg-white/[0.02] transition-all group"
-    >
-      <div className="flex items-center gap-2.5 min-w-0">
-        <div className="p-1.5 rounded-lg bg-white/5 text-muted-foreground group-hover:text-primary transition-colors">
-          <Icon className="w-3.5 h-3.5" />
-        </div>
-        <div className="min-w-0">
-          <div className="text-xs font-bold text-white leading-none">{label}</div>
-          <div className="text-[10px] text-muted-foreground/50 font-mono truncate mt-0.5">{url}</div>
-        </div>
-      </div>
-      <svg className="w-3 h-3 text-muted-foreground/30 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-      </svg>
-    </a>
   )
 }

@@ -15,7 +15,6 @@ import {
   User,
   Palette,
   Github,
-  Command,
   CornerDownLeft,
   Zap,
   Globe,
@@ -35,16 +34,24 @@ interface CommandItem {
   keywords: string[]
   shortcut?: string
   action: () => void
-  accent?: string
 }
 
 const categoryLabels: Record<CommandCategory, string> = {
-  ai: 'Intelligent AI',
+  ai: 'Assistant',
   apps: 'Applications',
-  navigation: 'Navigation',
+  navigation: 'Go to',
   projects: 'Projects',
-  themes: 'Appearance',
-  links: 'External Systems',
+  themes: 'Palette',
+  links: 'Elsewhere',
+}
+
+const themeLabels: Record<ThemeName, string> = {
+  'ai-lab': 'Ember',
+  matrix: 'Moss',
+  minimal: 'Paper',
+  cyber: 'Clay',
+  synthwave: 'Slate',
+  ubuntu: 'Dusk',
 }
 
 const categoryOrder: CommandCategory[] = ['ai', 'apps', 'projects', 'navigation', 'themes', 'links']
@@ -121,7 +128,7 @@ export function CommandPalette() {
     if (isExplicit || isQuestion || hasLongQuery) {
       return {
         query: q.startsWith('>') ? q.slice(1).trim() : q,
-        label: q.startsWith('>') ? 'Ask PRS-AI' : 'Intelligent Search',
+        label: q.startsWith('>') ? 'Ask the assistant' : 'Search the workspace',
         icon: Sparkles
       }
     }
@@ -139,48 +146,44 @@ export function CommandPalette() {
     const baseCommands: CommandItem[] = [
       {
         id: 'projects',
-        label: 'Project Explorer',
-        description: 'Explore engineering work and systems',
+        label: 'Projects',
+        description: 'Selected work and case studies',
         icon: FolderOpen,
         category: 'apps',
         keywords: ['projects', 'work', 'code', 'explorer'],
         action: execute('projects'),
-        accent: 'text-sky-400',
       },
       {
         id: 'terminal',
         label: 'Terminal',
-        description: 'High-fidelity system shell',
+        description: 'Shell for the workspace',
         icon: Terminal,
         category: 'apps',
         keywords: ['terminal', 'bash', 'shell', 'cmd'],
         action: execute('terminal'),
-        accent: 'text-emerald-400',
       },
       {
         id: 'resume',
-        label: 'Resume Viewer',
-        description: 'Technical background and experience',
+        label: 'Résumé',
+        description: 'Background, experience and education',
         icon: FileText,
         category: 'apps',
         keywords: ['resume', 'cv', 'experience', 'career'],
         action: execute('resume'),
-        accent: 'text-amber-400',
       },
       {
         id: 'runtime',
-        label: 'Runtime Browser',
-        description: 'Execute live project demonstrations',
+        label: 'Runtime',
+        description: 'Open live project demos',
         icon: Globe,
         category: 'apps',
         keywords: ['runtime', 'demo', 'live', 'browser', 'launch'],
         action: execute('runtime'),
-        accent: 'text-violet-400',
       },
       {
         id: 'github',
-        label: 'GitHub Workspace',
-        description: 'Integrated source control metrics',
+        label: 'GitHub',
+        description: 'Repositories and recent commits',
         icon: Github,
         category: 'apps',
         keywords: ['github', 'git', 'repo', 'source'],
@@ -189,8 +192,8 @@ export function CommandPalette() {
       // Navigation
       {
         id: 'nav-skills',
-        label: 'Technical Matrix',
-        description: 'View competency and tech stack',
+        label: 'Skills & stack',
+        description: 'Tools used across projects',
         icon: Cpu,
         category: 'navigation',
         keywords: ['skills', 'tech', 'stack'],
@@ -198,8 +201,8 @@ export function CommandPalette() {
       },
       {
         id: 'nav-timeline',
-        label: 'Development History',
-        description: 'Chronological project log',
+        label: 'Timeline',
+        description: 'Studies, internships and projects',
         icon: GitBranch,
         category: 'navigation',
         keywords: ['timeline', 'history'],
@@ -208,111 +211,107 @@ export function CommandPalette() {
       // Projects (Semantic results)
       {
         id: 'p-prs-os',
-        label: 'Project: PRS-OS',
-        description: 'System orchestration and virtual workspace',
+        label: 'PRS—OS',
+        description: 'This portfolio, built as a desktop workspace',
         icon: Code2,
         category: 'projects',
         keywords: ['prs-os', 'portfolio', 'architecture', 'window manager'],
-        action: execute('projects', 'PRS-OS Explorer'),
+        action: execute('projects', 'PRS—OS', 'prsos'),
       },
       {
         id: 'p-nimbusx',
-        label: 'Project: NimbusX',
-        description: 'Real-time messaging platform with WhatsApp-style UX',
+        label: 'Nimbus X',
+        description: 'Real-time Android messaging',
         icon: FileText,
         category: 'projects',
-        keywords: ['nimbusx', 'chat', 'firebase', 'webrtc', 'react'],
-        action: execute('projects', 'NimbusX Explorer'),
+        keywords: ['nimbusx', 'chat', 'supabase', 'react native'],
+        action: execute('projects', 'Nimbus X', 'nimbusx'),
       },
       {
         id: 'p-nimbusx-demo',
-        label: 'Launch: NimbusX Live',
-        description: 'Execute NimbusX in PRS-OS Runtime',
+        label: 'Launch Nimbus X',
+        description: 'Open the live app in Runtime',
         icon: Zap,
         category: 'projects',
         keywords: ['demo', 'launch', 'nimbusx', 'live', 'open nimbusx'],
         action: () => {
-          openWindow('runtime', 'NimbusX Runtime', 'https://nimbusx.vercel.app')
+          openWindow('runtime', 'Nimbus X · Runtime', 'https://nimbusx.vercel.app')
           toggleCommandPalette()
         },
-        accent: 'text-violet-400',
       },
       {
         id: 'p-neuroscan',
-        label: 'Project: NeuroScan AI',
-        description: 'AI-powered MRI scan classification and validation',
+        label: 'NeuroScan AI',
+        description: 'MRI tumour classification with ONNX',
         icon: Cpu,
         category: 'projects',
         keywords: ['ai', 'ml', 'medical', 'brain tumor', 'neuroscan', 'onnx', 'flask'],
-        action: execute('projects', 'NeuroScan AI Explorer'),
+        action: execute('projects', 'NeuroScan AI', 'neuroscan'),
       },
       {
         id: 'p-neuroscan-demo',
-        label: 'Launch: NeuroScan Live',
-        description: 'Execute NeuroScan AI in PRS-OS Runtime',
+        label: 'Launch NeuroScan AI',
+        description: 'Open the live demo in Runtime',
         icon: Zap,
         category: 'projects',
         keywords: ['demo', 'launch', 'neuroscan', 'live', 'open neuroscan'],
         action: () => {
-          openWindow('runtime', 'NeuroScan AI Runtime', 'https://neuroscan-pink.vercel.app/')
+          openWindow('runtime', 'NeuroScan AI · Runtime', 'https://neuroscan-pink.vercel.app/')
           toggleCommandPalette()
         },
-        accent: 'text-violet-400',
       },
       {
         id: 'p-studyflow',
-        label: 'Project: StudyFlow',
-        description: 'AI-driven study scheduling platform',
+        label: 'StudyFlow',
+        description: 'AI study planning from a syllabus',
         icon: FileText,
         category: 'projects',
         keywords: ['studyflow', 'gemini', 'schedule', 'supabase', 'nextjs'],
-        action: execute('projects', 'StudyFlow Explorer'),
+        action: execute('projects', 'StudyFlow', 'studyflow'),
       },
       {
         id: 'p-studyflow-demo',
-        label: 'Launch: StudyFlow Live',
-        description: 'Execute StudyFlow in PRS-OS Runtime',
+        label: 'Launch StudyFlow',
+        description: 'Open the live app in Runtime',
         icon: Zap,
         category: 'projects',
         keywords: ['demo', 'launch', 'studyflow', 'live', 'open studyflow'],
         action: () => {
-          openWindow('runtime', 'StudyFlow Runtime', 'https://studyflow-aii.vercel.app/')
+          openWindow('runtime', 'StudyFlow · Runtime', 'https://studyflow-aii.vercel.app/')
           toggleCommandPalette()
         },
-        accent: 'text-violet-400',
       },
       {
         id: 'p-codeviz',
-        label: 'Project: CodeViz',
-        description: 'Interactive code and algorithm visualization platform',
+        label: 'CodeViz',
+        description: 'Step-through algorithm visualiser',
         icon: FileText,
         category: 'projects',
         keywords: ['codeviz', 'monaco', 'd3js', 'algorithms', 'visualization'],
-        action: execute('projects', 'CodeViz Explorer'),
+        action: execute('projects', 'CodeViz', 'codeviz'),
       },
       {
         id: 'p-codeviz-demo',
-        label: 'Launch: CodeViz Live',
-        description: 'Execute CodeViz in PRS-OS Runtime',
+        label: 'Launch CodeViz',
+        description: 'Open the live app in Runtime',
         icon: Zap,
         category: 'projects',
         keywords: ['demo', 'launch', 'codeviz', 'live', 'open codeviz'],
         action: () => {
-          openWindow('runtime', 'CodeViz Runtime', 'https://code-visualizer.vercel.app/')
+          openWindow('runtime', 'CodeViz · Runtime', 'https://code-visualizer.vercel.app/')
           toggleCommandPalette()
         },
-        accent: 'text-violet-400',
       },
     ]
 
     // Themes
     const themeCommands = (['ai-lab', 'matrix', 'minimal', 'cyber', 'synthwave', 'ubuntu'] as ThemeName[]).map(t => ({
       id: `theme-${t}`,
-      label: `Theme: ${t.charAt(0).toUpperCase() + t.slice(1)}`,
-      description: currentTheme === t ? 'Active' : 'Switch',
+      label: themeLabels[t],
+      description: currentTheme === t ? 'Active palette' : 'Switch palette',
       icon: Palette,
       category: 'themes' as CommandCategory,
-      keywords: ['theme', t],
+      keywords: ['theme', 'palette', t, themeLabels[t].toLowerCase()],
       action: () => { setTheme(t); toggleCommandPalette() },
     }))
 
@@ -346,16 +345,15 @@ export function CommandPalette() {
     // AI Intent is ALWAYS first if it exists
     if (aiIntent) {
       out.push({
-        label: 'Intelligence',
+        label: 'Assistant',
         items: [{
           id: 'ai-prompt',
           label: aiIntent.label,
           description: `"${aiIntent.query}"`,
           icon: aiIntent.icon,
           isAI: true,
-          accent: 'text-violet-400',
           action: () => {
-            openWindow('ai-assistant', 'AI Assistant', aiIntent.query)
+            openWindow('ai-assistant', 'AI assistant', aiIntent.query)
             toggleCommandPalette()
           }
         }]
@@ -433,41 +431,39 @@ export function CommandPalette() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           onClick={toggleCommandPalette}
-          className="absolute inset-0 bg-background/50"
+          className="absolute inset-0 bg-background/60 backdrop-blur-[2px]"
         />
 
         {/* Palette */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(8px)' }}
+          initial={{ opacity: 0, scale: 0.98, y: -6, filter: 'blur(6px)' }}
           animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(8px)' }}
-          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-          className="relative w-full max-w-[620px] rounded-2xl bg-[oklch(0.09_0.01_240/0.95)] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col"
+          exit={{ opacity: 0, scale: 0.98, y: -6, filter: 'blur(6px)' }}
+          transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full max-w-[600px] mx-4 rounded-xl bg-window/95 backdrop-blur-xl border border-hairline shadow-[var(--shadow-elevated)] overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="px-5 py-4 flex items-center gap-4 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-            <div className="flex items-center justify-center w-5 h-5">
-              <Command className="w-4 h-4 text-primary/60" />
-            </div>
+          <div className="px-4 py-3.5 flex items-center gap-3 border-b border-hairline">
+            <Search className="w-4 h-4 text-muted-foreground/45 shrink-0" />
             <input
               ref={inputRef}
               autoFocus
-              className="flex-1 bg-transparent border-none outline-none text-base text-foreground placeholder:text-foreground/20"
-              placeholder="Type a command or search..."
+              className="flex-1 bg-transparent border-none outline-none text-[13px] text-foreground placeholder:text-muted-foreground/35"
+              placeholder="Search projects, sections, or ask a question…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               spellCheck={false}
             />
-            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/[0.04]">
-              <span className="text-[10px] font-bold text-foreground/25 tracking-widest uppercase">esc</span>
-            </div>
+            <kbd className="px-1.5 py-0.5 rounded border border-hairline bg-foreground/[0.03] text-[9px] font-mono text-muted-foreground/40">
+              esc
+            </kbd>
           </div>
 
           {/* List */}
-          <div ref={listRef} className="max-h-[420px] overflow-y-auto custom-scrollbar p-2">
+          <div ref={listRef} className="max-h-[400px] overflow-y-auto custom-scrollbar p-2">
             {groups.map((group) => (
-              <div key={group.label} className="mb-1">
-                <div className="px-3 py-2 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em]">
+              <div key={group.label} className="mb-1 last:mb-0">
+                <div className="px-2.5 pt-2.5 pb-1.5 text-[9px] font-mono tracking-[0.14em] uppercase text-muted-foreground/35">
                   {group.label}
                 </div>
                 {group.items.map((cmd: any) => {
@@ -484,34 +480,33 @@ export function CommandPalette() {
                       }}
                       initial={false}
                       animate={{
-                        backgroundColor: isSelected ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0)',
+                        backgroundColor: isSelected ? 'rgba(255,248,236,0.045)' : 'rgba(0,0,0,0)',
                       }}
                       transition={{ duration: 0.1 }}
-                      className={`
-                        w-full flex items-center gap-4 px-3 py-2.5 rounded-xl text-left transition-colors
-                        ${isSelected ? '' : 'text-foreground/50'}
-                      `}
+                      className="w-full flex items-center gap-3 px-2.5 py-2 rounded-md text-left transition-colors"
                     >
                       <div className={`
-                        w-8 h-8 rounded-lg flex items-center justify-center transition-colors
-                        ${isSelected 
-                          ? `bg-primary/15 ${cmd.accent || 'text-primary'}` 
-                          : 'bg-white/[0.03] text-foreground/30'
+                        w-7 h-7 rounded-md flex items-center justify-center transition-colors shrink-0
+                        ${isSelected
+                          ? 'bg-primary/10 text-primary'
+                          : 'bg-foreground/[0.03] text-muted-foreground/40'
                         }
                       `}>
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-3.5 h-3.5" strokeWidth={1.7} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className={`text-sm font-semibold truncate ${isSelected ? 'text-foreground' : ''}`}>{cmd.label}</div>
-                        <div className="text-[11px] text-foreground/25 truncate font-mono mt-0.5">{cmd.description}</div>
+                        <div className={`text-[12.5px] truncate transition-colors ${isSelected ? 'text-foreground' : 'text-foreground/70'}`}>
+                          {cmd.label}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground/40 truncate mt-0.5">{cmd.description}</div>
                       </div>
                       {isSelected && (
                         <motion.div
-                          initial={{ opacity: 0, x: -4 }}
+                          initial={{ opacity: 0, x: -3 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className="flex items-center gap-1.5 text-[10px] text-primary/70 font-bold uppercase tracking-wider"
+                          className="flex items-center gap-1.5 text-[9.5px] text-muted-foreground/45 shrink-0"
                         >
-                          Run <CornerDownLeft className="w-3 h-3" />
+                          Open <CornerDownLeft className="w-3 h-3" />
                         </motion.div>
                       )}
                     </motion.button>
@@ -522,19 +517,20 @@ export function CommandPalette() {
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-2.5 bg-white/[0.02] flex items-center justify-between shadow-[0_-1px_0_rgba(255,255,255,0.03)]">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1 text-[9px] font-bold text-foreground/20 uppercase tracking-widest">
-                <kbd className="px-1 py-0.5 rounded bg-white/[0.04]">↑↓</kbd> Navigate
+          <div className="px-3.5 py-2.5 border-t border-hairline flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-1 text-[9px] text-muted-foreground/35">
+                <kbd className="px-1 py-0.5 rounded border border-hairline bg-foreground/[0.03] font-mono">↑↓</kbd>
+                Navigate
               </div>
-              <div className="flex items-center gap-1 text-[9px] font-bold text-foreground/20 uppercase tracking-widest">
-                <kbd className="px-1 py-0.5 rounded bg-white/[0.04]">↵</kbd> Execute
+              <div className="flex items-center gap-1 text-[9px] text-muted-foreground/35">
+                <kbd className="px-1 py-0.5 rounded border border-hairline bg-foreground/[0.03] font-mono">↵</kbd>
+                Open
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-3 h-3 text-primary/30" />
-              <span className="text-[9px] font-bold text-primary/30 uppercase tracking-[0.2em]">PRS-OS Command Hub</span>
-            </div>
+            <span className="text-[9px] font-mono tracking-[0.1em] uppercase text-muted-foreground/25">
+              PRS—OS
+            </span>
           </div>
         </motion.div>
       </div>

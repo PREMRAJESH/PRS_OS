@@ -1,15 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  Cpu,
-  Database,
-  Brain,
-  Code,
-  Server,
-  Wrench,
-  CheckCircle2,
-} from 'lucide-react'
 
 interface Skill {
   name: string
@@ -18,123 +9,128 @@ interface Skill {
 
 interface SkillGroup {
   category: string
-  icon: any
+  note: string
   skills: Skill[]
 }
 
 const skillGroups: SkillGroup[] = [
   {
-    category: 'Programming Languages',
-    icon: Code,
+    category: 'Languages',
+    note: 'Day to day',
     skills: [
       { name: 'Python', version: '3.11' },
+      { name: 'TypeScript', version: 'ES2023' },
       { name: 'Java', version: '17' },
-      { name: 'C++', version: 'c++17' },
-      { name: 'JavaScript', version: 'ES2023' }
-    ]
+      { name: 'C++', version: 'C++17' },
+    ],
   },
   {
     category: 'Frontend',
-    icon: Code,
+    note: 'Interfaces',
     skills: [
-      { name: 'React', version: '19.0' },
-      { name: 'Next.js', version: '16.0' },
-      { name: 'Tailwind CSS', version: '4.0' }
-    ]
+      { name: 'React', version: '19' },
+      { name: 'Next.js', version: '16' },
+      { name: 'Tailwind CSS', version: '4' },
+      { name: 'Framer Motion', version: '12' },
+    ],
   },
   {
     category: 'Backend',
-    icon: Server,
+    note: 'Services & data',
     skills: [
-      { name: 'Node.js', version: '22.0' },
+      { name: 'Node.js', version: '22' },
       { name: 'FastAPI', version: '0.110' },
-      { name: 'Firebase', version: '11.0' }
-    ]
+      { name: 'Firebase', version: '11' },
+      { name: 'Supabase' },
+    ],
   },
   {
     category: 'AI / ML',
-    icon: Brain,
+    note: 'Models & inference',
     skills: [
       { name: 'TensorFlow', version: '2.18' },
       { name: 'PyTorch', version: '2.5' },
-      { name: 'Gemini API', version: 'v1beta' }
-    ]
+      { name: 'ONNX Runtime' },
+      { name: 'Gemini API' },
+    ],
   },
   {
-    category: 'Developer Tools',
-    icon: Wrench,
+    category: 'Tools',
+    note: 'Shipping',
     skills: [
       { name: 'Git', version: '2.47' },
-      { name: 'GitHub', version: 'Cloud' },
-      { name: 'Docker', version: '26.0' },
-      { name: 'Vercel', version: 'Production' }
-    ]
-  }
+      { name: 'Docker', version: '26' },
+      { name: 'Vercel' },
+      { name: 'VS Code' },
+    ],
+  },
 ]
 
 export function SkillsWindow() {
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] font-sans selection:bg-primary/30">
+    <div className="h-full flex flex-col font-sans">
       {/* Header */}
-      <div className="p-5 border-b border-border/50 bg-background/25">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/20 text-primary">
-            <Cpu className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="font-bold text-white tracking-tight">System Modules</h2>
-            <p className="text-xs text-muted-foreground">
-              Technical stack modules verified & active in environment.
-            </p>
-          </div>
+      <div className="px-6 py-5 border-b border-hairline shrink-0">
+        <p className="text-eyebrow">Skills & stack</p>
+        <div className="mt-1.5 flex items-end justify-between gap-4">
+          <h2 className="font-display text-[2rem] leading-none tracking-[-0.02em]">
+            What I build with
+          </h2>
+          <span className="hidden sm:block text-[9.5px] font-mono text-muted-foreground/40 pb-0.5">
+            {skillGroups.reduce((n, g) => n + g.skills.length, 0)} tools
+          </span>
         </div>
+        <p className="mt-2 text-[11.5px] text-muted-foreground/60 max-w-md">
+          A working set, not a wishlist. Everything here has shipped in a project or is in
+          active use.
+        </p>
       </div>
 
-      {/* Skills Group Grid */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 select-none">
+      {/* Groups */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-2 select-none">
         {skillGroups.map((group, gIdx) => (
-          <div key={group.category} className="space-y-3">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-              <group.icon className="w-3.5 h-3.5 text-primary/70" />
-              {group.category}
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {group.skills.map((skill, idx) => (
-                <motion.div
+          <motion.section
+            key={group.category}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: gIdx * 0.045, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="grid grid-cols-1 sm:grid-cols-[124px_1fr] gap-x-6 gap-y-2 py-4 border-b border-hairline last:border-b-0"
+          >
+            <div className="sm:pt-1">
+              <h3 className="text-[12px] text-foreground/85 leading-none">{group.category}</h3>
+              <p className="mt-1.5 text-[9px] font-mono tracking-[0.08em] uppercase text-muted-foreground/35">
+                {group.note}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5">
+              {group.skills.map(skill => (
+                <span
                   key={skill.name}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (gIdx * 3 + idx) * 0.03, type: 'spring', stiffness: 300, damping: 24 }}
-                  className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.01] border border-white/5 hover:border-primary/30 hover:bg-white/[0.03] transition-all group"
+                  className="inline-flex items-baseline gap-1.5 px-2 py-1 rounded border border-hairline bg-foreground/[0.02] text-[11px] text-foreground/75 hover:border-hairline-strong hover:bg-foreground/[0.04] transition-colors cursor-default"
                 >
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">
-                      {skill.name}
-                    </span>
-                  </div>
+                  {skill.name}
                   {skill.version && (
-                    <span className="text-[10px] font-mono text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-md">
-                      v{skill.version}
+                    <span className="text-[8.5px] font-mono text-muted-foreground/40">
+                      {skill.version}
                     </span>
                   )}
-                </motion.div>
+                </span>
               ))}
             </div>
-          </div>
+          </motion.section>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border/50 bg-secondary/15">
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span className="flex items-center gap-1.5 font-medium">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Integrity check: PASS
-          </span>
-          <span className="font-mono text-[10px]">All dependencies synchronized</span>
-        </div>
+      <div className="px-6 py-3 border-t border-hairline shrink-0 flex items-center justify-between gap-4">
+        <span className="flex items-center gap-1.5 text-[10px] text-muted-foreground/50">
+          <span className="w-1 h-1 rounded-full bg-accent" />
+          Currently learning agentic workflows and evaluation
+        </span>
+        <span className="hidden sm:block text-[9px] font-mono text-muted-foreground/30">
+          Updated 2026
+        </span>
       </div>
     </div>
   )

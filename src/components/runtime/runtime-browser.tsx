@@ -154,8 +154,7 @@ export function RuntimeBrowser() {
 
   return (
     <div
-      className="flex h-full text-foreground overflow-hidden font-sans"
-      style={{ background: "#0a0a0b" }}
+      className="flex h-full text-foreground overflow-hidden font-sans bg-transparent"
     >
       {/* ── Arc-style Sidebar ───────────────── */}
       <motion.aside
@@ -163,7 +162,7 @@ export function RuntimeBrowser() {
           width: isSidebarCollapsed ? 0 : 240,
           opacity: isSidebarCollapsed ? 0 : 1,
         }}
-        className="flex flex-col border-r border-white/5 bg-[#121214] z-20"
+        className="flex flex-col border-r border-hairline bg-window-chrome/40 z-20"
       >
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -174,7 +173,7 @@ export function RuntimeBrowser() {
           </div>
           <button
             onClick={addTab}
-            className="p-1.5 rounded-lg hover:bg-white/5 text-muted-foreground transition-colors"
+            className="p-1.5 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground transition-colors"
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -194,15 +193,15 @@ export function RuntimeBrowser() {
                   w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all group relative cursor-pointer
                   ${
                     isActive
-                      ? "bg-white/10 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-                      : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                      ? "bg-foreground/[0.07] text-foreground"
+                      : "text-muted-foreground/70 hover:bg-foreground/[0.03] hover:text-foreground"
                   }
                 `}
               >
                 <div
                   className={`
                   w-6 h-6 rounded-lg flex items-center justify-center shrink-0
-                  ${isActive ? "bg-primary/20 text-primary" : "bg-white/5 text-muted-foreground/40 group-hover:text-muted-foreground"}
+                  ${isActive ? "bg-primary/15 text-primary" : "bg-foreground/[0.03] text-muted-foreground/40 group-hover:text-muted-foreground"}
                 `}
                 >
                   <tab.icon className="w-3.5 h-3.5" />
@@ -212,7 +211,7 @@ export function RuntimeBrowser() {
                 </span>
                 <button
                   onClick={(e) => closeTab(tab.id, e)}
-                  className={`p-1 rounded-md hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? "opacity-100" : ""}`}
+                  className={`p-1 rounded-md hover:bg-foreground/[0.08] opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? "opacity-100" : ""}`}
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -227,11 +226,11 @@ export function RuntimeBrowser() {
           })}
         </div>
 
-        <div className="p-4 border-t border-white/5 flex items-center justify-between">
-          <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-colors">
+        <div className="p-4 border-t border-hairline flex items-center justify-between">
+          <button className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground transition-colors">
             <LayoutGrid className="w-4 h-4" />
           </button>
-          <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-colors">
+          <button className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground transition-colors">
             <Settings className="w-4 h-4" />
           </button>
         </div>
@@ -239,27 +238,22 @@ export function RuntimeBrowser() {
 
       {/* ── Main Browser Area ───────────────── */}
       <main
-        className="flex-1 flex flex-col relative min-w-0 min-h-0"
-        style={{ background: "#0a0a0b" }}
+        className="flex-1 flex flex-col relative min-w-0 min-h-0 bg-transparent"
       >
         {/* Navigation Bar */}
         <header
-          className="h-12 border-b border-white/5 flex items-center gap-4 px-4 shrink-0"
-          style={{
-            background: "rgba(10,10,11,0.85)",
-            backdropFilter: "blur(12px)",
-          }}
+          className="h-12 border-b border-hairline flex items-center gap-4 px-4 shrink-0 bg-window/60 backdrop-blur-md"
         >
           <div className="flex items-center gap-1">
-            <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground/40 transition-colors">
+            <button className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground/40 transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground/40 transition-colors">
+            <button className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground/40 transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
               onClick={handleRefresh}
-              className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-colors"
+              className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground transition-colors"
             >
               <RotateCcw
                 className={`w-3.5 h-3.5 ${activeTab.isLoading ? "animate-spin" : ""}`}
@@ -269,13 +263,13 @@ export function RuntimeBrowser() {
 
           <div className="flex-1 relative group">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
-              <Lock className="w-3 h-3 text-emerald-500/60" />
+              <Lock className="w-3 h-3 text-accent/60" />
             </div>
             <input
               type="text"
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
-              className="w-full bg-white/5 border border-white/5 rounded-xl py-1.5 pl-9 pr-4 text-[11px] font-mono text-muted-foreground/80 focus:text-foreground focus:bg-white/10 outline-none transition-all"
+              className="w-full bg-foreground/[0.03] border border-hairline rounded-md py-1.5 pl-9 pr-4 text-[11px] font-mono text-muted-foreground/80 focus:text-foreground focus:bg-foreground/[0.05] outline-none transition-all"
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
               {activeTab.isLoading && (
@@ -285,7 +279,7 @@ export function RuntimeBrowser() {
             </div>
           </div>
 
-          <button className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-colors">
+          <button className="p-2 rounded-lg hover:bg-foreground/[0.05] text-muted-foreground transition-colors">
             <MoreVertical className="w-4 h-4" />
           </button>
         </header>
@@ -293,8 +287,7 @@ export function RuntimeBrowser() {
         {/* Browser Content — scaled viewport area */}
         <div
           ref={containerRef}
-          className="flex-1 relative overflow-hidden"
-          style={{ background: "#0a0a0b" }}
+          className="flex-1 relative overflow-hidden bg-transparent"
         >
           {(() => {
             // Virtual viewport: render websites at desktop width, scale down to fit
@@ -365,21 +358,21 @@ export function RuntimeBrowser() {
 
                 {/* Runtime Viewport Metrics */}
                 <div className="absolute bottom-4 right-4 flex items-center gap-3 z-30 pointer-events-none">
-                  <div className="px-3 py-1.5 rounded-full bg-black/70 border border-white/5 flex items-center gap-2.5 shadow-2xl">
+                  <div className="px-3 py-1.5 rounded-full bg-popover/90 backdrop-blur border border-hairline flex items-center gap-2.5 shadow-[var(--shadow-ambient)]">
                     <div className="flex items-center gap-1.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[8px] font-black text-emerald-500/80 uppercase tracking-widest">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                      <span className="text-[8px] font-mono text-accent/90 uppercase tracking-[0.1em]">
                         Live
                       </span>
                     </div>
-                    <div className="w-px h-3 bg-white/10" />
-                    <span className="text-[9px] font-mono font-bold text-white/50">
+                    <div className="w-px h-3 bg-hairline" />
+                    <span className="text-[9px] font-mono text-foreground/50 tabular">
                       {Math.round(effectiveW)}×{Math.round(effectiveH)}
                     </span>
                     {scale < 1 && (
                       <>
-                        <div className="w-px h-3 bg-white/10" />
-                        <span className="text-[9px] font-mono font-bold text-primary">
+                        <div className="w-px h-3 bg-hairline" />
+                        <span className="text-[9px] font-mono text-primary tabular">
                           {Math.round(scale * 100)}%
                         </span>
                       </>

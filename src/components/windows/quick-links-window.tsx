@@ -2,136 +2,156 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Github, 
-  Linkedin, 
-  Code2, 
+import {
+  Github,
+  Linkedin,
+  Code2,
   FileText,
   Send,
-  Terminal,
-  ExternalLink,
-  CheckCircle2,
-  Loader2
+  ArrowUpRight,
+  Check,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react'
 
 const contactLinks = [
   {
     title: 'GitHub',
-    desc: 'Explore open source systems, AI applications, and full-stack codebases.',
     url: 'github.com/PREMRAJESH',
     href: 'https://github.com/PREMRAJESH',
     icon: Github,
-    color: 'hover:border-white/30',
   },
   {
     title: 'LinkedIn',
-    desc: 'Connect professionally for opportunities, collaborations, and tech discussions.',
     url: 'linkedin.com/in/prem-sargara',
     href: 'https://www.linkedin.com/in/gecdhd-comp-prem-sargara/',
     icon: Linkedin,
-    color: 'hover:border-blue-500/30',
   },
   {
     title: 'LeetCode',
-    desc: 'View solved DSA problems, sorting algorithms, and challenge badges.',
     url: 'leetcode.com/u/Sargara_Prem',
     href: 'https://leetcode.com/u/Sargara_Prem/',
     icon: Code2,
-    color: 'hover:border-yellow-500/30',
   },
   {
-    title: 'Resume',
-    desc: 'Download the full technical resume and credentials document.',
+    title: 'Résumé',
     url: 'Download PDF',
     href: '/Resume.pdf',
     icon: FileText,
-    color: 'hover:border-amber-500/30',
   },
 ]
 
+type Status = 'idle' | 'sending' | 'sent' | 'error'
+
 export function QuickLinksWindow() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [status, setStatus] = useState<Status>('idle')
+
+  const update = (field: keyof typeof formData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [field]: e.target.value })
+    if (status === 'error') setStatus('idle')
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) return
-    
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setStatus('error')
+      return
+    }
+
     setStatus('sending')
-    
+
     try {
       const res = await fetch('/api/send-mail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-      
+
       if (!res.ok) throw new Error('Failed to send')
-      
+
       setStatus('sent')
       setTimeout(() => {
         setStatus('idle')
         setFormData({ name: '', email: '', subject: '', message: '' })
-      }, 4000)
+      }, 5000)
     } catch {
-      setStatus('idle')
+      setStatus('error')
     }
   }
 
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] font-mono selection:bg-primary/30">
-      {/* Title Bar */}
-      <div className="h-9 flex items-center justify-between px-3 border-b border-white/10 bg-[#0c0c0e] shrink-0">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-3 h-3 text-primary" />
-          <span className="text-[10px] font-bold text-white tracking-wider">CONTACT SYSTEM</span>
-        </div>
-        <div className="text-[8px] text-muted-foreground font-mono">
-          PRS-MAIL v1.0 — <span className="text-emerald-400">Online</span>
+    <div className="h-full flex flex-col font-sans">
+      {/* Header */}
+      <div className="px-6 py-5 border-b border-hairline shrink-0">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-eyebrow">Contact</p>
+            <h2 className="font-display text-[1.9rem] leading-none tracking-[-0.02em] mt-1.5">
+              Say hello.
+            </h2>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5 text-[9.5px] font-mono tracking-[0.08em] uppercase text-muted-foreground/55 mt-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            Replies within 24h
+          </div>
         </div>
       </div>
 
-      {/* Split View Content */}
-      <div className="flex-1 flex min-h-0">
-        {/* Left Panel — Contact Network */}
-        <div className="w-[40%] border-r border-white/10 flex flex-col">
-          <div className="px-3 py-2 border-b border-white/5 bg-white/[0.01] shrink-0">
-            <h2 className="text-[11px] font-bold text-white tracking-wider">CONTACT NETWORK</h2>
-            <p className="text-[9px] text-muted-foreground mt-0.5">Connect through any platform</p>
+      <div className="flex-1 flex flex-col md:flex-row min-h-0">
+        {/* Links */}
+        <div className="md:w-[38%] md:min-w-[200px] border-b md:border-b-0 md:border-r border-hairline flex flex-col shrink-0">
+          <div className="px-5 py-3 border-b border-hairline hidden md:block">
+            <span className="text-[9px] font-mono tracking-[0.13em] uppercase text-muted-foreground/40">
+              Elsewhere
+            </span>
           </div>
-          <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
-            {contactLinks.map((link, idx) => (
-              <motion.a
-                key={link.title}
-                href={link.href}
-                target={link.title === 'Resume' ? undefined : '_blank'}
-                rel={link.title === 'Resume' ? undefined : 'noopener noreferrer'}
-                download={link.title === 'Resume' ? 'P.R.S_Resume.pdf' : undefined}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.04 }}
-                className={`block p-2.5 rounded-lg border border-white/5 bg-white/[0.01] transition-all group ${link.color}`}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-lg bg-white/5 text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
-                      <link.icon className="w-3.5 h-3.5" />
+
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-2.5">
+            {contactLinks.map((link, idx) => {
+              const isResume = link.title === 'Résumé'
+              return (
+                <motion.a
+                  key={link.title}
+                  href={link.href}
+                  target={isResume ? undefined : '_blank'}
+                  rel={isResume ? undefined : 'noopener noreferrer'}
+                  download={isResume ? 'P.R.S_Resume.pdf' : undefined}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.035, duration: 0.3 }}
+                  className="group flex items-center gap-3 px-2.5 py-2.5 rounded-md hover:bg-foreground/[0.035] transition-colors"
+                >
+                  <link.icon className="w-3.5 h-3.5 shrink-0 text-muted-foreground/40 group-hover:text-primary transition-colors" strokeWidth={1.7} />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[12px] text-foreground/80 group-hover:text-foreground transition-colors">
+                      {link.title}
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="text-xs font-bold text-white group-hover:text-primary transition-colors">{link.title}</h3>
-                      <p className="text-[9px] text-muted-foreground leading-relaxed mt-0.5">{link.desc}</p>
-                      <span className="text-[8px] text-muted-foreground/60 font-mono mt-1 block">{link.url}</span>
+                    <div className="text-[9.5px] font-mono text-muted-foreground/40 truncate mt-0.5">
+                      {link.url}
                     </div>
                   </div>
-                  <ExternalLink className="w-3 h-3 text-muted-foreground/30 group-hover:text-primary transition-colors shrink-0 mt-1.5" />
-                </div>
-              </motion.a>
-            ))}
+                  <ArrowUpRight className="w-3 h-3 shrink-0 text-muted-foreground/25 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </motion.a>
+              )
+            })}
+
+            <div className="mt-2 mx-2.5 pt-3 border-t border-hairline">
+              <div className="text-[9px] font-mono tracking-[0.1em] uppercase text-muted-foreground/35">
+                Direct
+              </div>
+              <a
+                href="mailto:sargarapremrajesh@gmail.com"
+                className="mt-1.5 block text-[10px] font-mono text-muted-foreground/60 hover:text-foreground transition-colors break-all"
+              >
+                sargarapremrajesh@gmail.com
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Right Panel — PRS-MAIL Client */}
-        <div className="flex-[60%] flex flex-col min-w-0">
+        {/* Form */}
+        <div className="flex-1 flex flex-col min-w-0 min-h-0">
           <AnimatePresence mode="wait">
             {status === 'sent' ? (
               <motion.div
@@ -139,130 +159,130 @@ export function QuickLinksWindow() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex items-center justify-center"
+                className="flex-1 flex items-center justify-center p-7"
               >
-                <div className="text-center space-y-4 p-6">
-                  <motion.div
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                  >
-                    <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-                  </motion.div>
-                  <div>
-                    <h3 className="text-sm font-bold text-emerald-400 tracking-wider mb-1">
-                      TRANSMISSION SENT
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Message successfully delivered to Prem Rajesh.
-                    </p>
+                <div className="text-center max-w-[260px]">
+                  <div className="mx-auto w-10 h-10 rounded-full border border-accent/30 bg-accent/10 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-accent" strokeWidth={2.5} />
                   </div>
-                  <div className="inline-block text-left text-[10px] text-muted-foreground/60 space-y-0.5 font-mono p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
-                    <p>Status: <span className="text-emerald-400">Delivered</span></p>
-                    <p>Protocol: <span className="text-emerald-400">PRS-MAIL</span></p>
-                    <p>Encryption: <span className="text-emerald-400">AES-256</span></p>
-                  </div>
+                  <h3 className="mt-4 font-display text-[1.5rem] leading-none">Message sent</h3>
+                  <p className="mt-2 text-[11.5px] leading-relaxed text-muted-foreground/65">
+                    Thanks for reaching out. I usually reply within a day.
+                  </p>
                 </div>
               </motion.div>
             ) : (
-              <motion.div
+              <motion.form
                 key="form"
+                onSubmit={handleSubmit}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col min-h-0"
               >
-                {/* Compact horizontal status bar */}
-                <div className="shrink-0 flex items-center gap-3 px-4 py-1.5 border-b border-white/5 bg-white/[0.01] text-[9px] text-muted-foreground font-mono">
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
-                    <span className="text-primary font-bold text-[10px] tracking-wider">PRS-MAIL v1.0</span>
-                  </div>
-                  <span className="text-white/10">|</span>
-                  <span className="shrink-0">Online</span>
-                  <span className="text-white/10">|</span>
-                  <span className="truncate">Accepting Opportunities</span>
-                  <span className="text-white/10 max-md:hidden">|</span>
-                  <span className="max-md:hidden shrink-0">Response: <span className="text-primary font-bold">&lt;24h</span></span>
-                </div>
-
-                {/* Form with scrollable fields and sticky send button */}
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0">
-                  <div className="flex-1 overflow-y-auto space-y-2.5 px-4 py-3">
-                    <div className="space-y-1">
-                      <label className="text-[10px] text-muted-foreground font-bold tracking-wider">&gt; NAME_</label>
+                <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-4 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Field label="Name">
                       <input
                         type="text"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/[0.02] text-xs text-white font-mono focus:border-primary/50 focus:outline-none transition-colors placeholder:text-muted-foreground/40"
-                        placeholder="Enter your name"
+                        onChange={update('name')}
+                        placeholder="Your name"
                         required
+                        className={inputClass}
                       />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[10px] text-muted-foreground font-bold tracking-wider">&gt; EMAIL_</label>
+                    </Field>
+                    <Field label="Email">
                       <input
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/[0.02] text-xs text-white font-mono focus:border-primary/50 focus:outline-none transition-colors placeholder:text-muted-foreground/40"
-                        placeholder="your@email.com"
+                        onChange={update('email')}
+                        placeholder="you@example.com"
                         required
+                        className={inputClass}
                       />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[10px] text-muted-foreground font-bold tracking-wider">&gt; SUBJECT_</label>
-                      <input
-                        type="text"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/[0.02] text-xs text-white font-mono focus:border-primary/50 focus:outline-none transition-colors placeholder:text-muted-foreground/40"
-                        placeholder="What is this about?"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[10px] text-muted-foreground font-bold tracking-wider">&gt; MESSAGE_</label>
-                      <textarea
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        rows={4}
-                        className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/[0.02] text-xs text-white font-mono focus:border-primary/50 focus:outline-none transition-colors resize-none placeholder:text-muted-foreground/40"
-                        placeholder="Type your message..."
-                        required
-                      />
-                    </div>
+                    </Field>
                   </div>
 
-                  <div className="shrink-0 px-4 py-2.5 border-t border-white/5">
-                    <button
-                      type="submit"
-                      disabled={status === 'sending'}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-black text-xs font-bold tracking-wider hover:bg-primary/90 transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(0,255,255,0.15)]"
-                    >
-                      {status === 'sending' ? (
-                        <>
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          TRANSMITTING...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-3.5 h-3.5" />
-                          SEND TRANSMISSION
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
+                  <Field label="Subject">
+                    <input
+                      type="text"
+                      value={formData.subject}
+                      onChange={update('subject')}
+                      placeholder="What is this about?"
+                      required
+                      className={inputClass}
+                    />
+                  </Field>
+
+                  <Field label="Message">
+                    <textarea
+                      value={formData.message}
+                      onChange={update('message')}
+                      rows={4}
+                      placeholder="A few lines are plenty."
+                      required
+                      className={`${inputClass} resize-none`}
+                    />
+                  </Field>
+
+                  <AnimatePresence>
+                    {status === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2 text-[10.5px] text-destructive"
+                        role="alert"
+                      >
+                        <AlertCircle className="w-3 h-3 shrink-0" />
+                        Couldn&apos;t send that. Check your connection, or email me directly.
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <div className="shrink-0 px-5 py-3 border-t border-hairline flex items-center justify-between gap-3">
+                  <span className="hidden sm:block text-[9.5px] font-mono text-muted-foreground/35">
+                    Or write to sargarapremrajesh@gmail.com
+                  </span>
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="flex items-center justify-center gap-2 h-8 px-3.5 rounded-md bg-primary text-primary-foreground text-[11.5px] font-medium hover:bg-primary/90 transition-colors disabled:opacity-55"
+                  >
+                    {status === 'sending' ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        Sending
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        Send message
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.form>
             )}
           </AnimatePresence>
         </div>
       </div>
     </div>
+  )
+}
+
+const inputClass =
+  'w-full px-2.5 py-1.5 rounded-md border border-hairline bg-foreground/[0.025] text-[12px] text-foreground/90 placeholder:text-muted-foreground/30 focus:border-primary/45 focus:bg-foreground/[0.04] focus:outline-none transition-colors'
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block space-y-1">
+      <span className="text-[9px] font-mono tracking-[0.12em] uppercase text-muted-foreground/45">
+        {label}
+      </span>
+      {children}
+    </label>
   )
 }

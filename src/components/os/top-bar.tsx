@@ -4,16 +4,10 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useOSStore } from '@/store/os-store'
 import { developerStatus } from '@/data/workspace'
-import {
-  Search,
-  Wifi,
-  Volume2,
-  GitBranch,
-  Command,
-} from 'lucide-react'
+import { Search, GitBranch, Command, Settings } from 'lucide-react'
 
 export function TopBar() {
-  const { toggleCommandPalette } = useOSStore()
+  const { toggleCommandPalette, openWindow } = useOSStore()
   const [currentTime, setCurrentTime] = useState<string>('')
   const [currentDate, setCurrentDate] = useState<string>('')
 
@@ -42,56 +36,67 @@ export function TopBar() {
 
   return (
     <motion.header
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -12, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="h-11 flex items-center justify-between px-4 bg-[oklch(0.07_0.01_240/0.8)] z-50 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.03)]"
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="relative h-12 flex items-center justify-between px-4 bg-background/70 backdrop-blur-xl z-50 shrink-0 shadow-[inset_0_-1px_0_var(--hairline)]"
     >
-      {/* ── Left: Brand + Branch ───────────────── */}
+      {/* Left — identity */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 group cursor-default">
-          <div className="w-5 h-5 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-[0_2px_8px_rgba(120,200,255,0.2)] transition-transform group-hover:scale-110">
-            <span className="text-[9px] font-black text-background leading-none">P</span>
-          </div>
-          <span className="text-xs font-bold font-mono text-foreground/80 tracking-tight group-hover:text-primary transition-colors">PRS-OS</span>
-        </div>
+        <button
+          onClick={() => openWindow('about')}
+          className="flex items-center gap-2.5 group"
+          aria-label="Open profile"
+        >
+          <span className="w-6 h-6 rounded-[7px] border border-hairline flex items-center justify-center bg-surface/60 group-hover:border-primary/40 transition-colors">
+            <span className="font-display text-[15px] leading-none text-primary -mt-px">P</span>
+          </span>
+          <span className="text-[11px] font-medium font-mono tracking-[0.16em] text-foreground/70 group-hover:text-foreground transition-colors">
+            PRS—OS
+          </span>
+        </button>
 
-        <div className="h-3.5 w-px bg-white/[0.06]" />
+        <span className="hidden sm:block h-3 w-px bg-hairline" />
 
-        <div className="flex items-center gap-1.5 text-[10px] text-foreground/30 font-mono uppercase tracking-widest">
+        <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-muted-foreground/70 font-mono">
           <GitBranch className="w-3 h-3" />
-          <span className="hover:text-primary/70 transition-colors cursor-default">{developerStatus.branch}</span>
+          <span className="hover:text-foreground/70 transition-colors cursor-default">{developerStatus.branch}</span>
         </div>
       </div>
 
-      {/* ── Center: Command / Search Bar ────────── */}
+      {/* Center — command / search */}
       <button
         onClick={toggleCommandPalette}
-        className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 px-4 py-1.5 rounded-xl bg-white/[0.03] text-foreground/25 text-[11px] hover:bg-white/[0.06] hover:text-foreground/50 transition-all duration-300 group w-72 max-w-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+        className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-foreground/[0.025] border border-hairline text-muted-foreground/70 text-[11px] hover:bg-foreground/[0.05] hover:text-foreground/80 hover:border-hairline-strong transition-all duration-200 group w-64 max-w-[38vw]"
+        aria-label="Search or run a command"
       >
-        <Search className="w-3.5 h-3.5 shrink-0 group-hover:text-primary/60 transition-colors" />
-        <span className="flex-1 text-left font-medium tracking-wide">Search or run command...</span>
-        <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-white/[0.04] text-[9px] font-mono text-foreground/20 group-hover:text-primary/40 transition-colors">
+        <Search className="w-3.5 h-3.5 shrink-0 text-muted-foreground/60 group-hover:text-primary/80 transition-colors" />
+        <span className="flex-1 text-left tracking-wide">Search or jump to…</span>
+        <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-hairline bg-foreground/[0.03] text-[9px] font-mono text-muted-foreground/50">
           <Command className="w-2.5 h-2.5" />K
         </kbd>
       </button>
 
-      {/* ── Right: System status ─────────────── */}
-      <div className="flex items-center gap-4 text-foreground/30">
-        <div className="flex items-center gap-0.5">
-          <button className="p-1.5 rounded-lg hover:bg-white/[0.04] hover:text-foreground/60 transition-all active:scale-90">
-            <Wifi className="w-3.5 h-3.5" />
-          </button>
-          <button className="p-1.5 rounded-lg hover:bg-white/[0.04] hover:text-foreground/60 transition-all active:scale-90">
-            <Volume2 className="w-3.5 h-3.5" />
-          </button>
+      {/* Right — status */}
+      <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2 text-[10px] font-mono text-muted-foreground/70">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+          <span>Open to internships</span>
         </div>
 
-        <div className="h-3 w-px bg-white/[0.06]" />
+        <span className="hidden md:block h-3 w-px bg-hairline" />
 
-        <div className="flex items-center gap-3 text-[11px] font-bold">
-          <span className="text-foreground/20 uppercase tracking-[0.1em]">{currentDate}</span>
-          <span className="font-mono text-foreground/70 tabular-nums tracking-wider">{currentTime}</span>
+        <button
+          onClick={() => openWindow('settings')}
+          className="p-1.5 rounded-md text-muted-foreground/70 hover:text-foreground/80 hover:bg-foreground/[0.04] transition-colors"
+          aria-label="Open settings"
+        >
+          <Settings className="w-3.5 h-3.5" />
+        </button>
+
+        <div className="flex items-baseline gap-2.5 text-[11px] tabular">
+          <span className="hidden sm:inline text-muted-foreground/45">{currentDate}</span>
+          <span className="font-mono text-foreground/80 tracking-wide">{currentTime}</span>
         </div>
       </div>
     </motion.header>

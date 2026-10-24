@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { GraduationCap, Calendar, BookOpen, Award } from 'lucide-react'
 
 interface EducationItem {
   institution: string
@@ -14,103 +13,90 @@ interface EducationItem {
 const educationData: EducationItem[] = [
   {
     institution: 'Government Engineering College, Dahod',
-    degree: 'Bachelor of Engineering (BE)',
-    period: '2024 – 2027',
-    areas: ['Web Applications', 'Artificial Intelligence', 'Software Engineering'],
+    degree: 'B.E. Computer Engineering',
+    period: '2024 — 2027',
+    areas: ['Web applications', 'Artificial intelligence', 'Software engineering'],
   },
   {
     institution: 'Government Polytechnic, Dahod',
     degree: 'Diploma in Computer Software Engineering',
-    period: '2021 – 2024',
-    metric: 'CPI: 8.33',
-    areas: ['Web Development', 'Machine Learning', 'Software Engineering Fundamentals'],
-  }
+    period: '2021 — 2024',
+    metric: 'CPI 8.33',
+    areas: ['Web development', 'Machine learning', 'Software engineering fundamentals'],
+  },
 ]
 
 export function EducationWindow() {
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] font-sans selection:bg-primary/30">
+    <div className="h-full flex flex-col font-sans">
       {/* Header */}
-      <div className="p-6 border-b border-border/50 bg-background/25">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-primary/20 text-primary">
-            <GraduationCap className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="font-bold text-white text-base tracking-tight">Academic History</h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Verified educational background and core technical tracks
-            </p>
-          </div>
+      <div className="px-6 py-5 border-b border-hairline shrink-0">
+        <p className="text-eyebrow">Education</p>
+        <div className="mt-1.5 flex items-end justify-between gap-4">
+          <h2 className="font-display text-[2rem] leading-none tracking-[-0.02em]">
+            Where I studied
+          </h2>
+          <span className="hidden sm:block text-[9.5px] font-mono text-muted-foreground/40 pb-0.5">
+            Gujarat, India
+          </span>
         </div>
+        <p className="mt-2 text-[11.5px] text-muted-foreground/60">
+          Two programmes, one direction: building software that holds up outside a classroom.
+        </p>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
-        <div className="relative border-l border-white/5 ml-4 pl-6 space-y-8 py-2">
-          {educationData.map((edu, idx) => (
-            <motion.div
-              key={edu.institution}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1, type: 'spring', stiffness: 300, damping: 25 }}
-              className="relative group"
-            >
-              {/* Timeline marker */}
-              <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-primary border-2 border-[#0a0a0b] group-hover:scale-125 transition-transform duration-200 shadow-[0_0_8px_rgba(56,189,248,0.5)]" />
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-2">
+        {educationData.map((edu, idx) => (
+          <motion.article
+            key={edu.institution}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="py-5 border-b border-hairline last:border-b-0 grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-x-6 gap-y-2"
+          >
+            <div className="sm:pt-0.5">
+              <span className="font-mono text-[10px] text-muted-foreground/40 tabular">
+                {edu.period}
+              </span>
+              {edu.metric && (
+                <span className="mt-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-accent/25 bg-accent/[0.06] text-[8.5px] font-mono tracking-[0.06em] uppercase text-accent">
+                  {edu.metric}
+                </span>
+              )}
+            </div>
 
-              <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.02] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3.5 mb-4">
-                  <div>
-                    <h3 className="font-bold text-white text-base group-hover:text-primary transition-colors duration-200">
-                      {edu.institution}
-                    </h3>
-                    <p className="text-sm font-semibold text-primary/80 mt-1 flex items-center gap-2 edu-exp-content">
-                      {edu.degree}
-                      {edu.metric && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black">
-                          {edu.metric}
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono bg-white/5 px-3 py-1 rounded-lg self-start sm:self-center">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{edu.period}</span>
-                  </div>
-                </div>
+            <div className="min-w-0">
+              <h3 className="text-[15px] leading-snug text-foreground/90">{edu.degree}</h3>
+              <p className="mt-1 text-[11.5px] text-muted-foreground/60">{edu.institution}</p>
 
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest">
-                    <BookOpen className="w-3.5 h-3.5 text-primary/70" />
-                    <span>Relevant Areas of Study</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {edu.areas.map((area) => (
-                      <span
-                        key={area}
-                        className="px-3 py-1 rounded-lg text-xs font-medium text-foreground bg-white/[0.03] border border-white/5 group-hover:border-primary/10 transition-colors edu-exp-content"
-                      >
-                        {area}
-                      </span>
-                    ))}
-                  </div>
+              <div className="mt-3">
+                <span className="text-[9px] font-mono tracking-[0.12em] uppercase text-muted-foreground/35">
+                  Areas of study
+                </span>
+                <div className="flex flex-wrap gap-1.5 mt-1.5">
+                  {edu.areas.map(area => (
+                    <span
+                      key={area}
+                      className="px-2 py-0.5 rounded border border-hairline bg-foreground/[0.02] text-[10.5px] text-muted-foreground/70 edu-exp-content"
+                    >
+                      {area}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.article>
+        ))}
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border/50 bg-secondary/15">
-        <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
-          <span className="flex items-center gap-1.5 font-bold">
-            <Award className="w-4 h-4 text-emerald-400" />
-            Accreditation: AICTE / Gujarat Technological University
-          </span>
-          <span>Verified profile</span>
-        </div>
+      <div className="px-6 py-3 border-t border-hairline shrink-0 flex items-center justify-between gap-4">
+        <span className="flex items-center gap-1.5 text-[10px] text-muted-foreground/50">
+          <span className="w-1 h-1 rounded-full bg-accent" />
+          AICTE / Gujarat Technological University
+        </span>
+        <span className="text-[9px] font-mono text-muted-foreground/30">2 programmes</span>
       </div>
     </div>
   )

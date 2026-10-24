@@ -26,34 +26,34 @@ export function ResumeViewer() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-[#1e1e1e] text-foreground font-sans overflow-hidden select-none">
+    <div className="h-full flex flex-col bg-transparent text-foreground font-sans overflow-hidden select-none">
 
       {/* ─── Top Toolbar ─── */}
-      <div className="h-12 flex items-center justify-between px-3 border-b border-border/40 bg-[#252526] shrink-0 z-10">
-        <div className="text-xs text-muted-foreground font-bold tracking-wider pl-1">
+      <div className="h-11 flex items-center justify-between px-4 border-b border-hairline bg-window-chrome/40 shrink-0 z-10">
+        <div className="text-[10.5px] text-muted-foreground/60 font-mono tracking-tight pl-0.5">
           P.R.S_Resume.pdf
         </div>
 
         {/* Right: Zoom & Actions */}
         <div className="flex items-center gap-1.5">
-          <button onClick={handleZoomOut} className="p-1.5 rounded-md hover:bg-white/10 text-muted-foreground transition-colors">
-            <ZoomOut className="w-4 h-4" />
+          <button onClick={handleZoomOut} className="p-1.5 rounded-md hover:bg-foreground/[0.06] text-muted-foreground/65 transition-colors">
+            <ZoomOut className="w-3.5 h-3.5" />
           </button>
-          <div className="w-12 text-center text-xs text-muted-foreground select-none font-mono">
+          <div className="w-10 text-center text-[10px] text-muted-foreground/55 select-none font-mono tabular">
             {zoom}%
           </div>
-          <button onClick={handleZoomIn} className="p-1.5 rounded-md hover:bg-white/10 text-muted-foreground transition-colors">
-            <ZoomIn className="w-4 h-4" />
+          <button onClick={handleZoomIn} className="p-1.5 rounded-md hover:bg-foreground/[0.06] text-muted-foreground/65 transition-colors">
+            <ZoomIn className="w-3.5 h-3.5" />
           </button>
 
-          <div className="w-px h-5 bg-border/40 mx-2" />
+          <div className="w-px h-4 bg-hairline mx-1.5" />
 
           <button
             onClick={handleDownload}
-            className="flex items-center gap-1.5 px-3 py-1.5 ml-1 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-xs font-bold"
+            className="flex items-center gap-1.5 h-7 px-2.5 ml-0.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-[10.5px] font-medium"
           >
-            {downloaded ? <Check className="w-3.5 h-3.5 animate-pulse" /> : <Download className="w-3.5 h-3.5" />}
-            {downloaded ? 'Opening PDF' : 'Download CV'}
+            {downloaded ? <Check className="w-3 h-3" /> : <Download className="w-3 h-3" />}
+            {downloaded ? 'Opening PDF' : 'Download PDF'}
           </button>
         </div>
       </div>
@@ -61,7 +61,7 @@ export function ResumeViewer() {
       {/* ─── PDF Viewer ─── */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-auto bg-[#1e1e1e] custom-scrollbar relative"
+        className="flex-1 overflow-auto bg-foreground/[0.02] custom-scrollbar relative"
       >
         <div
           className="w-full h-full min-h-[500px] transition-transform duration-75 origin-top"

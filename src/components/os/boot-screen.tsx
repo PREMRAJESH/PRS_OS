@@ -1,195 +1,96 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
-const bootMessages = [
-  { text: 'Initializing PRS-OS v2.0...', delay: 0 },
-  { text: 'Loading neural modules...', delay: 400 },
-  { text: 'Mounting development environment...', delay: 800 },
-  { text: 'Connecting AI workspace...', delay: 1200 },
-  { text: 'Authenticating developer credentials...', delay: 1600 },
-  { text: 'Loading project repositories...', delay: 2000 },
-  { text: 'Initializing terminal subsystems...', delay: 2400 },
-  { text: 'System ready.', delay: 2800 },
+const bootSteps = [
+  'Preparing the workspace',
+  'Loading project archive',
+  'Restoring your session',
+  'Ready',
 ]
+
+const STEP_MS = 620
 
 interface BootScreenProps {
   onBootComplete: () => void
 }
 
 export function BootScreen({ onBootComplete }: BootScreenProps) {
-  const [visibleMessages, setVisibleMessages] = useState<number>(0)
-  const [progress, setProgress] = useState(0)
-  const [showWelcome, setShowWelcome] = useState(false)
+  const [step, setStep] = useState(0)
 
   useEffect(() => {
-    bootMessages.forEach((_, index) => {
-      setTimeout(() => {
-        setVisibleMessages(index + 1)
-        setProgress(((index + 1) / bootMessages.length) * 100)
-      }, bootMessages[index].delay)
-    })
+    const timers = bootSteps.map((_, index) =>
+      setTimeout(() => setStep(index + 1), (index + 1) * STEP_MS)
+    )
+    const done = setTimeout(onBootComplete, bootSteps.length * STEP_MS + 420)
 
-    // Show welcome message
-    setTimeout(() => {
-      setShowWelcome(true)
-    }, 3200)
-
-    // Complete boot
-    setTimeout(() => {
-      onBootComplete()
-    }, 4500)
+    return () => {
+      timers.forEach(clearTimeout)
+      clearTimeout(done)
+    }
   }, [onBootComplete])
+
+  const progress = Math.min(100, (step / bootSteps.length) * 100)
+  const current = bootSteps[Math.min(step, bootSteps.length - 1)]
 
   return (
     <motion.div
-      className="fixed inset-0 bg-background z-50 flex flex-col items-center justify-center overflow-hidden"
+      className="fixed inset-0 desktop-texture z-50 flex flex-col items-center justify-center overflow-hidden"
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: 'easeInOut' }}
+      transition={{ duration: 0.6, ease: 'easeInOut' }}
     >
-      {/* Background grid effect */}
-      <div className="absolute inset-0 opacity-5">
-        <div 
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(100, 200, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(100, 200, 255, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }}
-        />
-      </div>
+      <div className="grain" aria-hidden="true" />
 
-      {/* Scanline effect */}
-      <div className="scanline" />
-
-      {/* Main content */}
-      <div className="relative z-10 w-full max-w-2xl px-8">
-        {/* Logo */}
+      <div className="relative z-10 w-full max-w-sm px-8 text-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative inline-block">
-            <motion.div
-              className="text-6xl font-bold font-mono tracking-tighter"
-              style={{ color: 'var(--primary)' }}
-            >
-              PRS-OS
-            </motion.div>
-            <motion.div
-              className="absolute -inset-4 rounded-lg opacity-30 blur-xl"
-              style={{ background: 'var(--glow)' }}
-              animate={{ opacity: [0.2, 0.4, 0.2] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
+          <div className="flex items-center justify-center gap-2.5 mb-7">
+            <span className="w-5 h-5 rounded-[6px] border border-hairline-strong bg-surface/60 flex items-center justify-center">
+              <span className="font-display text-[12px] leading-none text-primary -mt-px">P</span>
+            </span>
+            <span className="text-[10px] font-mono tracking-[0.2em] text-muted-foreground/60">
+              PRS—OS
+            </span>
           </div>
-          <motion.p 
-            className="text-muted-foreground mt-4 font-mono text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            AI-Powered Developer Operating System
-          </motion.p>
+
+          <h1 className="font-display text-[3.25rem] leading-[0.95] text-foreground tracking-[-0.02em]">
+            Prem Rajesh
+          </h1>
+          <p className="mt-3 text-[12px] text-muted-foreground/70">
+            Software engineer in Gujarat, India
+          </p>
         </motion.div>
 
-        {/* Boot messages */}
-        <div className="font-mono text-sm space-y-2 mb-8 h-64 overflow-hidden">
-          <AnimatePresence>
-            {bootMessages.slice(0, visibleMessages).map((message, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
-                className="flex items-center gap-3"
-              >
-                <span style={{ color: 'var(--terminal-green)' }}>{'>'}</span>
-                <span className="text-muted-foreground">{message.text}</span>
-                {index === visibleMessages - 1 && index < bootMessages.length - 1 && (
-                  <motion.span
-                    className="w-2 h-4 ml-1"
-                    style={{ background: 'var(--primary)' }}
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 0.5, repeat: Infinity }}
-                  />
-                )}
-                {index === bootMessages.length - 1 && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="ml-2 px-2 py-0.5 text-xs rounded"
-                    style={{ 
-                      background: 'var(--terminal-green)',
-                      color: 'var(--background)'
-                    }}
-                  >
-                    OK
-                  </motion.span>
-                )}
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Progress bar */}
-        <div className="relative h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
-          <motion.div
-            className="absolute inset-y-0 left-0 rounded-full"
-            style={{ background: 'var(--primary)' }}
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-          />
-          <motion.div
-            className="absolute inset-y-0 left-0 rounded-full opacity-50 blur-sm"
-            style={{ background: 'var(--primary)' }}
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-          />
-        </div>
-
-        {/* Progress percentage */}
-        <motion.div 
-          className="text-center mt-4 font-mono text-xs text-muted-foreground"
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="mt-12"
         >
-          {Math.round(progress)}%
-        </motion.div>
-
-        {/* Welcome message */}
-        <AnimatePresence>
-          {showWelcome && (
+          <div className="h-px w-full bg-hairline overflow-hidden">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center mt-12"
-            >
-              <p className="text-xl font-medium" style={{ color: 'var(--primary)' }}>
-                Welcome back, Developer.
-              </p>
-              <p className="text-muted-foreground text-sm mt-2">
-                Entering workspace...
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              className="h-full bg-primary/80"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+            />
+          </div>
+
+          <div className="mt-3 flex items-center justify-between text-[10px] font-mono text-muted-foreground/55">
+            <span>{current}</span>
+            <span className="tabular">{Math.round(progress)}%</span>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Corner decorations */}
-      <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 opacity-20" style={{ borderColor: 'var(--primary)' }} />
-      <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 opacity-20" style={{ borderColor: 'var(--primary)' }} />
-      <div className="absolute bottom-4 left-4 w-16 h-16 border-l-2 border-b-2 opacity-20" style={{ borderColor: 'var(--primary)' }} />
-      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 opacity-20" style={{ borderColor: 'var(--primary)' }} />
+      <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between text-[9px] font-mono tracking-[0.14em] uppercase text-muted-foreground/30">
+        <span>v2.0</span>
+        <span>Portfolio</span>
+      </div>
     </motion.div>
   )
 }

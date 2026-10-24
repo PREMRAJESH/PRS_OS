@@ -2,229 +2,201 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Briefcase, Calendar, CheckCircle, Image as ImageIcon, ZoomIn, X, Award, ExternalLink } from 'lucide-react'
+import { Image as ImageIcon, ZoomIn, X, ArrowUpRight } from 'lucide-react'
+
+interface Role {
+  company: string
+  role: string
+  period: string
+  current?: boolean
+  points: string[]
+  artifact?: {
+    label: string
+    href?: string
+    image?: string
+    kind: 'pdf' | 'image'
+  }
+}
+
+const roles: Role[] = [
+  {
+    company: 'CSRBOX × IBM SkillsBuild × AICTE',
+    role: 'AI Automation & Intelligent Solutions intern',
+    period: 'June 2026 — present',
+    current: true,
+    points: [
+      'Agentic AI and workflow automation',
+      'IBM SkillsBuild learning path',
+      'Hands-on AI projects with industry mentorship',
+      'AICTE certified programme',
+    ],
+    artifact: {
+      label: 'Offer letter',
+      href: '/csrbox-offerletter.pdf',
+      kind: 'pdf',
+    },
+  },
+  {
+    company: 'BrainyBeam Technologies',
+    role: 'Web development intern',
+    period: 'September 2022',
+    points: [
+      'Front-end development',
+      'Website build and iteration',
+      'Practical exposure to production web technologies',
+    ],
+    artifact: {
+      label: 'Offer letter',
+      image: '/offerletter.jpg',
+      kind: 'image',
+    },
+  },
+]
 
 export function ExperienceWindow() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
-  const csrboxResponsibilities = [
-    'AI Automation & Intelligent Solutions',
-    'IBM SkillsBuild Learning Path',
-    'Agentic AI & Workflow Automation',
-    'Hands-on AI Projects',
-    'Industry Mentorship',
-    'AICTE Certified Program',
-  ]
-
-  const responsibilities = [
-    'Front-End Development',
-    'Website Development',
-    'Web Technologies',
-    'Practical Industry Exposure',
-  ]
-
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] font-sans selection:bg-primary/30 relative">
+    <div className="h-full flex flex-col font-sans relative">
       {/* Header */}
-      <div className="p-6 border-b border-border/50 bg-background/25">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-primary/20 text-primary">
-            <Briefcase className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="font-bold text-white text-base tracking-tight">Professional Experience</h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Verified industry experience and practical internships
-            </p>
-          </div>
+      <div className="px-6 py-5 border-b border-hairline shrink-0">
+        <p className="text-eyebrow">Experience</p>
+        <div className="mt-1.5 flex items-end justify-between gap-4">
+          <h2 className="font-display text-[2rem] leading-none tracking-[-0.02em]">
+            Where I&apos;ve worked
+          </h2>
+          <span className="hidden sm:flex items-center gap-1.5 text-[9.5px] font-mono tracking-[0.08em] uppercase text-muted-foreground/55 pb-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            1 active
+          </span>
         </div>
+        <p className="mt-2 text-[11.5px] text-muted-foreground/60">
+          Two internships, four years apart. Both changed how I think about shipping software.
+        </p>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
-        {/* CSRBOX × IBM SkillsBuild × AICTE Internship */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-          className="p-6 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.02] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)] flex flex-col md:flex-row gap-6"
-        >
-          {/* Left panel: Info */}
-          <div className="flex-1 space-y-5">
-            <div className="border-b border-white/5 pb-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-bold text-white text-lg">
-                  CSRBOX × IBM SkillsBuild × AICTE
-                </h3>
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono bg-white/5 px-3 py-1 rounded-lg">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>June 2026 – Present</span>
-                </div>
+      {/* Roles */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar px-6">
+        {roles.map((role, idx) => (
+          <motion.article
+            key={role.company}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="py-5 border-b border-hairline last:border-b-0 grid grid-cols-1 md:grid-cols-[1fr_168px] gap-x-7 gap-y-4"
+          >
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h3 className="text-[15px] leading-snug text-foreground/90">{role.role}</h3>
+                {role.current && (
+                  <span className="inline-flex items-center gap-1 text-[8.5px] font-mono tracking-[0.08em] uppercase text-accent">
+                    <span className="w-1 h-1 rounded-full bg-accent" />
+                    Current
+                  </span>
+                )}
               </div>
-              <p className="text-sm font-semibold text-primary/80 mt-1 edu-exp-content">
-                AI Automation & Intelligent Solutions Intern
+              <p className="mt-1 text-[11.5px] text-muted-foreground/60">
+                {role.company} <span className="text-muted-foreground/25 mx-1.5">·</span>
+                <span className="font-mono text-[10px]">{role.period}</span>
               </p>
-            </div>
 
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-500" />
-                Responsibilities & Exposure
-              </h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {csrboxResponsibilities.map((resp) => (
-                  <li
-                    key={resp}
-                    className="flex items-center gap-2 p-2.5 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-foreground/90 font-medium edu-exp-content"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{resp}</span>
+              <ul className="mt-3.5 space-y-1.5">
+                {role.points.map(point => (
+                  <li key={point} className="flex items-start gap-2.5 text-[11.5px] leading-relaxed text-muted-foreground/70 edu-exp-content">
+                    <span className="mt-[7px] w-[3px] h-[3px] rounded-full bg-foreground/30 shrink-0" />
+                    {point}
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
 
-          {/* Right panel: Certificate Thumbnail */}
-          <div className="w-full md:w-56 shrink-0 flex flex-col justify-center items-center md:items-end">
-            <div className="space-y-2 w-full max-w-[200px]">
-              <span className="block text-[10px] font-black uppercase tracking-wider text-muted-foreground/60 text-center md:text-left">
-                Active Program
-              </span>
-              <a
-                href="/csrbox-offerletter.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 hover:border-primary/40 bg-[#121318] shadow-lg flex items-center justify-center transition-all duration-300 no-underline"
-              >
-                <div className="w-full h-full flex items-center justify-center bg-[#121318]">
-                  <ImageIcon className="w-8 h-8 text-primary/60 group-hover:scale-110 transition-transform" />
-                </div>
+            {/* Artifact */}
+            {role.artifact && (
+              <div className="md:pt-1">
+                <span className="block text-[9px] font-mono tracking-[0.1em] uppercase text-muted-foreground/35 mb-1.5">
+                  {role.artifact.label}
+                </span>
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-black/40 group-hover:bg-black/20 transition-all duration-300">
-                  <span className="text-[10px] font-bold text-white tracking-wider flex items-center gap-1">
-                    View Offer Letter <ExternalLink className="w-3 h-3 text-primary" />
-                  </span>
-                </div>
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* BrainyBeam Technologies Internship */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-          className="p-6 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.02] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)] flex flex-col md:flex-row gap-6"
-        >
-          {/* Left panel: Info */}
-          <div className="flex-1 space-y-5">
-            <div className="border-b border-white/5 pb-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-bold text-white text-lg">
-                  BrainyBeam Technologies Pvt. Ltd.
-                </h3>
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono bg-white/5 px-3 py-1 rounded-lg">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>September 2022</span>
-                </div>
-              </div>
-              <p className="text-sm font-semibold text-primary/80 mt-1 edu-exp-content">
-                Web Development Intern
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-500" />
-                Responsibilities & Exposure
-              </h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {responsibilities.map((resp) => (
-                  <li
-                    key={resp}
-                    className="flex items-center gap-2 p-2.5 rounded-lg bg-white/[0.02] border border-white/5 text-xs text-foreground/90 font-medium edu-exp-content"
+                {role.artifact.kind === 'pdf' ? (
+                  <a
+                    href={role.artifact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex flex-col justify-between w-full max-w-[168px] aspect-[4/3] rounded-md border border-hairline hover:border-hairline-strong bg-foreground/[0.02] p-3 transition-colors no-underline"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{resp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Right panel: Certificate Thumbnail */}
-          <div className="w-full md:w-56 shrink-0 flex flex-col justify-center items-center md:items-end">
-            <div className="space-y-2 w-full max-w-[200px]">
-              <span className="block text-[10px] font-black uppercase tracking-wider text-muted-foreground/60 text-center md:text-left">
-                Complete Internship
-              </span>
-              <button
-                onClick={() => setIsLightboxOpen(true)}
-                className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 hover:border-primary/40 bg-[#121318] shadow-lg flex items-center justify-center transition-all duration-300"
-              >
-                {/* Background Offer Letter Image */}
-                <img
-                  src="/offerletter.jpg"
-                  alt="BrainyBeam Internship Offer Letter"
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-85 transition-opacity duration-300"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
-                
-                {/* Fallback & Overlay info */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-black/40 group-hover:bg-black/20 transition-all duration-300">
-                  <ImageIcon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform mb-1" />
-                  <span className="text-[10px] font-bold text-white tracking-wider flex items-center gap-1">
-                    View Offer Letter <ZoomIn className="w-3 h-3 text-primary" />
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </motion.div>
+                    <div className="flex items-start justify-between">
+                      <ImageIcon className="w-4 h-4 text-muted-foreground/35 group-hover:text-primary transition-colors" />
+                      <ArrowUpRight className="w-3 h-3 text-muted-foreground/25 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-foreground/70 group-hover:text-foreground transition-colors">
+                        View PDF
+                      </p>
+                      <p className="text-[8.5px] font-mono text-muted-foreground/35 mt-0.5">
+                        csrbox-offerletter.pdf
+                      </p>
+                    </div>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => setIsLightboxOpen(true)}
+                    className="group relative w-full max-w-[168px] aspect-[4/3] rounded-md overflow-hidden border border-hairline hover:border-hairline-strong bg-surface transition-colors"
+                    aria-label="Open BrainyBeam offer letter"
+                  >
+                    <img
+                      src={role.artifact.image}
+                      alt="BrainyBeam internship offer letter"
+                      className="w-full h-full object-cover object-top opacity-65 group-hover:opacity-90 transition-opacity duration-300"
+                      onError={(e) => { e.currentTarget.style.display = 'none' }}
+                    />
+                    <span className="absolute inset-0 flex items-center justify-center gap-1.5 bg-background/40 group-hover:bg-background/20 transition-colors text-[10px] text-foreground/80">
+                      <ZoomIn className="w-3 h-3" />
+                      Enlarge
+                    </span>
+                  </button>
+                )}
+              </div>
+            )}
+          </motion.article>
+        ))}
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border/50 bg-secondary/15">
-        <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
-          <span className="flex items-center gap-1.5 font-bold">
-            <Award className="w-4 h-4 text-emerald-400" />
-            CSRBOX & BrainyBeam Certified
-          </span>
-          <span>Verified profile</span>
-        </div>
+      <div className="px-6 py-3 border-t border-hairline shrink-0 flex items-center justify-between gap-4">
+        <span className="text-[10px] text-muted-foreground/50">
+          CSRBOX and BrainyBeam certified
+        </span>
+        <span className="text-[9px] font-mono text-muted-foreground/30">2 internships</span>
       </div>
 
-      {/* Full screen Lightbox for Certificate */}
+      {/* Lightbox */}
       <AnimatePresence>
         {isLightboxOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-6"
+            className="fixed inset-0 z-[2000] flex items-center justify-center bg-background/92 backdrop-blur-sm p-6"
             onClick={() => setIsLightboxOpen(false)}
           >
             <button
               onClick={() => setIsLightboxOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="absolute top-5 right-5 p-2 rounded-md border border-hairline bg-popover text-foreground/70 hover:text-foreground transition-colors"
+              aria-label="Close preview"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
             <motion.div
-              initial={{ scale: 0.9, y: 20 }}
+              initial={{ scale: 0.97, y: 8 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="relative max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 bg-[#121318] shadow-2xl flex items-center justify-center"
+              exit={{ scale: 0.97, y: 8 }}
+              className="relative max-w-3xl w-full max-h-[85vh] overflow-hidden rounded-lg border border-hairline bg-window shadow-[var(--shadow-elevated)]"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src="/offerletter.jpg"
-                alt="BrainyBeam Internship Offer Letter"
-                className="w-full h-full object-contain max-h-[80vh]"
+                alt="BrainyBeam internship offer letter"
+                className="w-full h-full object-contain max-h-[85vh]"
               />
             </motion.div>
           </motion.div>

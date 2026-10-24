@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Award, CheckCircle, ExternalLink } from 'lucide-react'
+import { ArrowUpRight, Check } from 'lucide-react'
 
 interface CoreCertificate {
   title: string
@@ -13,111 +13,112 @@ interface CoreCertificate {
 
 const coreCertificates: CoreCertificate[] = [
   {
-    title: '100xDevs Cohort 3 Certificate',
+    title: '100xDevs Cohort 3',
     issuer: '100xDevs',
-    date: '25/08/2024',
-    description: 'Web Development + DevOps + Blockchain Cohort — comprehensive knowledge of web application development, system deployment, and blockchain-based technologies.',
-    pdf: '/Cohort.pdf'
+    date: 'Aug 2024',
+    description:
+      'Web development, DevOps and blockchain cohort covering application architecture, deployment and on-chain fundamentals.',
+    pdf: '/Cohort.pdf',
   },
   {
-    title: 'Diploma Completion Certificate',
+    title: 'Diploma completion',
     issuer: 'Government Polytechnic, Dahod',
-    description: 'Completed Computer Software Engineering Diploma program (CPI: 8.33).'
+    description:
+      'Completed the Computer Software Engineering diploma with a CPI of 8.33.',
   },
   {
-    title: 'AI Automation & Intelligent Solutions Internship',
+    title: 'AI Automation & Intelligent Solutions',
     issuer: 'CSRBOX × IBM SkillsBuild × AICTE',
-    date: 'June 2026 – Present',
-    description: 'AICTE certified program covering AI Automation, Agentic AI & Workflow Automation, IBM SkillsBuild Learning Path, and hands-on AI projects with industry mentorship.'
+    date: '2026 — present',
+    description:
+      'AICTE certified programme covering agentic AI, workflow automation, the IBM SkillsBuild path and supervised projects.',
   },
   {
-    title: 'Web Development Internship Certificate',
-    issuer: 'BrainyBeam Technologies Pvt. Ltd.',
-    date: 'September 2022',
-    description: 'Completed internship program focusing on Front-End Development, Website Development, and Web Technologies.'
-  }
+    title: 'Web development internship',
+    issuer: 'BrainyBeam Technologies',
+    date: 'Sep 2022',
+    description:
+      'Front-end development, website delivery and practical exposure to production web technologies.',
+  },
 ]
 
 export function CertificationsWindow() {
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] font-sans selection:bg-primary/30">
+    <div className="h-full flex flex-col font-sans">
       {/* Header */}
-      <div className="p-6 border-b border-border/50 bg-background/25">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-primary/20 text-primary">
-            <Award className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="font-bold text-white text-base tracking-tight">Credentials & Achievements</h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Verified certifications, diplomas, and technical specializations
-            </p>
-          </div>
+      <div className="px-6 py-5 border-b border-hairline shrink-0">
+        <p className="text-eyebrow">Certifications</p>
+        <div className="mt-1.5 flex items-end justify-between gap-4">
+          <h2 className="font-display text-[2rem] leading-none tracking-[-0.02em]">
+            Credentials
+          </h2>
+          <span className="hidden sm:block text-[9.5px] font-mono text-muted-foreground/40 pb-0.5">
+            {coreCertificates.length} records
+          </span>
         </div>
+        <p className="mt-2 text-[11.5px] text-muted-foreground/60">
+          Academic records and programmes completed alongside them.
+        </p>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
-        {/* Core Certificates Grid */}
-        <div className="space-y-3.5">
-          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-            <Award className="w-3.5 h-3.5 text-primary/80" />
-            Core Academic & Industry Certificates
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {coreCertificates.map((cert, index) => (
-              <motion.div
-                key={cert.title}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, type: 'spring', stiffness: 300, damping: 25 }}
-                className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.02] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex flex-col justify-between"
-              >
-                <div className="space-y-2.5">
-                  <div className="flex justify-between items-start gap-2">
-                    <h4 className="font-bold text-white text-sm leading-snug">
-                      {cert.title}
-                    </h4>
-                    {cert.date && (
-                      <span className="text-[9px] font-mono text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded">
-                        {cert.date}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-primary/80 font-semibold">{cert.issuer}</p>
-                  <p className="text-xs text-muted-foreground/85 leading-relaxed">
-                    {cert.description}
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold font-mono">
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>Credential verified</span>
-                  </div>
-                  {cert.pdf && (
-                    <a
-                      href={cert.pdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-[10px] text-primary font-semibold font-mono hover:text-primary/80 transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>View Certificate</span>
-                    </a>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      {/* Grid */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar p-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          {coreCertificates.map((cert, index) => (
+            <motion.article
+              key={cert.title}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="group p-4 rounded-lg border border-hairline bg-foreground/[0.015] hover:bg-foreground/[0.03] hover:border-hairline-strong transition-colors flex flex-col"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-[12.5px] leading-snug text-foreground/90">{cert.title}</h3>
+                {cert.date && (
+                  <span className="shrink-0 text-[8.5px] font-mono text-muted-foreground/40 pt-0.5">
+                    {cert.date}
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-1 text-[10px] font-mono text-muted-foreground/55">{cert.issuer}</p>
+
+              <p className="mt-2.5 text-[11px] leading-relaxed text-muted-foreground/65 flex-1">
+                {cert.description}
+              </p>
+
+              <div className="mt-3.5 pt-2.5 border-t border-hairline flex items-center justify-between gap-3">
+                <span className="flex items-center gap-1.5 text-[9px] font-mono tracking-[0.06em] uppercase text-accent/90">
+                  <Check className="w-2.5 h-2.5" strokeWidth={2.5} />
+                  Verified
+                </span>
+
+                {cert.pdf ? (
+                  <a
+                    href={cert.pdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link inline-flex items-center gap-1 text-[10px] text-muted-foreground/60 hover:text-foreground transition-colors"
+                  >
+                    View certificate
+                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                  </a>
+                ) : (
+                  <span className="text-[9px] font-mono text-muted-foreground/25">On record</span>
+                )}
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border/50 bg-secondary/15">
-        <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
-          <span>{coreCertificates.length} Core Certificates</span>
-          <span>Security status: SECURE</span>
-        </div>
+      <div className="px-6 py-3 border-t border-hairline shrink-0 flex items-center justify-between gap-4">
+        <span className="flex items-center gap-1.5 text-[10px] text-muted-foreground/50">
+          <span className="w-1 h-1 rounded-full bg-accent" />
+          Accreditation: AICTE / GTU
+        </span>
+        <span className="text-[9px] font-mono text-muted-foreground/30">Updated 2026</span>
       </div>
     </div>
   )

@@ -29,12 +29,12 @@ export interface FileNode {
 }
 
 const categoryColors: Record<string, string> = {
-  frontend: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-  backend: 'text-green-400 bg-green-400/10 border-green-400/20',
-  database: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
-  infra: 'text-purple-400 bg-purple-400/10 border-purple-400/20',
-  ai: 'text-pink-400 bg-pink-400/10 border-pink-400/20',
-  tools: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
+  frontend: 'text-primary/90 bg-primary/[0.07] border-primary/20',
+  backend: 'text-accent bg-accent/[0.07] border-accent/20',
+  database: 'text-foreground/70 bg-foreground/[0.05] border-hairline-strong',
+  infra: 'text-muted-foreground bg-foreground/[0.04] border-hairline',
+  ai: 'text-primary bg-primary/[0.08] border-primary/25',
+  tools: 'text-muted-foreground bg-foreground/[0.04] border-hairline',
 }
 
 export { categoryColors }
@@ -44,7 +44,7 @@ export const projectsData: ProjectData[] = [
     id: 'neuroscan',
     name: 'NeuroScan AI',
     slug: 'neuroscan',
-    tagline: 'Brain Tumor Detection System | TensorFlow + ONNX | ~90% Model Accuracy',
+    tagline: 'Brain Tumor Detection System | TensorFlow + ONNX | 94.05% Validation Accuracy',
     overview: `NeuroScan AI is a Flask web application designed for classifying brain MRI scans into four distinct categories: Glioma Tumor, Meningioma Tumor, Pituitary Tumor, or No Tumor.
     
 The application leverages a deep learning model based on the EfficientNetB0 architecture, specifically trained using Transfer Learning. For optimal performance, the app executes local model inference using ONNX Runtime, removing the need for a heavy TensorFlow dependency.`,

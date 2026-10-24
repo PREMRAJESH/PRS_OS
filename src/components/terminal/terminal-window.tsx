@@ -38,8 +38,8 @@ export function TerminalWindow() {
   const { openWindow, setTheme, currentTheme } = useOSStore()
 
   const [lines, setLines] = useState<TermLine[]>([
-    { id: lid(), type: 'system', content: '  PRS-OS Terminal v2.0' },
-    { id: lid(), type: 'system', content: '  Type "help" for available commands.' },
+    { id: lid(), type: 'system', content: '  PRS—OS · shell' },
+    { id: lid(), type: 'system', content: '  Type "help" to see what is available.' },
     { id: lid(), type: 'blank', content: '' },
   ])
   const [input, setInput] = useState('')
@@ -565,7 +565,7 @@ export function TerminalWindow() {
     return (
       <div
         className={`whitespace-pre leading-relaxed ${
-          line.type === 'error' ? 'text-red-400' :
+          line.type === 'error' ? 'text-destructive' :
           line.type === 'system' ? 'text-primary/80' :
           'text-foreground/70'
         }`}
@@ -579,12 +579,9 @@ export function TerminalWindow() {
 
   return (
     <div
-      className="h-full flex flex-col bg-[#080a12] font-mono text-[13px] cursor-text selection:bg-primary/30 relative overflow-hidden"
+      className="h-full flex flex-col bg-transparent font-mono text-[12.5px] cursor-text selection:bg-primary/25 relative overflow-hidden"
       onClick={focusInput}
     >
-      {/* Subtle scanline overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.03)_2px,rgba(255,255,255,0.03)_4px)]" />
-
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto custom-scrollbar px-4 py-3 relative z-10"
@@ -613,7 +610,7 @@ export function TerminalWindow() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 className="w-full bg-transparent outline-none !outline-none ring-0 !ring-0 border-none text-foreground caret-current focus:outline-none focus:ring-0"
-                style={{ caretColor: 'oklch(0.78 0.18 150)' }}
+                style={{ caretColor: 'var(--primary)' }}
                 autoFocus
                 spellCheck={false}
                 autoComplete="off"
@@ -637,7 +634,7 @@ export function TerminalWindow() {
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.1 }}
-              className="absolute left-0 mt-1 z-50 py-1 rounded-lg bg-background/95 border border-border/60 shadow-lg min-w-48 overflow-hidden"
+              className="absolute left-0 mt-1 z-50 py-1 rounded-md bg-popover border border-hairline shadow-[var(--shadow-elevated)] min-w-48 overflow-hidden"
               style={{ marginLeft: `${(input.lastIndexOf(' ') + 1) * 0.6 + 1}rem` }}
             >
               {suggestions.map((s, i) => (
