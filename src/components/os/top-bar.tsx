@@ -30,7 +30,10 @@ export function TopBar() {
       )
     }
     updateTime()
-    const interval = setInterval(updateTime, 1000)
+    // The bar only shows hours and minutes; no need to re-render every second.
+    const interval = setInterval(() => {
+      if (!document.hidden) updateTime()
+    }, 30_000)
     return () => clearInterval(interval)
   }, [])
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { BootScreen } from '@/components/os/boot-screen'
 import { Desktop } from '@/components/os/desktop'
 import { MobileOS } from '@/components/mobile/mobile-os'
@@ -28,20 +28,22 @@ export default function Home() {
   }
 
   return (
-    <main className="h-[100dvh] w-screen overflow-hidden">
-      <AnimatePresence mode="wait">
-        {isBooting && <BootScreen onBootComplete={handleBootComplete} />}
-      </AnimatePresence>
+    <MotionConfig reducedMotion="user">
+      <main className="h-[100dvh] w-screen overflow-hidden">
+        <AnimatePresence mode="wait">
+          {isBooting && <BootScreen onBootComplete={handleBootComplete} />}
+        </AnimatePresence>
 
-      {showOS &&
-        isAndroid !== null &&
-        (isAndroid ? (
-          <div className="android-shell h-[100dvh] w-full">
-            <MobileOS />
-          </div>
-        ) : (
-          <Desktop />
-        ))}
-    </main>
+        {showOS &&
+          isAndroid !== null &&
+          (isAndroid ? (
+            <div className="android-shell h-[100dvh] w-full">
+              <MobileOS />
+            </div>
+          ) : (
+            <Desktop />
+          ))}
+      </main>
+    </MotionConfig>
   )
 }
