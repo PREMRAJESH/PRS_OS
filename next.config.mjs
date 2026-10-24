@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: false,
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
     unoptimized: true,
+  },
+  // The assistant route reads this at runtime as its authoritative profile.
+  outputFileTracingIncludes: {
+    '/api/assistant': ['./prem-rajesh-profile.md'],
   },
   async headers() {
     return [

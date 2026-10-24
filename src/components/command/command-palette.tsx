@@ -118,7 +118,8 @@ export function CommandPalette() {
   /* ── Intelligent AI Detection ─────────── */
 
   const aiIntent = useMemo(() => {
-    const q = query.trim().toLowerCase()
+    const raw = query.trim()
+    const q = raw.toLowerCase()
     if (!q) return null
     
     const isExplicit = q.startsWith('>')
@@ -127,7 +128,7 @@ export function CommandPalette() {
 
     if (isExplicit || isQuestion || hasLongQuery) {
       return {
-        query: q.startsWith('>') ? q.slice(1).trim() : q,
+        query: raw.startsWith('>') ? raw.slice(1).trim() : raw,
         label: q.startsWith('>') ? 'Ask the assistant' : 'Search the workspace',
         icon: Sparkles
       }

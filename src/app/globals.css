@@ -526,6 +526,110 @@
   z-index: 0;
 }
 
+/* ─── Android / mobile shell ─── */
+
+.android-shell {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+.android-wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(120% 78% at 12% -8%, var(--glow), transparent 62%),
+    radial-gradient(95% 62% at 102% 8%, var(--glow-accent), transparent 66%),
+    radial-gradient(80% 52% at 50% 110%, oklch(0.76 0.09 68 / 0.07), transparent 72%),
+    radial-gradient(oklch(0.93 0.012 80 / 0.05) 0.5px, transparent 0.6px);
+  background-size: auto, auto, auto, 22px 22px;
+  transition: filter 0.3s ease;
+}
+
+.android-wallpaper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, oklch(0.1 0.006 70 / 0.45) 100%);
+}
+
+.android-tile {
+  box-shadow:
+    inset 0 1px 0 oklch(0.93 0.012 80 / 0.08),
+    0 10px 24px -16px rgba(10, 7, 4, 0.85);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.mobile-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mobile-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) var(--fill, 70%),
+    var(--hairline-strong) var(--fill, 70%)
+  );
+}
+
+.mobile-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--foreground);
+  box-shadow: 0 0 0 4px oklch(0.76 0.09 68 / 0.14);
+}
+
+.mobile-range::-moz-range-track {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--hairline-strong);
+}
+
+.mobile-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--primary);
+}
+
+.mobile-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--foreground);
+}
+
+/* Keep iOS from zooming when a field receives focus. */
+@media (max-width: 1023px) {
+  .android-shell input,
+  .android-shell textarea,
+  .android-shell select {
+    font-size: 16px !important;
+  }
+}
+
 /* ─── Content scale (kept from original, slightly tightened) ─── */
 
 .hero-title {

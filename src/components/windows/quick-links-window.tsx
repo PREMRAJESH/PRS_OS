@@ -98,7 +98,7 @@ export function QuickLinksWindow() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col md:flex-row min-h-0">
+      <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-y-auto custom-scrollbar md:overflow-hidden">
         {/* Links */}
         <div className="md:w-[38%] md:min-w-[200px] border-b md:border-b-0 md:border-r border-hairline flex flex-col shrink-0">
           <div className="px-5 py-3 border-b border-hairline hidden md:block">
@@ -107,7 +107,7 @@ export function QuickLinksWindow() {
             </span>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-2.5">
+          <div className="grid grid-cols-2 gap-1.5 p-2.5 custom-scrollbar md:block md:flex-1 md:overflow-y-auto">
             {contactLinks.map((link, idx) => {
               const isResume = link.title === 'Résumé'
               return (
@@ -120,29 +120,29 @@ export function QuickLinksWindow() {
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.035, duration: 0.3 }}
-                  className="group flex items-center gap-3 px-2.5 py-2.5 rounded-md hover:bg-foreground/[0.035] transition-colors"
+                  className="group flex items-center gap-2.5 rounded-lg border border-hairline bg-foreground/[0.02] px-2.5 py-2 transition-colors hover:bg-foreground/[0.035] md:rounded-md md:border-0 md:bg-transparent md:px-2.5 md:py-2.5"
                 >
                   <link.icon className="w-3.5 h-3.5 shrink-0 text-muted-foreground/40 group-hover:text-primary transition-colors" strokeWidth={1.7} />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[12px] text-foreground/80 group-hover:text-foreground transition-colors">
+                    <div className="text-[11.5px] text-foreground/80 group-hover:text-foreground transition-colors">
                       {link.title}
                     </div>
-                    <div className="text-[9.5px] font-mono text-muted-foreground/40 truncate mt-0.5">
+                    <div className="hidden text-[9.5px] font-mono text-muted-foreground/40 truncate mt-0.5 md:block">
                       {link.url}
                     </div>
                   </div>
-                  <ArrowUpRight className="w-3 h-3 shrink-0 text-muted-foreground/25 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <ArrowUpRight className="hidden w-3 h-3 shrink-0 text-muted-foreground/25 group-hover:text-primary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 md:block" />
                 </motion.a>
               )
             })}
 
-            <div className="mt-2 mx-2.5 pt-3 border-t border-hairline">
+            <div className="col-span-2 mt-1 border-t border-hairline px-1 pt-2.5 md:mx-2.5 md:mt-2 md:px-0 md:pt-3">
               <div className="text-[9px] font-mono tracking-[0.1em] uppercase text-muted-foreground/35">
                 Direct
               </div>
               <a
                 href="mailto:sargarapremrajesh@gmail.com"
-                className="mt-1.5 block text-[10px] font-mono text-muted-foreground/60 hover:text-foreground transition-colors break-all"
+                className="mt-1 block text-[10px] font-mono text-muted-foreground/60 hover:text-foreground transition-colors break-all"
               >
                 sargarapremrajesh@gmail.com
               </a>
@@ -180,7 +180,7 @@ export function QuickLinksWindow() {
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col min-h-0"
               >
-                <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-4 space-y-3">
+                <div className="px-5 py-4 space-y-3 custom-scrollbar md:flex-1 md:overflow-y-auto">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <Field label="Name">
                       <input
@@ -242,14 +242,14 @@ export function QuickLinksWindow() {
                   </AnimatePresence>
                 </div>
 
-                <div className="shrink-0 px-5 py-3 border-t border-hairline flex items-center justify-between gap-3">
+                <div className="shrink-0 px-5 py-3 border-t border-hairline flex items-center justify-end gap-3 sm:justify-between">
                   <span className="hidden sm:block text-[9.5px] font-mono text-muted-foreground/35">
                     Or write to sargarapremrajesh@gmail.com
                   </span>
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="flex items-center justify-center gap-2 h-8 px-3.5 rounded-md bg-primary text-primary-foreground text-[11.5px] font-medium hover:bg-primary/90 transition-colors disabled:opacity-55"
+                    className="flex h-9 w-full items-center justify-center gap-2 rounded-md bg-primary px-3.5 text-[11.5px] font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-55 sm:h-8 sm:w-auto"
                   >
                     {status === 'sending' ? (
                       <>

@@ -11,44 +11,18 @@ interface Message {
   timestamp: Date
 }
 
-const specializedResponses: Record<string, string> = {
-  'explain architecture': 'PRS—OS is a small operating system built in the browser:\n\n• **Runtime:** Next.js 16 and React 19 render every window inside a single desktop shell.\n• **State:** a Zustand store owns window positions, focus order, minimisation and themes.\n• **Motion:** Framer Motion handles drag physics, focus transitions and the dock.\n• **Surfaces:** Tailwind CSS 4 tokens keep one warm palette across all windows.\n\nEach app is an isolated module, so the terminal, project explorer and assistant share the same shell without sharing state.',
-  'explain neuroscan architecture': 'NeuroScan AI is a lightweight medical inference pipeline:\n\n• **Model:** an EfficientNetB0 backbone trained with transfer learning across four tumour classes, reaching 94.05% validation accuracy.\n• **Deployment:** exported to ONNX and compressed to roughly 35 MB, then executed on CPU through ONNX Runtime on Vercel serverless.\n• **Guardrails:** grayscale, contrast and border checks reject non-MRI inputs before inference.\n• **Interface:** a clinical workbench with confidence scoring and MRI visualisation. Inference stays under 150 ms.',
-  'explain studyflow architecture': 'StudyFlow turns a syllabus into a working week:\n\n• **Interface:** Next.js 16 App Router, TypeScript and Tailwind CSS 4.\n• **Generation:** Google Gemini through the Vercel AI SDK, with JSON schemas validated by Zod.\n• **Data:** Supabase for auth, Postgres and storage, protected by row-level security.\n• **Result:** a 99.8% schedule generation success rate, with onboarding reduced from 20 minutes to under 45 seconds.',
-  'show ai projects': 'Three projects sit closest to AI work:\n\n• **NeuroScan AI** — MRI tumour classification with an ONNX model and clinical guardrails.\n• **StudyFlow** — Gemini-generated study plans backed by Supabase.\n• **CodeViz** — a step-through visualiser for algorithms, data structures and call stacks.\n\nAsk about any of them and I can go deeper.',
-  'what technologies does prs use': 'The working stack is deliberately small:\n\n• **Languages:** Python, TypeScript, Java, C++.\n• **Frontend:** React 19, Next.js 16, Tailwind CSS 4, Framer Motion.\n• **Backend:** Node.js, FastAPI, Firebase, Supabase.\n• **AI:** TensorFlow, PyTorch, ONNX Runtime, Gemini.\n• **Tools:** Git, Docker, Vercel.',
-  availability: 'Prem is open to internships and early-career software roles, particularly around AI engineering, full-stack product work and developer tooling.\n\nThe fastest route is email: **sargarapremrajesh@gmail.com**. You can also use the contact window and the form will reach the same inbox.',
-  contact: 'You can reach Prem at **sargarapremrajesh@gmail.com**, or open the Contact window to send a message directly. He is also on GitHub as **@PREMRAJESH** and LinkedIn at **in/gecdhd-comp-prem-sargara**.',
-}
+const WELCOME =
+  "Ask me about Prem's projects, stack, experience or availability. I answer from his portfolio — and point you to his links when a question needs the latest information."
 
 const suggestions = [
+  "What's Prem's latest project?",
   'What has Prem built?',
   'Explain NeuroScan architecture',
-  'What is his stack?',
-  'Is he available?',
+  'How do I contact Prem?',
 ]
 
-function getAIResponse(query: string): string {
-  const lowerQuery = query.toLowerCase()
-
-  for (const [key, response] of Object.entries(specializedResponses)) {
-    if (lowerQuery.includes(key)) return response
-  }
-
-  if (lowerQuery.includes('available') || lowerQuery.includes('intern') || lowerQuery.includes('hire')) {
-    return specializedResponses.availability
-  }
-
-  if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('reach')) {
-    return specializedResponses.contact
-  }
-
-  if (lowerQuery.includes('project') || lowerQuery.includes('built') || lowerQuery.includes('work')) {
-    return 'Prem has shipped four portfolio projects:\n\n• **NeuroScan AI** — brain tumour detection, 94.05% validation accuracy.\n• **StudyFlow** — an AI study planner built with Gemini and Supabase.\n• **Nimbus X** — a real-time Android messaging app.\n• **CodeViz** — a client-side algorithm visualiser.\n\nWhich one should I open up?'
-  }
-
-  return 'I can explain the projects, the stack, or how this workspace is built. Try asking about NeuroScan, StudyFlow, CodeViz or Nimbus X — or ask whether Prem is available for an internship.'
-}
+const FALLBACK =
+  'I could not reach the assistant service just now. You can still browse Prem’s latest work at **https://github.com/PREMRAJESH**, connect on **https://www.linkedin.com/in/gecdhd-comp-prem-sargara/**, or email **sargarapremrajesh@gmail.com**.'
 
 interface AIAssistantWindowProps {
   initialQuery?: string | null
@@ -59,8 +33,7 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
     {
       id: 'welcome',
       role: 'assistant',
-      content:
-        "I'm a small assistant for this portfolio. Ask about a project, the stack, or how PRS—OS is put together.",
+      content: WELCOME,
       timestamp: new Date(),
     },
   ])
@@ -68,6 +41,7 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const lastQuery = useRef<string | null>(null)
+  const inFlight = useRef(false)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -82,35 +56,66 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
   }, [initialQuery])
 
   const handleProcessQuery = async (query: string) => {
+    const trimmed = query.trim()
+    // Ref guard blocks duplicate submits before React re-renders isTyping.
+    if (!trimmed || inFlight.current) return
+    inFlight.current = true
+
+    const history = messages
+      .filter((message) => message.id !== 'welcome')
+      .map((message) => ({ role: message.role, content: message.content }))
+
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: `u-${Date.now()}`,
       role: 'user',
-      content: query,
+      content: trimmed,
       timestamp: new Date(),
     }
 
-    setMessages(prev => [...prev, userMessage])
+    setMessages((prev) => [...prev, userMessage])
     setIsTyping(true)
 
-    await new Promise(resolve => setTimeout(resolve, 650 + Math.random() * 450))
+    let content = FALLBACK
+    try {
+      const response = await fetch('/api/assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: trimmed, history }),
+      })
 
-    const assistantMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      role: 'assistant',
-      content: getAIResponse(query),
-      timestamp: new Date(),
+      const data = (await response.json().catch(() => null)) as
+        | { text?: string; error?: string }
+        | null
+
+      if (response.ok && data?.text) {
+        content = data.text
+      } else if (data?.error) {
+        content = `${data.error}\n\nFor the latest details, check **https://github.com/PREMRAJESH**, or email **sargarapremrajesh@gmail.com**.`
+      }
+    } catch {
+      // Keep the fallback with links.
+    } finally {
+      inFlight.current = false
     }
 
-    setMessages(prev => [...prev, assistantMessage])
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `a-${Date.now()}`,
+        role: 'assistant',
+        content,
+        timestamp: new Date(),
+      },
+    ])
     setIsTyping(false)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isTyping) return
-    const q = input.trim()
+    const query = input.trim()
     setInput('')
-    handleProcessQuery(q)
+    handleProcessQuery(query)
   }
 
   const showSuggestions = messages.length === 1 && !isTyping
@@ -127,12 +132,12 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
             <p className="text-[9px] font-mono tracking-[0.13em] uppercase text-muted-foreground/40 leading-none">
               Assistant
             </p>
-            <p className="text-[11.5px] text-foreground/75 mt-1 leading-none">Workspace guide</p>
+            <p className="text-[11.5px] text-foreground/75 mt-1 leading-none">Prem&apos;s workspace guide</p>
           </div>
         </div>
         <span className="flex items-center gap-1.5 text-[9px] font-mono tracking-[0.08em] uppercase text-muted-foreground/40">
           <span className="w-1 h-1 rounded-full bg-accent" />
-          Local context
+          Scoped to Prem
         </span>
       </div>
 
@@ -155,15 +160,10 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
                       PRS—OS
                     </span>
                   </div>
-                  <div className="text-[12px] leading-[1.7] text-muted-foreground/85">
+                  <div className="text-[12.5px] md:text-[12px] leading-[1.7] text-muted-foreground/85">
                     {message.content.split('\n').map((line, i) => (
                       <span key={i} className="block min-h-[2px]">
-                        {line.split(/(\*\*.*?\*\*)/g).map((part, j) => {
-                          if (part.startsWith('**') && part.endsWith('**')) {
-                            return <strong key={j} className="text-foreground/90 font-medium">{part.slice(2, -2)}</strong>
-                          }
-                          return part
-                        })}
+                        {renderInline(line)}
                       </span>
                     ))}
                   </div>
@@ -186,13 +186,13 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
             transition={{ delay: 0.2 }}
             className="mt-2 flex flex-wrap gap-1.5"
           >
-            {suggestions.map(s => (
+            {suggestions.map((suggestion) => (
               <button
-                key={s}
-                onClick={() => handleProcessQuery(s)}
+                key={suggestion}
+                onClick={() => handleProcessQuery(suggestion)}
                 className="px-2 py-1 rounded border border-hairline bg-foreground/[0.02] text-[10px] text-muted-foreground/65 hover:text-foreground hover:border-hairline-strong hover:bg-foreground/[0.04] transition-colors"
               >
-                {s}
+                {suggestion}
               </button>
             ))}
           </motion.div>
@@ -205,7 +205,7 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
             className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground/40"
           >
             <Loader2 className="w-3 h-3 animate-spin" />
-            Reading the workspace…
+            Checking Prem&apos;s context…
           </motion.div>
         )}
 
@@ -219,7 +219,7 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about a project or the stack…"
+            placeholder="Ask about Prem…"
             className="w-full h-10 rounded-md bg-foreground/[0.025] border border-hairline pl-3 pr-11 text-[12px] text-foreground/90 placeholder:text-muted-foreground/35 focus:border-primary/40 focus:bg-foreground/[0.04] outline-none transition-colors"
             disabled={isTyping}
           />
@@ -233,9 +233,57 @@ export function AIAssistantWindow({ initialQuery }: AIAssistantWindowProps) {
           </button>
         </form>
         <p className="mt-2 text-[9px] font-mono text-muted-foreground/30 text-center">
-          Answers come from the portfolio&apos;s local context
+          Prem-related questions only · live details come from his links
         </p>
       </div>
     </div>
   )
+}
+
+/* ── Tiny renderer: **bold**, URLs and email addresses become links ── */
+
+const INLINE_TOKEN = /(\*\*[^*]+\*\*|https?:\/\/[^\s<>()]+|[\w.+-]+@[\w-]+\.[\w.-]+)/g
+
+function renderInline(line: string) {
+  return line.split(INLINE_TOKEN).map((token, index) => {
+    if (token.startsWith('**') && token.endsWith('**') && token.length > 4) {
+      return (
+        <strong key={index} className="text-foreground/90 font-medium">
+          {token.slice(2, -2)}
+        </strong>
+      )
+    }
+
+    if (/^https?:\/\//.test(token)) {
+      const trailing = token.match(/[.,;:!?]+$/)?.[0] ?? ''
+      const href = trailing ? token.slice(0, -trailing.length) : token
+      return (
+        <span key={index}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary/90 underline decoration-primary/30 underline-offset-2 break-words hover:decoration-primary"
+          >
+            {href}
+          </a>
+          {trailing}
+        </span>
+      )
+    }
+
+    if (/^[\w.+-]+@[\w-]+\.[\w.-]+$/.test(token)) {
+      return (
+        <a
+          key={index}
+          href={`mailto:${token}`}
+          className="text-primary/90 underline decoration-primary/30 underline-offset-2 break-words hover:decoration-primary"
+        >
+          {token}
+        </a>
+      )
+    }
+
+    return token
+  })
 }

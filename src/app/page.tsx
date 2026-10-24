@@ -4,35 +4,44 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { BootScreen } from '@/components/os/boot-screen'
 import { Desktop } from '@/components/os/desktop'
+import { MobileOS } from '@/components/mobile/mobile-os'
+import { useIsAndroid } from '@/hooks/use-media-query'
 
 export default function Home() {
   const [isBooting, setIsBooting] = useState(true)
-  const [showDesktop, setShowDesktop] = useState(false)
+  const [showOS, setShowOS] = useState(false)
+  const isAndroid = useIsAndroid()
 
   useEffect(() => {
     // Check if already booted in this session
     const hasBooted = sessionStorage.getItem('prs-os-booted')
     if (hasBooted) {
       setIsBooting(false)
-      setShowDesktop(true)
+      setShowOS(true)
     }
   }, [])
 
   const handleBootComplete = () => {
     sessionStorage.setItem('prs-os-booted', 'true')
     setIsBooting(false)
-    setTimeout(() => setShowDesktop(true), 100)
+    setTimeout(() => setShowOS(true), 100)
   }
 
   return (
-    <main className="h-screen w-screen overflow-hidden">
+    <main className="h-[100dvh] w-screen overflow-hidden">
       <AnimatePresence mode="wait">
-        {isBooting && (
-          <BootScreen onBootComplete={handleBootComplete} />
-        )}
+        {isBooting && <BootScreen onBootComplete={handleBootComplete} />}
       </AnimatePresence>
-      
-      {showDesktop && <Desktop />}
+
+      {showOS &&
+        isAndroid !== null &&
+        (isAndroid ? (
+          <div className="android-shell h-[100dvh] w-full">
+            <MobileOS />
+          </div>
+        ) : (
+          <Desktop />
+        ))}
     </main>
   )
 }

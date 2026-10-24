@@ -74,7 +74,7 @@ export function SettingsWindow() {
           <span className="text-[10px] font-mono text-muted-foreground/45">{activeTheme.name}</span>
         </div>
         <p className="mt-2 text-[11.5px] text-muted-foreground/60">
-          Choose a palette for the desktop. Window layout and content stay the same.
+          Choose a palette for the workspace. Window layout and content stay the same.
         </p>
       </div>
 
